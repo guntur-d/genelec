@@ -1,0 +1,17 @@
+{
+  "name": "fastify-vercel-app",
+  "version": "1.0.0",
+  "description": "A simple Fastify application for testing on Vercel.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "dependencies": {
+    "fastify": "^4.0.0",
+    "vercel": "^44.2.12"
+  },
+  "engines": {
+    "node": ">=14.x"
+  },
+  "license": "MIT"
+}
