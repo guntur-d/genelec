@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "fastify": "^4.0.0",
+    "serverless-http": "^3.2.0",
     "vercel": "^44.2.12"
   },
   "engines": {
