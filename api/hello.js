@@ -1,16 +1,26 @@
+
+
 // api/hello.js
 import Fastify from 'fastify';
 
-const app = Fastify();
+const app = Fastify({ logger: true });
 
+// define your route on `/`
 app.get('/', async (req, reply) => {
   return { msg: 'Hello from Fastify on Vercel!' };
 });
 
-// Vercel Serverless Handler
 export default async function handler(req, res) {
-  // Ensure Fastify is ready
+  // wait for fastify to be ready
   await app.ready();
-  // Let Fastify handle this req/res
+
+  // strip the Vercel prefix (/api/hello)
+  const prefix = '/api/hello';
+  if (req.url.startsWith(prefix)) {
+    // remove prefix, but leave at least '/'
+    req.url = req.url.slice(prefix.length) || '/';
+  }
+
+  // hand off to Fastify’s internal server
   app.server.emit('request', req, res);
 }
