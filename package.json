@@ -7,8 +7,9 @@
     "start": "node src/server.js"
   },
   "dependencies": {
-    "fastify": "^4.0.0",
-    "serverless-http": "^3.2.0",
+    "@fastify/view": "^11.1.0",
+    "fastify": "^5",
+    "pug": "^3.0.3",
     "vercel": "^44.2.12"
   },
   "engines": {
