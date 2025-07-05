@@ -1,9 +1,16 @@
 // api/hello.js
-const fastify = require('fastify')({ logger: true });
-const serverless = require('serverless-http');
+import Fastify from 'fastify';
 
-fastify.get('/', async (req, reply) => {
+const app = Fastify();
+
+app.get('/', async (req, reply) => {
   return { msg: 'Hello from Fastify on Vercel!' };
 });
 
-module.exports = serverless(fastify);
+// Vercel Serverless Handler
+export default async function handler(req, res) {
+  // Ensure Fastify is ready
+  await app.ready();
+  // Let Fastify handle this req/res
+  app.server.emit('request', req, res);
+}
