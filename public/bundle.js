@@ -1,2 +1,1756 @@
-(()=>{var Bt=Object.create;var Be=Object.defineProperty;var Kt=Object.getOwnPropertyDescriptor;var Vt=Object.getOwnPropertyNames;var Jt=Object.getPrototypeOf,Gt=Object.prototype.hasOwnProperty;var d=(i,u)=>()=>(u||i((u={exports:{}}).exports,u),u.exports);var Wt=(i,u,c,l)=>{if(u&&typeof u=="object"||typeof u=="function")for(let m of Vt(u))!Gt.call(i,m)&&m!==c&&Be(i,m,{get:()=>u[m],enumerable:!(l=Kt(u,m))||l.enumerable});return i};var Ke=(i,u,c)=>(c=i!=null?Bt(Jt(i)):{},Wt(u||!i||!i.__esModule?Be(c,"default",{value:i,enumerable:!0}):c,i));var W=d((zr,Ve)=>{"use strict";function v(i,u,c,l,m,o){return{tag:i,key:u,attrs:c,children:l,text:m,dom:o,is:void 0,domSize:void 0,state:void 0,events:void 0,instance:void 0}}v.normalize=function(i){return Array.isArray(i)?v("[",void 0,void 0,v.normalizeChildren(i),void 0,void 0):i==null||typeof i=="boolean"?null:typeof i=="object"?i:v("#",void 0,void 0,String(i),void 0,void 0)};v.normalizeChildren=function(i){var u=[];if(i.length){for(var c=i[0]!=null&&i[0].key!=null,l=1;l<i.length;l++)if((i[l]!=null&&i[l].key!=null)!==c)throw new TypeError(c&&(i[l]!=null||typeof i[l]=="boolean")?"In fragments, vnodes must either all have keys or none have keys. You may wish to consider using an explicit keyed empty fragment, m.fragment({key: ...}), instead of a hole.":"In fragments, vnodes must either all have keys or none have keys.");for(var l=0;l<i.length;l++)u[l]=v.normalize(i[l])}return u};Ve.exports=v});var Ae=d((Cr,Je)=>{"use strict";var Xt=W();Je.exports=function(){var i=arguments[this],u=this+1,c;if(i==null?i={}:(typeof i!="object"||i.tag!=null||Array.isArray(i))&&(i={},u=this),arguments.length===u+1)c=arguments[u],Array.isArray(c)||(c=[c]);else for(c=[];u<arguments.length;)c.push(arguments[u++]);return Xt("",i.key,i,c)}});var fe=d((Er,Ge)=>{"use strict";Ge.exports={}.hasOwnProperty});var Ce=d((Rr,Xe)=>{"use strict";var Yt=W(),Zt=Ae(),ze=fe(),vt=/(?:(^|#|\.)([^#\.\[\]]+))|(\[(.+?)(?:\s*=\s*("|'|)((?:\\["'\]]|.)*?)\5)?\])/g,We=Object.create(null);function kt(i){for(var u in i)if(ze.call(i,u))return!1;return!0}function er(i){for(var u,c="div",l=[],m={};u=vt.exec(i);){var o=u[1],f=u[2];if(o===""&&f!=="")c=f;else if(o==="#")m.id=f;else if(o===".")l.push(f);else if(u[3][0]==="["){var h=u[6];h&&(h=h.replace(/\\(["'])/g,"$1").replace(/\\\\/g,"\\")),u[4]==="class"?l.push(h):m[u[4]]=h===""?h:h||!0}}return l.length>0&&(m.className=l.join(" ")),kt(m)&&(m=null),We[i]={tag:c,attrs:m}}function tr(i,u){var c=u.attrs,l=ze.call(c,"class"),m=l?c.class:c.className;return u.tag=i.tag,i.attrs!=null?(c=Object.assign({},i.attrs,c),(m!=null||i.attrs.className!=null)&&(c.className=m!=null?i.attrs.className!=null?String(i.attrs.className)+" "+String(m):m:i.attrs.className!=null?i.attrs.className:null)):m!=null&&(c.className=m),l&&(c.class=null),i.tag==="input"&&ze.call(c,"type")&&(c=Object.assign({type:c.type},c)),u.is=c.is,u.attrs=c,u}function rr(i){if(i==null||typeof i!="string"&&typeof i!="function"&&typeof i.view!="function")throw Error("The selector must be either a string or a component.");var u=Zt.apply(1,arguments);return typeof i=="string"&&(u.children=Yt.normalizeChildren(u.children),i!=="[")?tr(We[i]||er(i),u):(u.tag=i,u)}Xe.exports=rr});var Ze=d((Nr,Ye)=>{"use strict";var ir=W();Ye.exports=function(i){return i==null&&(i=""),ir("<",void 0,void 0,i,void 0,void 0)}});var ke=d((Tr,ve)=>{"use strict";var nr=W(),ar=Ae();ve.exports=function(){var i=ar.apply(0,arguments);return i.tag="[",i.children=nr.normalizeChildren(i.children),i}});var tt=d((Pr,et)=>{"use strict";var Ee=Ce();Ee.trust=Ze();Ee.fragment=ke();et.exports=Ee});var Ne=d((jr,rt)=>{"use strict";var Re=new WeakMap;function*fr(i){var u=i.dom,c=i.domSize,l=Re.get(u);if(u!=null)do{var m=u.nextSibling;Re.get(u)===l&&(yield u,c--),u=m}while(c)}rt.exports={delayedRemoval:Re,domFor:fr}});var at=d((dr,nt)=>{"use strict";var Te=W(),it=Ne(),ur=it.delayedRemoval,Pe=it.domFor;nt.exports=function(){var i={svg:"http://www.w3.org/2000/svg",math:"http://www.w3.org/1998/Math/MathML"},u,c;function l(t){return t.ownerDocument}function m(t){return t.attrs&&t.attrs.xmlns||i[t.tag]}function o(t,e){if(t.state!==e)throw new Error("'vnode.state' must not be modified.")}function f(t){var e=t.state;try{return this.apply(e,arguments)}finally{o(t,e)}}function h(t){try{return l(t).activeElement}catch{return null}}function x(t,e,r,n,a,s,A){for(var z=r;z<n;z++){var p=e[z];p!=null&&w(t,p,a,A,s)}}function w(t,e,r,n,a){var s=e.tag;if(typeof s=="string")switch(e.state={},e.attrs!=null&&he(e.attrs,e,r),s){case"#":q(t,e,a);break;case"<":L(t,e,n,a);break;case"[":g(t,e,r,n,a);break;default:P(t,e,r,n,a)}else J(t,e,r,n,a)}function q(t,e,r){e.dom=l(t).createTextNode(e.children),G(t,e.dom,r)}var R={caption:"table",thead:"table",tbody:"table",tfoot:"table",tr:"tbody",th:"tr",td:"tr",colgroup:"table",col:"colgroup"};function L(t,e,r,n){var a=e.children.match(/^\s*?<(\w+)/im)||[],s=l(t).createElement(R[a[1]]||"div");r==="http://www.w3.org/2000/svg"?(s.innerHTML='<svg xmlns="http://www.w3.org/2000/svg">'+e.children+"</svg>",s=s.firstChild):s.innerHTML=e.children,e.dom=s.firstChild,e.domSize=s.childNodes.length;for(var A=l(t).createDocumentFragment(),z;z=s.firstChild;)A.appendChild(z);G(t,A,n)}function g(t,e,r,n,a){var s=l(t).createDocumentFragment();if(e.children!=null){var A=e.children;x(s,A,0,A.length,r,null,n)}e.dom=s.firstChild,e.domSize=s.childNodes.length,G(t,s,a)}function P(t,e,r,n,a){var s=e.tag,A=e.attrs,z=e.is;n=m(e)||n;var p=n?z?l(t).createElementNS(n,s,{is:z}):l(t).createElementNS(n,s):z?l(t).createElement(s,{is:z}):l(t).createElement(s);if(e.dom=p,A!=null&&It(e,A,n),G(t,p,a),!Y(e)&&e.children!=null){var C=e.children;x(p,C,0,C.length,r,null,n),e.tag==="select"&&A!=null&&_t(e,A)}}function X(t,e){var r;if(typeof t.tag.view=="function"){if(t.state=Object.create(t.tag),r=t.state.view,r.$$reentrantLock$$!=null)return;r.$$reentrantLock$$=!0}else{if(t.state=void 0,r=t.tag,r.$$reentrantLock$$!=null)return;r.$$reentrantLock$$=!0,t.state=t.tag.prototype!=null&&typeof t.tag.prototype.view=="function"?new t.tag(t):t.tag(t)}if(he(t.state,t,e),t.attrs!=null&&he(t.attrs,t,e),t.instance=Te.normalize(f.call(t.state.view,t)),t.instance===t)throw Error("A view cannot return the vnode it received as argument");r.$$reentrantLock$$=null}function J(t,e,r,n,a){X(e,r),e.instance!=null?(w(t,e.instance,r,n,a),e.dom=e.instance.dom,e.domSize=e.dom!=null?e.instance.domSize:0):e.domSize=0}function V(t,e,r,n,a,s){if(!(e===r||e==null&&r==null))if(e==null||e.length===0)x(t,r,0,r.length,n,a,s);else if(r==null||r.length===0)te(t,e,0,e.length);else{var A=e[0]!=null&&e[0].key!=null,z=r[0]!=null&&r[0].key!=null,p=0,C=0;if(!A)for(;C<e.length&&e[C]==null;)C++;if(!z)for(;p<r.length&&r[p]==null;)p++;if(A!==z)te(t,e,C,e.length),x(t,r,p,r.length,n,a,s);else if(z){for(var $=e.length-1,_=r.length-1,ae,Q,F,H,T,we;$>=C&&_>=p&&(H=e[$],T=r[_],H.key===T.key);)H!==T&&K(t,H,T,n,a,s),T.dom!=null&&(a=T.dom),$--,_--;for(;$>=C&&_>=p&&(Q=e[C],F=r[p],Q.key===F.key);)C++,p++,Q!==F&&K(t,Q,F,n,Z(e,C,a),s);for(;$>=C&&_>=p&&!(p===_||Q.key!==T.key||H.key!==F.key);)we=Z(e,C,a),ee(t,H,we),H!==F&&K(t,H,F,n,we,s),++p<=--_&&ee(t,Q,a),Q!==T&&K(t,Q,T,n,a,s),T.dom!=null&&(a=T.dom),C++,$--,H=e[$],T=r[_],Q=e[C],F=r[p];for(;$>=C&&_>=p&&H.key===T.key;)H!==T&&K(t,H,T,n,a,s),T.dom!=null&&(a=T.dom),$--,_--,H=e[$],T=r[_];if(p>_)te(t,e,C,$+1);else if(C>$)x(t,r,p,_+1,n,a,s);else{var Qt=a,Qe=_-p+1,ie=new Array(Qe),be=0,D=0,xe=2147483647,qe=0,ae,Oe;for(D=0;D<Qe;D++)ie[D]=-1;for(D=_;D>=p;D--){ae==null&&(ae=N(e,C,$+1)),T=r[D];var k=ae[T.key];k!=null&&(xe=k<xe?k:-1,ie[D-p]=k,H=e[k],e[k]=null,H!==T&&K(t,H,T,n,a,s),T.dom!=null&&(a=T.dom),qe++)}if(a=Qt,qe!==$-C+1&&te(t,e,C,$+1),qe===0)x(t,r,p,_+1,n,a,s);else if(xe===-1)for(Oe=I(ie),be=Oe.length-1,D=_;D>=p;D--)F=r[D],ie[D-p]===-1?w(t,F,n,s,a):Oe[be]===D-p?be--:ee(t,F,a),F.dom!=null&&(a=r[D].dom);else for(D=_;D>=p;D--)F=r[D],ie[D-p]===-1&&w(t,F,n,s,a),F.dom!=null&&(a=r[D].dom)}}else{var ge=e.length<r.length?e.length:r.length;for(p=p<C?p:C;p<ge;p++)Q=e[p],F=r[p],!(Q===F||Q==null&&F==null)&&(Q==null?w(t,F,n,s,Z(e,p+1,a)):F==null?ne(t,Q):K(t,Q,F,n,Z(e,p+1,a),s));e.length>ge&&te(t,e,p,e.length),r.length>ge&&x(t,r,p,r.length,n,a,s)}}}function K(t,e,r,n,a,s){var A=e.tag,z=r.tag;if(A===z&&e.is===r.is){if(r.state=e.state,r.events=e.events,$t(r,e))return;if(typeof A=="string")switch(r.attrs!=null&&ye(r.attrs,r,n),A){case"#":j(e,r);break;case"<":y(t,e,r,s,a);break;case"[":E(t,e,r,n,a,s);break;default:b(e,r,n,s)}else M(t,e,r,n,a,s)}else ne(t,e),w(t,r,n,s,a)}function j(t,e){t.children.toString()!==e.children.toString()&&(t.dom.nodeValue=e.children),e.dom=t.dom}function y(t,e,r,n,a){e.children!==r.children?(Se(t,e),L(t,r,n,a)):(r.dom=e.dom,r.domSize=e.domSize)}function E(t,e,r,n,a,s){V(t,e.children,r.children,n,a,s);var A=0,z=r.children;if(r.dom=null,z!=null){for(var p=0;p<z.length;p++){var C=z[p];C!=null&&C.dom!=null&&(r.dom==null&&(r.dom=C.dom),A+=C.domSize||1)}A!==1&&(r.domSize=A)}}function b(t,e,r,n){var a=e.dom=t.dom;n=m(e)||n,Ut(e,t.attrs,e.attrs,n),Y(e)||V(a,t.children,e.children,r,null,n)}function M(t,e,r,n,a,s){if(r.instance=Te.normalize(f.call(r.state.view,r)),r.instance===r)throw Error("A view cannot return the vnode it received as argument");ye(r.state,r,n),r.attrs!=null&&ye(r.attrs,r,n),r.instance!=null?(e.instance==null?w(t,r.instance,n,s,a):K(t,e.instance,r.instance,n,a,s),r.dom=r.instance.dom,r.domSize=r.instance.domSize):e.instance!=null?(ne(t,e.instance),r.dom=void 0,r.domSize=0):(r.dom=e.dom,r.domSize=e.domSize)}function N(t,e,r){for(var n=Object.create(null);e<r;e++){var a=t[e];if(a!=null){var s=a.key;s!=null&&(n[s]=e)}}return n}var O=[];function I(t){for(var e=[0],r=0,n=0,a=0,s=O.length=t.length,a=0;a<s;a++)O[a]=t[a];for(var a=0;a<s;++a)if(t[a]!==-1){var A=e[e.length-1];if(t[A]<t[a]){O[a]=A,e.push(a);continue}for(r=0,n=e.length-1;r<n;){var z=(r>>>1)+(n>>>1)+(r&n&1);t[e[z]]<t[a]?r=z+1:n=z}t[a]<t[e[r]]&&(r>0&&(O[a]=e[r-1]),e[r]=a)}for(r=e.length,n=e[r-1];r-- >0;)e[r]=n,n=O[n];return O.length=0,e}function Z(t,e,r){for(;e<t.length;e++)if(t[e]!=null&&t[e].dom!=null)return t[e].dom;return r}function ee(t,e,r){if(e.dom!=null){var n;if(e.domSize==null)n=e.dom;else{n=l(t).createDocumentFragment();for(var a of Pe(e))n.appendChild(a)}G(t,n,r)}}function G(t,e,r){r!=null?t.insertBefore(e,r):t.appendChild(e)}function Y(t){if(t.attrs==null||t.attrs.contenteditable==null&&t.attrs.contentEditable==null)return!1;var e=t.children;if(e!=null&&e.length===1&&e[0].tag==="<"){var r=e[0].children;t.dom.innerHTML!==r&&(t.dom.innerHTML=r)}else if(e!=null&&e.length!==0)throw new Error("Child node of a contenteditable must be trusted.");return!0}function te(t,e,r,n){for(var a=r;a<n;a++){var s=e[a];s!=null&&ne(t,s)}}function Me(t,e,r,n){var a=e.state,s=f.call(r.onbeforeremove,e);if(s!=null){var A=c;for(var z of Pe(e))ur.set(z,A);n.v++,Promise.resolve(s).finally(function(){o(e,a),Ie(t,e,n)})}}function Ie(t,e,r){--r.v===0&&(oe(e),Se(t,e))}function ne(t,e){var r={v:1};typeof e.tag!="string"&&typeof e.state.onbeforeremove=="function"&&Me(t,e,e.state,r),e.attrs&&typeof e.attrs.onbeforeremove=="function"&&Me(t,e,e.attrs,r),Ie(t,e,r)}function Se(t,e){if(e.dom!=null)if(e.domSize==null)t.removeChild(e.dom);else for(var r of Pe(e))t.removeChild(r)}function oe(t){if(typeof t.tag!="string"&&typeof t.state.onremove=="function"&&f.call(t.state.onremove,t),t.attrs&&typeof t.attrs.onremove=="function"&&f.call(t.attrs.onremove,t),typeof t.tag!="string")t.instance!=null&&oe(t.instance);else{t.events!=null&&(t.events._=null);var e=t.children;if(Array.isArray(e))for(var r=0;r<e.length;r++){var n=e[r];n!=null&&oe(n)}}}function It(t,e,r){for(var n in e)me(t,n,null,e[n],r)}function me(t,e,r,n,a){if(!(e==="key"||n==null||_e(e)||r===n&&!Ht(t,e)&&typeof n!="object")){if(e[0]==="o"&&e[1]==="n")return $e(t,e,n);if(e.slice(0,6)==="xlink:")t.dom.setAttributeNS("http://www.w3.org/1999/xlink",e.slice(6),n);else if(e==="style")He(t.dom,r,n);else if(Ue(t,e,a)){if(e==="value"){if((t.tag==="input"||t.tag==="textarea")&&t.dom.value===""+n||t.tag==="select"&&r!==null&&t.dom.value===""+n||t.tag==="option"&&r!==null&&t.dom.value===""+n)return;if(t.tag==="input"&&t.attrs.type==="file"&&""+n!=""){console.error("`value` is read-only on file inputs!");return}}t.tag==="input"&&e==="type"?t.dom.setAttribute(e,n):t.dom[e]=n}else typeof n=="boolean"?n?t.dom.setAttribute(e,""):t.dom.removeAttribute(e):t.dom.setAttribute(e==="className"?"class":e,n)}}function St(t,e,r,n){if(!(e==="key"||r==null||_e(e)))if(e[0]==="o"&&e[1]==="n")$e(t,e,void 0);else if(e==="style")He(t.dom,r,null);else if(Ue(t,e,n)&&e!=="className"&&e!=="title"&&!(e==="value"&&(t.tag==="option"||t.tag==="select"&&t.dom.selectedIndex===-1&&t.dom===h(t.dom)))&&!(t.tag==="input"&&e==="type"))t.dom[e]=null;else{var a=e.indexOf(":");a!==-1&&(e=e.slice(a+1)),r!==!1&&t.dom.removeAttribute(e==="className"?"class":e)}}function _t(t,e){if("value"in e)if(e.value===null)t.dom.selectedIndex!==-1&&(t.dom.value=null);else{var r=""+e.value;(t.dom.value!==r||t.dom.selectedIndex===-1)&&(t.dom.value=r)}"selectedIndex"in e&&me(t,"selectedIndex",null,e.selectedIndex,void 0)}function Ut(t,e,r,n){var a;if(e!=null){e===r&&console.warn("Don't reuse attrs object, use new object for every redraw, this will throw in next major");for(var s in e)(a=e[s])!=null&&(r==null||r[s]==null)&&St(t,s,a,n)}if(r!=null)for(var s in r)me(t,s,e&&e[s],r[s],n)}function Ht(t,e){return e==="value"||e==="checked"||e==="selectedIndex"||e==="selected"&&(t.dom===h(t.dom)||t.tag==="option"&&t.dom.parentNode===h(t.dom))}function _e(t){return t==="oninit"||t==="oncreate"||t==="onupdate"||t==="onremove"||t==="onbeforeremove"||t==="onbeforeupdate"}function Ue(t,e,r){return r===void 0&&(t.tag.indexOf("-")>-1||t.is||e!=="href"&&e!=="list"&&e!=="form"&&e!=="width"&&e!=="height")&&e in t.dom}function He(t,e,r){if(e!==r)if(r==null)t.style="";else if(typeof r!="object")t.style=r;else if(e==null||typeof e!="object"){t.style="";for(var n in r){var a=r[n];a!=null&&(n.includes("-")?t.style.setProperty(n,String(a)):t.style[n]=String(a))}}else{for(var n in e)e[n]!=null&&r[n]==null&&(n.includes("-")?t.style.removeProperty(n):t.style[n]="");for(var n in r){var a=r[n];a!=null&&(a=String(a))!==String(e[n])&&(n.includes("-")?t.style.setProperty(n,a):t.style[n]=a)}}}function pe(){this._=u}pe.prototype=Object.create(null),pe.prototype.handleEvent=function(t){var e=this["on"+t.type],r;typeof e=="function"?r=e.call(t.currentTarget,t):typeof e.handleEvent=="function"&&e.handleEvent(t);var n=this;n._!=null&&(t.redraw!==!1&&(0,n._)(),r!=null&&typeof r.then=="function"&&Promise.resolve(r).then(function(){n._!=null&&t.redraw!==!1&&(0,n._)()})),r===!1&&(t.preventDefault(),t.stopPropagation())};function $e(t,e,r){if(t.events!=null){if(t.events._=u,t.events[e]===r)return;r!=null&&(typeof r=="function"||typeof r=="object")?(t.events[e]==null&&t.dom.addEventListener(e.slice(2),t.events,!1),t.events[e]=r):(t.events[e]!=null&&t.dom.removeEventListener(e.slice(2),t.events,!1),t.events[e]=void 0)}else r!=null&&(typeof r=="function"||typeof r=="object")&&(t.events=new pe,t.dom.addEventListener(e.slice(2),t.events,!1),t.events[e]=r)}function he(t,e,r){typeof t.oninit=="function"&&f.call(t.oninit,e),typeof t.oncreate=="function"&&r.push(f.bind(t.oncreate,e))}function ye(t,e,r){typeof t.onupdate=="function"&&r.push(f.bind(t.onupdate,e))}function $t(t,e){do{if(t.attrs!=null&&typeof t.attrs.onbeforeupdate=="function"){var r=f.call(t.attrs.onbeforeupdate,t,e);if(r!==void 0&&!r)break}if(typeof t.tag!="string"&&typeof t.state.onbeforeupdate=="function"){var r=f.call(t.state.onbeforeupdate,t,e);if(r!==void 0&&!r)break}return!1}while(!1);return t.dom=e.dom,t.domSize=e.domSize,t.instance=e.instance,t.attrs=e.attrs,t.children=e.children,t.text=e.text,!0}var re;return function(t,e,r){if(!t)throw new TypeError("DOM element being rendered to does not exist.");if(re!=null&&t.contains(re))throw new TypeError("Node is currently being rendered to and thus is locked.");var n=u,a=re,s=[],A=h(t),z=t.namespaceURI;re=t,u=typeof r=="function"?r:void 0,c={};try{t.vnodes==null&&(t.textContent=""),e=Te.normalizeChildren(Array.isArray(e)?e:[e]),V(t,t.vnodes,e,s,null,z==="http://www.w3.org/1999/xhtml"?void 0:z),t.vnodes=e,A!=null&&h(t)!==A&&typeof A.focus=="function"&&A.focus();for(var p=0;p<s.length;p++)s[p]()}finally{u=n,re=a}}}});var je=d((Dr,ft)=>{"use strict";ft.exports=at()(typeof window<"u"?window:null)});var ct=d((Lr,lt)=>{"use strict";var ut=W();lt.exports=function(i,u,c){var l=[],m=!1,o=-1;function f(){for(o=0;o<l.length;o+=2)try{i(l[o],ut(l[o+1]),h)}catch(w){c.error(w)}o=-1}function h(){m||(m=!0,u(function(){m=!1,f()}))}h.sync=f;function x(w,q){if(q!=null&&q.view==null&&typeof q!="function")throw new TypeError("m.mount expects a component, not a vnode.");var R=l.indexOf(w);R>=0&&(l.splice(R,2),R<=o&&(o-=2),i(w,[])),q!=null&&(l.push(w,q),i(w,ut(q),h))}return{mount:x,redraw:h}}});var ue=d((Fr,st)=>{"use strict";var lr=je();st.exports=ct()(lr,typeof requestAnimationFrame<"u"?requestAnimationFrame:null,typeof console<"u"?console:null)});var de=d((Mr,ot)=>{"use strict";ot.exports=function(i){if(Object.prototype.toString.call(i)!=="[object Object]")return"";var u=[];for(var c in i)l(c,i[c]);return u.join("&");function l(m,o){if(Array.isArray(o))for(var f=0;f<o.length;f++)l(m+"["+f+"]",o[f]);else if(Object.prototype.toString.call(o)==="[object Object]")for(var f in o)l(m+"["+f+"]",o[f]);else u.push(encodeURIComponent(m)+(o!=null&&o!==""?"="+encodeURIComponent(o):""))}}});var le=d((Ir,mt)=>{"use strict";var cr=de();mt.exports=function(i,u){if(/:([^\/\.-]+)(\.{3})?:/.test(i))throw new SyntaxError("Template parameter names must be separated by either a '/', '-', or '.'.");if(u==null)return i;var c=i.indexOf("?"),l=i.indexOf("#"),m=l<0?i.length:l,o=c<0?m:c,f=i.slice(0,o),h={};Object.assign(h,u);var x=f.replace(/:([^\/\.-]+)(\.{3})?/g,function(X,J,V){return delete h[J],u[J]==null?X:V?u[J]:encodeURIComponent(String(u[J]))}),w=x.indexOf("?"),q=x.indexOf("#"),R=q<0?x.length:q,L=w<0?R:w,g=x.slice(0,L);c>=0&&(g+=i.slice(c,m)),w>=0&&(g+=(c<0?"?":"&")+x.slice(w,R));var P=cr(h);return P&&(g+=(c<0&&w<0?"?":"&")+P),l>=0&&(g+=i.slice(l)),q>=0&&(g+=(l<0?"":"&")+x.slice(q)),g}});var yt=d((Sr,ht)=>{"use strict";var sr=le(),pt=fe();ht.exports=function(i,u){function c(o){return new Promise(o)}function l(o,f){return new Promise(function(h,x){o=sr(o,f.params);var w=f.method!=null?f.method.toUpperCase():"GET",q=f.body,R=(f.serialize==null||f.serialize===JSON.serialize)&&!(q instanceof i.FormData||q instanceof i.URLSearchParams),L=f.responseType||(typeof f.extract=="function"?"":"json"),g=new i.XMLHttpRequest,P=!1,X=!1,J=g,V,K=g.abort;g.abort=function(){P=!0,K.call(this)},g.open(w,o,f.async!==!1,typeof f.user=="string"?f.user:void 0,typeof f.password=="string"?f.password:void 0),R&&q!=null&&!m(f,"content-type")&&g.setRequestHeader("Content-Type","application/json; charset=utf-8"),typeof f.deserialize!="function"&&!m(f,"accept")&&g.setRequestHeader("Accept","application/json, text/*"),f.withCredentials&&(g.withCredentials=f.withCredentials),f.timeout&&(g.timeout=f.timeout),g.responseType=L;for(var j in f.headers)pt.call(f.headers,j)&&g.setRequestHeader(j,f.headers[j]);g.onreadystatechange=function(y){if(!P&&y.target.readyState===4)try{var E=y.target.status>=200&&y.target.status<300||y.target.status===304||/^file:\/\//i.test(o),b=y.target.response,M;if(L==="json"){if(!y.target.responseType&&typeof f.extract!="function")try{b=JSON.parse(y.target.responseText)}catch{b=null}}else(!L||L==="text")&&b==null&&(b=y.target.responseText);if(typeof f.extract=="function"?(b=f.extract(y.target,f),E=!0):typeof f.deserialize=="function"&&(b=f.deserialize(b)),E){if(typeof f.type=="function")if(Array.isArray(b))for(var N=0;N<b.length;N++)b[N]=new f.type(b[N]);else b=new f.type(b);h(b)}else{var O=function(){try{M=y.target.responseText}catch{M=b}var I=new Error(M);I.code=y.target.status,I.response=b,x(I)};g.status===0?setTimeout(function(){X||O()}):O()}}catch(I){x(I)}},g.ontimeout=function(y){X=!0;var E=new Error("Request timed out");E.code=y.target.status,x(E)},typeof f.config=="function"&&(g=f.config(g,f,o)||g,g!==J&&(V=g.abort,g.abort=function(){P=!0,V.call(this)})),q==null?g.send():typeof f.serialize=="function"?g.send(f.serialize(q)):q instanceof i.FormData||q instanceof i.URLSearchParams?g.send(q):g.send(JSON.stringify(q))})}c.prototype=Promise.prototype,c.__proto__=Promise;function m(o,f){for(var h in o.headers)if(pt.call(o.headers,h)&&h.toLowerCase()===f)return!0;return!1}return{request:function(o,f){typeof o!="string"?(f=o,o=o.url):f==null&&(f={});var h=l(o,f);if(f.background===!0)return h;var x=0;function w(){--x===0&&typeof u=="function"&&u()}return q(h);function q(R){var L=R.then;return R.constructor=c,R.then=function(){x++;var g=L.apply(R,arguments);return g.then(w,function(P){if(w(),x===0)throw P}),q(g)},R}}}}});var wt=d((_r,gt)=>{"use strict";var or=ue();gt.exports=yt()(typeof window<"u"?window:null,or.redraw)});var De=d((Ur,xt)=>{"use strict";function bt(i){try{return decodeURIComponent(i)}catch{return i}}xt.exports=function(i){if(i===""||i==null)return{};i.charAt(0)==="?"&&(i=i.slice(1));for(var u=i.split("&"),c={},l={},m=0;m<u.length;m++){var o=u[m].split("="),f=bt(o[0]),h=o.length===2?bt(o[1]):"";h==="true"?h=!0:h==="false"&&(h=!1);var x=f.split(/\]\[?|\[/),w=l;f.indexOf("[")>-1&&x.pop();for(var q=0;q<x.length;q++){var R=x[q],L=x[q+1],g=L==""||!isNaN(parseInt(L,10));if(R===""){var f=x.slice(0,q).join();c[f]==null&&(c[f]=Array.isArray(w)?w.length:0),R=c[f]++}else if(R==="__proto__")break;if(q===x.length-1)w[R]=h;else{var P=Object.getOwnPropertyDescriptor(w,R);P!=null&&(P=P.value),P==null&&(w[R]=P=g?[]:{}),w=P}}}return l}});var ce=d((Hr,qt)=>{"use strict";var mr=De();qt.exports=function(i){var u=i.indexOf("?"),c=i.indexOf("#"),l=c<0?i.length:c,m=u<0?l:u,o=i.slice(0,m).replace(/\/{2,}/g,"/");return o?o[0]!=="/"&&(o="/"+o):o="/",{path:o,params:u<0?{}:mr(i.slice(u+1,l))}}});var At=d(($r,Ot)=>{"use strict";var pr=ce();Ot.exports=function(i){var u=pr(i),c=Object.keys(u.params),l=[],m=new RegExp("^"+u.path.replace(/:([^\/.-]+)(\.{3}|\.(?!\.)|-)?|[\\^$*+.()|\[\]{}]/g,function(o,f,h){return f==null?"\\"+o:(l.push({k:f,r:h==="..."}),h==="..."?"(.*)":h==="."?"([^/]+)\\.":"([^/]+)"+(h||""))})+"\\/?$");return function(o){for(var f=0;f<c.length;f++)if(u.params[c[f]]!==o.params[c[f]])return!1;if(!l.length)return m.test(o.path);var h=m.exec(o.path);if(h==null)return!1;for(var f=0;f<l.length;f++)o.params[l[f].k]=l[f].r?h[f+1]:decodeURIComponent(h[f+1]);return!0}}});var Le=d((Qr,Et)=>{"use strict";var zt=fe(),Ct=new RegExp("^(?:key|oninit|oncreate|onbeforeupdate|onupdate|onbeforeremove|onremove)$");Et.exports=function(i,u){var c={};if(u!=null)for(var l in i)zt.call(i,l)&&!Ct.test(l)&&u.indexOf(l)<0&&(c[l]=i[l]);else for(var l in i)zt.call(i,l)&&!Ct.test(l)&&(c[l]=i[l]);return c}});var Pt=d((Br,Tt)=>{"use strict";var hr=W(),yr=Ce(),Rt=le(),Nt=ce(),gr=At(),wr=Le();function br(i){try{return decodeURIComponent(i)}catch{return i}}Tt.exports=function(i,u){var c=i==null?null:typeof i.setImmediate=="function"?i.setImmediate:i.setTimeout,l=Promise.resolve(),m=!1,o=!1,f=!1,h,x,w,q,R,L,g,P,X={onremove:function(){o=f=!1,i.removeEventListener("popstate",K,!1)},view:function(){var y=hr(R,L.key,L);return q?q.render(y):[y]}},J=j.SKIP={};function V(){m=!1;var y=i.location.hash;j.prefix[0]!=="#"&&(y=i.location.search+y,j.prefix[0]!=="?"&&(y=i.location.pathname+y,y[0]!=="/"&&(y="/"+y)));var E=y.concat().replace(/(?:%[a-f89][a-f0-9])+/gim,br).slice(j.prefix.length),b=Nt(E);Object.assign(b.params,i.history.state);function M(O){console.error(O),j.set(w,null,{replace:!0})}N(0);function N(O){for(;O<x.length;O++)if(x[O].check(b)){var I=x[O].component,Z=x[O].route,ee=I,G=P=function(Y){if(G===P){if(Y===J)return N(O+1);R=Y!=null&&(typeof Y.view=="function"||typeof Y=="function")?Y:"div",L=b.params,g=E,P=null,q=I.render?I:null,f?u.redraw():(f=!0,u.mount(h,X))}};I.view||typeof I=="function"?(I={},G(ee)):I.onmatch?l.then(function(){return I.onmatch(b.params,E,Z)}).then(G,E===w?null:M):G();return}if(E===w)throw new Error("Could not resolve default route "+w+".");j.set(w,null,{replace:!0})}}function K(){m||(m=!0,c(V))}function j(y,E,b){if(!y)throw new TypeError("DOM element being rendered to does not exist.");if(x=Object.keys(b).map(function(N){if(N[0]!=="/")throw new SyntaxError("Routes must start with a '/'.");if(/:([^\/\.-]+)(\.{3})?:/.test(N))throw new SyntaxError("Route parameter names must be separated with either '/', '.', or '-'.");return{route:N,component:b[N],check:gr(N)}}),w=E,E!=null){var M=Nt(E);if(!x.some(function(N){return N.check(M)}))throw new ReferenceError("Default route doesn't match any known routes.")}h=y,i.addEventListener("popstate",K,!1),o=!0,V()}return j.set=function(y,E,b){if(P!=null&&(b=b||{},b.replace=!0),P=null,y=Rt(y,E),o){K();var M=b?b.state:null,N=b?b.title:null;b&&b.replace?i.history.replaceState(M,N,j.prefix+y):i.history.pushState(M,N,j.prefix+y)}else i.location.href=j.prefix+y},j.get=function(){return g},j.prefix="#!",j.Link={view:function(y){var E=yr(y.attrs.selector||"a",wr(y.attrs,["options","params","selector","onclick"]),y.children),b,M,N;return(E.attrs.disabled=!!E.attrs.disabled)?(E.attrs.href=null,E.attrs["aria-disabled"]="true"):(b=y.attrs.options,M=y.attrs.onclick,N=Rt(E.attrs.href,y.attrs.params),E.attrs.href=j.prefix+N,E.attrs.onclick=function(O){var I;typeof M=="function"?I=M.call(O.currentTarget,O):M==null||typeof M!="object"||typeof M.handleEvent=="function"&&M.handleEvent(O),I!==!1&&!O.defaultPrevented&&(O.button===0||O.which===0||O.which===1)&&(!O.currentTarget.target||O.currentTarget.target==="_self")&&!O.ctrlKey&&!O.metaKey&&!O.shiftKey&&!O.altKey&&(O.preventDefault(),O.redraw=!1,j.set(N,null,b))}),E}},j.param=function(y){return L&&y!=null?L[y]:L},j}});var dt=d((Kr,jt)=>{"use strict";var xr=ue();jt.exports=Pt()(typeof window<"u"?window:null,xr)});var Fe=d((Vr,Lt)=>{"use strict";var se=tt(),qr=wt(),Dt=ue(),Or=Ne(),U=function(){return se.apply(this,arguments)};U.m=se;U.trust=se.trust;U.fragment=se.fragment;U.Fragment="[";U.mount=Dt.mount;U.route=dt();U.render=je();U.redraw=Dt.redraw;U.request=qr.request;U.parseQueryString=De();U.buildQueryString=de();U.parsePathname=ce();U.buildPathname=le();U.vnode=W();U.censor=Le();U.domFor=Or.domFor;Lt.exports=U});var Mt=Ke(Fe(),1);var S=Ke(Fe(),1),B={email:"",password:"",error:"",success:"",view:()=>(0,S.default)(".flex.items-center.justify-center.min-h-screen.bg-base-200.px-4",(0,S.default)(".card.w-full.max-w-sm.shadow-xl.bg-base-100",(0,S.default)("form.card-body.space-y-6",{onsubmit:async i=>{i.preventDefault(),B.error=B.success="";try{let u=await S.default.request({method:"POST",url:"/api/signup",body:{email:B.email,password:B.password}});B.success=u.msg,localStorage.setItem("token",u.token)}catch(u){B.error=u.response?.data?.error||"Signup failed"}}},[(0,S.default)("h2.text-2xl.font-semibold.text-center.text-primary","Create an Account"),B.error&&(0,S.default)(".alert.alert-error",(0,S.default)("span",B.error)),B.success&&(0,S.default)(".alert.alert-success",(0,S.default)("span",B.success)),(0,S.default)(".form-control",[(0,S.default)("label.label",(0,S.default)("span.label-text","Email")),(0,S.default)("input.input.input-bordered.w-full",{type:"email",placeholder:"you@example.com",value:B.email,oninput:i=>B.email=i.target.value})]),(0,S.default)(".form-control",[(0,S.default)("label.label",(0,S.default)("span.label-text","Password")),(0,S.default)("input.input.input-bordered.w-full",{type:"password",placeholder:"\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",value:B.password,oninput:i=>B.password=i.target.value})]),(0,S.default)("button.btn.btn-primary.w-full.mt-4",{type:"submit"},"Sign Up")])))},Ft=B;console.log("\u2714\uFE0F Mounting SignupForm");Mt.default.mount(document.getElementById("app"),Ft);})();
-//# sourceMappingURL=bundle.js.map
+(() => {
+  var __create = Object.create;
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getProtoOf = Object.getPrototypeOf;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
+
+  // node_modules/mithril/render/vnode.js
+  var require_vnode = __commonJS({
+    "node_modules/mithril/render/vnode.js"(exports, module) {
+      "use strict";
+      function Vnode(tag, key, attrs, children, text, dom) {
+        return { tag, key, attrs, children, text, dom, is: void 0, domSize: void 0, state: void 0, events: void 0, instance: void 0 };
+      }
+      Vnode.normalize = function(node) {
+        if (Array.isArray(node)) return Vnode("[", void 0, void 0, Vnode.normalizeChildren(node), void 0, void 0);
+        if (node == null || typeof node === "boolean") return null;
+        if (typeof node === "object") return node;
+        return Vnode("#", void 0, void 0, String(node), void 0, void 0);
+      };
+      Vnode.normalizeChildren = function(input) {
+        var children = [];
+        if (input.length) {
+          var isKeyed = input[0] != null && input[0].key != null;
+          for (var i = 1; i < input.length; i++) {
+            if ((input[i] != null && input[i].key != null) !== isKeyed) {
+              throw new TypeError(
+                isKeyed && (input[i] != null || typeof input[i] === "boolean") ? "In fragments, vnodes must either all have keys or none have keys. You may wish to consider using an explicit keyed empty fragment, m.fragment({key: ...}), instead of a hole." : "In fragments, vnodes must either all have keys or none have keys."
+              );
+            }
+          }
+          for (var i = 0; i < input.length; i++) {
+            children[i] = Vnode.normalize(input[i]);
+          }
+        }
+        return children;
+      };
+      module.exports = Vnode;
+    }
+  });
+
+  // node_modules/mithril/render/hyperscriptVnode.js
+  var require_hyperscriptVnode = __commonJS({
+    "node_modules/mithril/render/hyperscriptVnode.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      module.exports = function() {
+        var attrs = arguments[this], start = this + 1, children;
+        if (attrs == null) {
+          attrs = {};
+        } else if (typeof attrs !== "object" || attrs.tag != null || Array.isArray(attrs)) {
+          attrs = {};
+          start = this;
+        }
+        if (arguments.length === start + 1) {
+          children = arguments[start];
+          if (!Array.isArray(children)) children = [children];
+        } else {
+          children = [];
+          while (start < arguments.length) children.push(arguments[start++]);
+        }
+        return Vnode("", attrs.key, attrs, children);
+      };
+    }
+  });
+
+  // node_modules/mithril/util/hasOwn.js
+  var require_hasOwn = __commonJS({
+    "node_modules/mithril/util/hasOwn.js"(exports, module) {
+      "use strict";
+      module.exports = {}.hasOwnProperty;
+    }
+  });
+
+  // node_modules/mithril/render/hyperscript.js
+  var require_hyperscript = __commonJS({
+    "node_modules/mithril/render/hyperscript.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      var hyperscriptVnode = require_hyperscriptVnode();
+      var hasOwn = require_hasOwn();
+      var selectorParser = /(?:(^|#|\.)([^#\.\[\]]+))|(\[(.+?)(?:\s*=\s*("|'|)((?:\\["'\]]|.)*?)\5)?\])/g;
+      var selectorCache = /* @__PURE__ */ Object.create(null);
+      function isEmpty(object) {
+        for (var key in object) if (hasOwn.call(object, key)) return false;
+        return true;
+      }
+      function compileSelector(selector) {
+        var match, tag = "div", classes = [], attrs = {};
+        while (match = selectorParser.exec(selector)) {
+          var type = match[1], value = match[2];
+          if (type === "" && value !== "") tag = value;
+          else if (type === "#") attrs.id = value;
+          else if (type === ".") classes.push(value);
+          else if (match[3][0] === "[") {
+            var attrValue = match[6];
+            if (attrValue) attrValue = attrValue.replace(/\\(["'])/g, "$1").replace(/\\\\/g, "\\");
+            if (match[4] === "class") classes.push(attrValue);
+            else attrs[match[4]] = attrValue === "" ? attrValue : attrValue || true;
+          }
+        }
+        if (classes.length > 0) attrs.className = classes.join(" ");
+        if (isEmpty(attrs)) attrs = null;
+        return selectorCache[selector] = { tag, attrs };
+      }
+      function execSelector(state, vnode) {
+        var attrs = vnode.attrs;
+        var hasClass = hasOwn.call(attrs, "class");
+        var className = hasClass ? attrs.class : attrs.className;
+        vnode.tag = state.tag;
+        if (state.attrs != null) {
+          attrs = Object.assign({}, state.attrs, attrs);
+          if (className != null || state.attrs.className != null) attrs.className = className != null ? state.attrs.className != null ? String(state.attrs.className) + " " + String(className) : className : state.attrs.className != null ? state.attrs.className : null;
+        } else {
+          if (className != null) attrs.className = className;
+        }
+        if (hasClass) attrs.class = null;
+        if (state.tag === "input" && hasOwn.call(attrs, "type")) {
+          attrs = Object.assign({ type: attrs.type }, attrs);
+        }
+        vnode.is = attrs.is;
+        vnode.attrs = attrs;
+        return vnode;
+      }
+      function hyperscript(selector) {
+        if (selector == null || typeof selector !== "string" && typeof selector !== "function" && typeof selector.view !== "function") {
+          throw Error("The selector must be either a string or a component.");
+        }
+        var vnode = hyperscriptVnode.apply(1, arguments);
+        if (typeof selector === "string") {
+          vnode.children = Vnode.normalizeChildren(vnode.children);
+          if (selector !== "[") return execSelector(selectorCache[selector] || compileSelector(selector), vnode);
+        }
+        vnode.tag = selector;
+        return vnode;
+      }
+      module.exports = hyperscript;
+    }
+  });
+
+  // node_modules/mithril/render/trust.js
+  var require_trust = __commonJS({
+    "node_modules/mithril/render/trust.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      module.exports = function(html) {
+        if (html == null) html = "";
+        return Vnode("<", void 0, void 0, html, void 0, void 0);
+      };
+    }
+  });
+
+  // node_modules/mithril/render/fragment.js
+  var require_fragment = __commonJS({
+    "node_modules/mithril/render/fragment.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      var hyperscriptVnode = require_hyperscriptVnode();
+      module.exports = function() {
+        var vnode = hyperscriptVnode.apply(0, arguments);
+        vnode.tag = "[";
+        vnode.children = Vnode.normalizeChildren(vnode.children);
+        return vnode;
+      };
+    }
+  });
+
+  // node_modules/mithril/hyperscript.js
+  var require_hyperscript2 = __commonJS({
+    "node_modules/mithril/hyperscript.js"(exports, module) {
+      "use strict";
+      var hyperscript = require_hyperscript();
+      hyperscript.trust = require_trust();
+      hyperscript.fragment = require_fragment();
+      module.exports = hyperscript;
+    }
+  });
+
+  // node_modules/mithril/render/domFor.js
+  var require_domFor = __commonJS({
+    "node_modules/mithril/render/domFor.js"(exports, module) {
+      "use strict";
+      var delayedRemoval = /* @__PURE__ */ new WeakMap();
+      function* domFor(vnode) {
+        var dom = vnode.dom;
+        var domSize = vnode.domSize;
+        var generation = delayedRemoval.get(dom);
+        if (dom != null) do {
+          var nextSibling = dom.nextSibling;
+          if (delayedRemoval.get(dom) === generation) {
+            yield dom;
+            domSize--;
+          }
+          dom = nextSibling;
+        } while (domSize);
+      }
+      module.exports = {
+        delayedRemoval,
+        domFor
+      };
+    }
+  });
+
+  // node_modules/mithril/render/render.js
+  var require_render = __commonJS({
+    "node_modules/mithril/render/render.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      var df = require_domFor();
+      var delayedRemoval = df.delayedRemoval;
+      var domFor = df.domFor;
+      module.exports = function() {
+        var nameSpace = {
+          svg: "http://www.w3.org/2000/svg",
+          math: "http://www.w3.org/1998/Math/MathML"
+        };
+        var currentRedraw;
+        var currentRender;
+        function getDocument(dom) {
+          return dom.ownerDocument;
+        }
+        function getNameSpace(vnode) {
+          return vnode.attrs && vnode.attrs.xmlns || nameSpace[vnode.tag];
+        }
+        function checkState(vnode, original) {
+          if (vnode.state !== original) throw new Error("'vnode.state' must not be modified.");
+        }
+        function callHook(vnode) {
+          var original = vnode.state;
+          try {
+            return this.apply(original, arguments);
+          } finally {
+            checkState(vnode, original);
+          }
+        }
+        function activeElement(dom) {
+          try {
+            return getDocument(dom).activeElement;
+          } catch (e) {
+            return null;
+          }
+        }
+        function createNodes(parent, vnodes, start, end, hooks, nextSibling, ns) {
+          for (var i = start; i < end; i++) {
+            var vnode = vnodes[i];
+            if (vnode != null) {
+              createNode(parent, vnode, hooks, ns, nextSibling);
+            }
+          }
+        }
+        function createNode(parent, vnode, hooks, ns, nextSibling) {
+          var tag = vnode.tag;
+          if (typeof tag === "string") {
+            vnode.state = {};
+            if (vnode.attrs != null) initLifecycle(vnode.attrs, vnode, hooks);
+            switch (tag) {
+              case "#":
+                createText(parent, vnode, nextSibling);
+                break;
+              case "<":
+                createHTML(parent, vnode, ns, nextSibling);
+                break;
+              case "[":
+                createFragment(parent, vnode, hooks, ns, nextSibling);
+                break;
+              default:
+                createElement(parent, vnode, hooks, ns, nextSibling);
+            }
+          } else createComponent(parent, vnode, hooks, ns, nextSibling);
+        }
+        function createText(parent, vnode, nextSibling) {
+          vnode.dom = getDocument(parent).createTextNode(vnode.children);
+          insertDOM(parent, vnode.dom, nextSibling);
+        }
+        var possibleParents = { caption: "table", thead: "table", tbody: "table", tfoot: "table", tr: "tbody", th: "tr", td: "tr", colgroup: "table", col: "colgroup" };
+        function createHTML(parent, vnode, ns, nextSibling) {
+          var match = vnode.children.match(/^\s*?<(\w+)/im) || [];
+          var temp = getDocument(parent).createElement(possibleParents[match[1]] || "div");
+          if (ns === "http://www.w3.org/2000/svg") {
+            temp.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg">' + vnode.children + "</svg>";
+            temp = temp.firstChild;
+          } else {
+            temp.innerHTML = vnode.children;
+          }
+          vnode.dom = temp.firstChild;
+          vnode.domSize = temp.childNodes.length;
+          var fragment = getDocument(parent).createDocumentFragment();
+          var child;
+          while (child = temp.firstChild) {
+            fragment.appendChild(child);
+          }
+          insertDOM(parent, fragment, nextSibling);
+        }
+        function createFragment(parent, vnode, hooks, ns, nextSibling) {
+          var fragment = getDocument(parent).createDocumentFragment();
+          if (vnode.children != null) {
+            var children = vnode.children;
+            createNodes(fragment, children, 0, children.length, hooks, null, ns);
+          }
+          vnode.dom = fragment.firstChild;
+          vnode.domSize = fragment.childNodes.length;
+          insertDOM(parent, fragment, nextSibling);
+        }
+        function createElement(parent, vnode, hooks, ns, nextSibling) {
+          var tag = vnode.tag;
+          var attrs = vnode.attrs;
+          var is = vnode.is;
+          ns = getNameSpace(vnode) || ns;
+          var element = ns ? is ? getDocument(parent).createElementNS(ns, tag, { is }) : getDocument(parent).createElementNS(ns, tag) : is ? getDocument(parent).createElement(tag, { is }) : getDocument(parent).createElement(tag);
+          vnode.dom = element;
+          if (attrs != null) {
+            setAttrs(vnode, attrs, ns);
+          }
+          insertDOM(parent, element, nextSibling);
+          if (!maybeSetContentEditable(vnode)) {
+            if (vnode.children != null) {
+              var children = vnode.children;
+              createNodes(element, children, 0, children.length, hooks, null, ns);
+              if (vnode.tag === "select" && attrs != null) setLateSelectAttrs(vnode, attrs);
+            }
+          }
+        }
+        function initComponent(vnode, hooks) {
+          var sentinel;
+          if (typeof vnode.tag.view === "function") {
+            vnode.state = Object.create(vnode.tag);
+            sentinel = vnode.state.view;
+            if (sentinel.$$reentrantLock$$ != null) return;
+            sentinel.$$reentrantLock$$ = true;
+          } else {
+            vnode.state = void 0;
+            sentinel = vnode.tag;
+            if (sentinel.$$reentrantLock$$ != null) return;
+            sentinel.$$reentrantLock$$ = true;
+            vnode.state = vnode.tag.prototype != null && typeof vnode.tag.prototype.view === "function" ? new vnode.tag(vnode) : vnode.tag(vnode);
+          }
+          initLifecycle(vnode.state, vnode, hooks);
+          if (vnode.attrs != null) initLifecycle(vnode.attrs, vnode, hooks);
+          vnode.instance = Vnode.normalize(callHook.call(vnode.state.view, vnode));
+          if (vnode.instance === vnode) throw Error("A view cannot return the vnode it received as argument");
+          sentinel.$$reentrantLock$$ = null;
+        }
+        function createComponent(parent, vnode, hooks, ns, nextSibling) {
+          initComponent(vnode, hooks);
+          if (vnode.instance != null) {
+            createNode(parent, vnode.instance, hooks, ns, nextSibling);
+            vnode.dom = vnode.instance.dom;
+            vnode.domSize = vnode.dom != null ? vnode.instance.domSize : 0;
+          } else {
+            vnode.domSize = 0;
+          }
+        }
+        function updateNodes(parent, old, vnodes, hooks, nextSibling, ns) {
+          if (old === vnodes || old == null && vnodes == null) return;
+          else if (old == null || old.length === 0) createNodes(parent, vnodes, 0, vnodes.length, hooks, nextSibling, ns);
+          else if (vnodes == null || vnodes.length === 0) removeNodes(parent, old, 0, old.length);
+          else {
+            var isOldKeyed = old[0] != null && old[0].key != null;
+            var isKeyed = vnodes[0] != null && vnodes[0].key != null;
+            var start = 0, oldStart = 0;
+            if (!isOldKeyed) while (oldStart < old.length && old[oldStart] == null) oldStart++;
+            if (!isKeyed) while (start < vnodes.length && vnodes[start] == null) start++;
+            if (isOldKeyed !== isKeyed) {
+              removeNodes(parent, old, oldStart, old.length);
+              createNodes(parent, vnodes, start, vnodes.length, hooks, nextSibling, ns);
+            } else if (!isKeyed) {
+              var commonLength = old.length < vnodes.length ? old.length : vnodes.length;
+              start = start < oldStart ? start : oldStart;
+              for (; start < commonLength; start++) {
+                o = old[start];
+                v = vnodes[start];
+                if (o === v || o == null && v == null) continue;
+                else if (o == null) createNode(parent, v, hooks, ns, getNextSibling(old, start + 1, nextSibling));
+                else if (v == null) removeNode(parent, o);
+                else updateNode(parent, o, v, hooks, getNextSibling(old, start + 1, nextSibling), ns);
+              }
+              if (old.length > commonLength) removeNodes(parent, old, start, old.length);
+              if (vnodes.length > commonLength) createNodes(parent, vnodes, start, vnodes.length, hooks, nextSibling, ns);
+            } else {
+              var oldEnd = old.length - 1, end = vnodes.length - 1, map, o, v, oe, ve, topSibling;
+              while (oldEnd >= oldStart && end >= start) {
+                oe = old[oldEnd];
+                ve = vnodes[end];
+                if (oe.key !== ve.key) break;
+                if (oe !== ve) updateNode(parent, oe, ve, hooks, nextSibling, ns);
+                if (ve.dom != null) nextSibling = ve.dom;
+                oldEnd--, end--;
+              }
+              while (oldEnd >= oldStart && end >= start) {
+                o = old[oldStart];
+                v = vnodes[start];
+                if (o.key !== v.key) break;
+                oldStart++, start++;
+                if (o !== v) updateNode(parent, o, v, hooks, getNextSibling(old, oldStart, nextSibling), ns);
+              }
+              while (oldEnd >= oldStart && end >= start) {
+                if (start === end) break;
+                if (o.key !== ve.key || oe.key !== v.key) break;
+                topSibling = getNextSibling(old, oldStart, nextSibling);
+                moveDOM(parent, oe, topSibling);
+                if (oe !== v) updateNode(parent, oe, v, hooks, topSibling, ns);
+                if (++start <= --end) moveDOM(parent, o, nextSibling);
+                if (o !== ve) updateNode(parent, o, ve, hooks, nextSibling, ns);
+                if (ve.dom != null) nextSibling = ve.dom;
+                oldStart++;
+                oldEnd--;
+                oe = old[oldEnd];
+                ve = vnodes[end];
+                o = old[oldStart];
+                v = vnodes[start];
+              }
+              while (oldEnd >= oldStart && end >= start) {
+                if (oe.key !== ve.key) break;
+                if (oe !== ve) updateNode(parent, oe, ve, hooks, nextSibling, ns);
+                if (ve.dom != null) nextSibling = ve.dom;
+                oldEnd--, end--;
+                oe = old[oldEnd];
+                ve = vnodes[end];
+              }
+              if (start > end) removeNodes(parent, old, oldStart, oldEnd + 1);
+              else if (oldStart > oldEnd) createNodes(parent, vnodes, start, end + 1, hooks, nextSibling, ns);
+              else {
+                var originalNextSibling = nextSibling, vnodesLength = end - start + 1, oldIndices = new Array(vnodesLength), li = 0, i = 0, pos = 2147483647, matched = 0, map, lisIndices;
+                for (i = 0; i < vnodesLength; i++) oldIndices[i] = -1;
+                for (i = end; i >= start; i--) {
+                  if (map == null) map = getKeyMap(old, oldStart, oldEnd + 1);
+                  ve = vnodes[i];
+                  var oldIndex = map[ve.key];
+                  if (oldIndex != null) {
+                    pos = oldIndex < pos ? oldIndex : -1;
+                    oldIndices[i - start] = oldIndex;
+                    oe = old[oldIndex];
+                    old[oldIndex] = null;
+                    if (oe !== ve) updateNode(parent, oe, ve, hooks, nextSibling, ns);
+                    if (ve.dom != null) nextSibling = ve.dom;
+                    matched++;
+                  }
+                }
+                nextSibling = originalNextSibling;
+                if (matched !== oldEnd - oldStart + 1) removeNodes(parent, old, oldStart, oldEnd + 1);
+                if (matched === 0) createNodes(parent, vnodes, start, end + 1, hooks, nextSibling, ns);
+                else {
+                  if (pos === -1) {
+                    lisIndices = makeLisIndices(oldIndices);
+                    li = lisIndices.length - 1;
+                    for (i = end; i >= start; i--) {
+                      v = vnodes[i];
+                      if (oldIndices[i - start] === -1) createNode(parent, v, hooks, ns, nextSibling);
+                      else {
+                        if (lisIndices[li] === i - start) li--;
+                        else moveDOM(parent, v, nextSibling);
+                      }
+                      if (v.dom != null) nextSibling = vnodes[i].dom;
+                    }
+                  } else {
+                    for (i = end; i >= start; i--) {
+                      v = vnodes[i];
+                      if (oldIndices[i - start] === -1) createNode(parent, v, hooks, ns, nextSibling);
+                      if (v.dom != null) nextSibling = vnodes[i].dom;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        function updateNode(parent, old, vnode, hooks, nextSibling, ns) {
+          var oldTag = old.tag, tag = vnode.tag;
+          if (oldTag === tag && old.is === vnode.is) {
+            vnode.state = old.state;
+            vnode.events = old.events;
+            if (shouldNotUpdate(vnode, old)) return;
+            if (typeof oldTag === "string") {
+              if (vnode.attrs != null) {
+                updateLifecycle(vnode.attrs, vnode, hooks);
+              }
+              switch (oldTag) {
+                case "#":
+                  updateText(old, vnode);
+                  break;
+                case "<":
+                  updateHTML(parent, old, vnode, ns, nextSibling);
+                  break;
+                case "[":
+                  updateFragment(parent, old, vnode, hooks, nextSibling, ns);
+                  break;
+                default:
+                  updateElement(old, vnode, hooks, ns);
+              }
+            } else updateComponent(parent, old, vnode, hooks, nextSibling, ns);
+          } else {
+            removeNode(parent, old);
+            createNode(parent, vnode, hooks, ns, nextSibling);
+          }
+        }
+        function updateText(old, vnode) {
+          if (old.children.toString() !== vnode.children.toString()) {
+            old.dom.nodeValue = vnode.children;
+          }
+          vnode.dom = old.dom;
+        }
+        function updateHTML(parent, old, vnode, ns, nextSibling) {
+          if (old.children !== vnode.children) {
+            removeDOM(parent, old);
+            createHTML(parent, vnode, ns, nextSibling);
+          } else {
+            vnode.dom = old.dom;
+            vnode.domSize = old.domSize;
+          }
+        }
+        function updateFragment(parent, old, vnode, hooks, nextSibling, ns) {
+          updateNodes(parent, old.children, vnode.children, hooks, nextSibling, ns);
+          var domSize = 0, children = vnode.children;
+          vnode.dom = null;
+          if (children != null) {
+            for (var i = 0; i < children.length; i++) {
+              var child = children[i];
+              if (child != null && child.dom != null) {
+                if (vnode.dom == null) vnode.dom = child.dom;
+                domSize += child.domSize || 1;
+              }
+            }
+            if (domSize !== 1) vnode.domSize = domSize;
+          }
+        }
+        function updateElement(old, vnode, hooks, ns) {
+          var element = vnode.dom = old.dom;
+          ns = getNameSpace(vnode) || ns;
+          updateAttrs(vnode, old.attrs, vnode.attrs, ns);
+          if (!maybeSetContentEditable(vnode)) {
+            updateNodes(element, old.children, vnode.children, hooks, null, ns);
+          }
+        }
+        function updateComponent(parent, old, vnode, hooks, nextSibling, ns) {
+          vnode.instance = Vnode.normalize(callHook.call(vnode.state.view, vnode));
+          if (vnode.instance === vnode) throw Error("A view cannot return the vnode it received as argument");
+          updateLifecycle(vnode.state, vnode, hooks);
+          if (vnode.attrs != null) updateLifecycle(vnode.attrs, vnode, hooks);
+          if (vnode.instance != null) {
+            if (old.instance == null) createNode(parent, vnode.instance, hooks, ns, nextSibling);
+            else updateNode(parent, old.instance, vnode.instance, hooks, nextSibling, ns);
+            vnode.dom = vnode.instance.dom;
+            vnode.domSize = vnode.instance.domSize;
+          } else if (old.instance != null) {
+            removeNode(parent, old.instance);
+            vnode.dom = void 0;
+            vnode.domSize = 0;
+          } else {
+            vnode.dom = old.dom;
+            vnode.domSize = old.domSize;
+          }
+        }
+        function getKeyMap(vnodes, start, end) {
+          var map = /* @__PURE__ */ Object.create(null);
+          for (; start < end; start++) {
+            var vnode = vnodes[start];
+            if (vnode != null) {
+              var key = vnode.key;
+              if (key != null) map[key] = start;
+            }
+          }
+          return map;
+        }
+        var lisTemp = [];
+        function makeLisIndices(a) {
+          var result = [0];
+          var u = 0, v = 0, i = 0;
+          var il = lisTemp.length = a.length;
+          for (var i = 0; i < il; i++) lisTemp[i] = a[i];
+          for (var i = 0; i < il; ++i) {
+            if (a[i] === -1) continue;
+            var j = result[result.length - 1];
+            if (a[j] < a[i]) {
+              lisTemp[i] = j;
+              result.push(i);
+              continue;
+            }
+            u = 0;
+            v = result.length - 1;
+            while (u < v) {
+              var c = (u >>> 1) + (v >>> 1) + (u & v & 1);
+              if (a[result[c]] < a[i]) {
+                u = c + 1;
+              } else {
+                v = c;
+              }
+            }
+            if (a[i] < a[result[u]]) {
+              if (u > 0) lisTemp[i] = result[u - 1];
+              result[u] = i;
+            }
+          }
+          u = result.length;
+          v = result[u - 1];
+          while (u-- > 0) {
+            result[u] = v;
+            v = lisTemp[v];
+          }
+          lisTemp.length = 0;
+          return result;
+        }
+        function getNextSibling(vnodes, i, nextSibling) {
+          for (; i < vnodes.length; i++) {
+            if (vnodes[i] != null && vnodes[i].dom != null) return vnodes[i].dom;
+          }
+          return nextSibling;
+        }
+        function moveDOM(parent, vnode, nextSibling) {
+          if (vnode.dom != null) {
+            var target;
+            if (vnode.domSize == null) {
+              target = vnode.dom;
+            } else {
+              target = getDocument(parent).createDocumentFragment();
+              for (var dom of domFor(vnode)) target.appendChild(dom);
+            }
+            insertDOM(parent, target, nextSibling);
+          }
+        }
+        function insertDOM(parent, dom, nextSibling) {
+          if (nextSibling != null) parent.insertBefore(dom, nextSibling);
+          else parent.appendChild(dom);
+        }
+        function maybeSetContentEditable(vnode) {
+          if (vnode.attrs == null || vnode.attrs.contenteditable == null && // attribute
+          vnode.attrs.contentEditable == null) return false;
+          var children = vnode.children;
+          if (children != null && children.length === 1 && children[0].tag === "<") {
+            var content = children[0].children;
+            if (vnode.dom.innerHTML !== content) vnode.dom.innerHTML = content;
+          } else if (children != null && children.length !== 0) throw new Error("Child node of a contenteditable must be trusted.");
+          return true;
+        }
+        function removeNodes(parent, vnodes, start, end) {
+          for (var i = start; i < end; i++) {
+            var vnode = vnodes[i];
+            if (vnode != null) removeNode(parent, vnode);
+          }
+        }
+        function tryBlockRemove(parent, vnode, source, counter) {
+          var original = vnode.state;
+          var result = callHook.call(source.onbeforeremove, vnode);
+          if (result == null) return;
+          var generation = currentRender;
+          for (var dom of domFor(vnode)) delayedRemoval.set(dom, generation);
+          counter.v++;
+          Promise.resolve(result).finally(function() {
+            checkState(vnode, original);
+            tryResumeRemove(parent, vnode, counter);
+          });
+        }
+        function tryResumeRemove(parent, vnode, counter) {
+          if (--counter.v === 0) {
+            onremove(vnode);
+            removeDOM(parent, vnode);
+          }
+        }
+        function removeNode(parent, vnode) {
+          var counter = { v: 1 };
+          if (typeof vnode.tag !== "string" && typeof vnode.state.onbeforeremove === "function") tryBlockRemove(parent, vnode, vnode.state, counter);
+          if (vnode.attrs && typeof vnode.attrs.onbeforeremove === "function") tryBlockRemove(parent, vnode, vnode.attrs, counter);
+          tryResumeRemove(parent, vnode, counter);
+        }
+        function removeDOM(parent, vnode) {
+          if (vnode.dom == null) return;
+          if (vnode.domSize == null) {
+            parent.removeChild(vnode.dom);
+          } else {
+            for (var dom of domFor(vnode)) parent.removeChild(dom);
+          }
+        }
+        function onremove(vnode) {
+          if (typeof vnode.tag !== "string" && typeof vnode.state.onremove === "function") callHook.call(vnode.state.onremove, vnode);
+          if (vnode.attrs && typeof vnode.attrs.onremove === "function") callHook.call(vnode.attrs.onremove, vnode);
+          if (typeof vnode.tag !== "string") {
+            if (vnode.instance != null) onremove(vnode.instance);
+          } else {
+            if (vnode.events != null) vnode.events._ = null;
+            var children = vnode.children;
+            if (Array.isArray(children)) {
+              for (var i = 0; i < children.length; i++) {
+                var child = children[i];
+                if (child != null) onremove(child);
+              }
+            }
+          }
+        }
+        function setAttrs(vnode, attrs, ns) {
+          for (var key in attrs) {
+            setAttr(vnode, key, null, attrs[key], ns);
+          }
+        }
+        function setAttr(vnode, key, old, value, ns) {
+          if (key === "key" || value == null || isLifecycleMethod(key) || old === value && !isFormAttribute(vnode, key) && typeof value !== "object") return;
+          if (key[0] === "o" && key[1] === "n") return updateEvent(vnode, key, value);
+          if (key.slice(0, 6) === "xlink:") vnode.dom.setAttributeNS("http://www.w3.org/1999/xlink", key.slice(6), value);
+          else if (key === "style") updateStyle(vnode.dom, old, value);
+          else if (hasPropertyKey(vnode, key, ns)) {
+            if (key === "value") {
+              if ((vnode.tag === "input" || vnode.tag === "textarea") && vnode.dom.value === "" + value) return;
+              if (vnode.tag === "select" && old !== null && vnode.dom.value === "" + value) return;
+              if (vnode.tag === "option" && old !== null && vnode.dom.value === "" + value) return;
+              if (vnode.tag === "input" && vnode.attrs.type === "file" && "" + value !== "") {
+                console.error("`value` is read-only on file inputs!");
+                return;
+              }
+            }
+            if (vnode.tag === "input" && key === "type") vnode.dom.setAttribute(key, value);
+            else vnode.dom[key] = value;
+          } else {
+            if (typeof value === "boolean") {
+              if (value) vnode.dom.setAttribute(key, "");
+              else vnode.dom.removeAttribute(key);
+            } else vnode.dom.setAttribute(key === "className" ? "class" : key, value);
+          }
+        }
+        function removeAttr(vnode, key, old, ns) {
+          if (key === "key" || old == null || isLifecycleMethod(key)) return;
+          if (key[0] === "o" && key[1] === "n") updateEvent(vnode, key, void 0);
+          else if (key === "style") updateStyle(vnode.dom, old, null);
+          else if (hasPropertyKey(vnode, key, ns) && key !== "className" && key !== "title" && !(key === "value" && (vnode.tag === "option" || vnode.tag === "select" && vnode.dom.selectedIndex === -1 && vnode.dom === activeElement(vnode.dom))) && !(vnode.tag === "input" && key === "type")) {
+            vnode.dom[key] = null;
+          } else {
+            var nsLastIndex = key.indexOf(":");
+            if (nsLastIndex !== -1) key = key.slice(nsLastIndex + 1);
+            if (old !== false) vnode.dom.removeAttribute(key === "className" ? "class" : key);
+          }
+        }
+        function setLateSelectAttrs(vnode, attrs) {
+          if ("value" in attrs) {
+            if (attrs.value === null) {
+              if (vnode.dom.selectedIndex !== -1) vnode.dom.value = null;
+            } else {
+              var normalized = "" + attrs.value;
+              if (vnode.dom.value !== normalized || vnode.dom.selectedIndex === -1) {
+                vnode.dom.value = normalized;
+              }
+            }
+          }
+          if ("selectedIndex" in attrs) setAttr(vnode, "selectedIndex", null, attrs.selectedIndex, void 0);
+        }
+        function updateAttrs(vnode, old, attrs, ns) {
+          var val;
+          if (old != null) {
+            if (old === attrs) {
+              console.warn("Don't reuse attrs object, use new object for every redraw, this will throw in next major");
+            }
+            for (var key in old) {
+              if ((val = old[key]) != null && (attrs == null || attrs[key] == null)) {
+                removeAttr(vnode, key, val, ns);
+              }
+            }
+          }
+          if (attrs != null) {
+            for (var key in attrs) {
+              setAttr(vnode, key, old && old[key], attrs[key], ns);
+            }
+          }
+        }
+        function isFormAttribute(vnode, attr) {
+          return attr === "value" || attr === "checked" || attr === "selectedIndex" || attr === "selected" && (vnode.dom === activeElement(vnode.dom) || vnode.tag === "option" && vnode.dom.parentNode === activeElement(vnode.dom));
+        }
+        function isLifecycleMethod(attr) {
+          return attr === "oninit" || attr === "oncreate" || attr === "onupdate" || attr === "onremove" || attr === "onbeforeremove" || attr === "onbeforeupdate";
+        }
+        function hasPropertyKey(vnode, key, ns) {
+          return ns === void 0 && // If it's a custom element, just keep it.
+          (vnode.tag.indexOf("-") > -1 || vnode.is || // If it's a normal element, let's try to avoid a few browser bugs.
+          key !== "href" && key !== "list" && key !== "form" && key !== "width" && key !== "height") && key in vnode.dom;
+        }
+        function updateStyle(element, old, style) {
+          if (old === style) {
+          } else if (style == null) {
+            element.style = "";
+          } else if (typeof style !== "object") {
+            element.style = style;
+          } else if (old == null || typeof old !== "object") {
+            element.style = "";
+            for (var key in style) {
+              var value = style[key];
+              if (value != null) {
+                if (key.includes("-")) element.style.setProperty(key, String(value));
+                else element.style[key] = String(value);
+              }
+            }
+          } else {
+            for (var key in old) {
+              if (old[key] != null && style[key] == null) {
+                if (key.includes("-")) element.style.removeProperty(key);
+                else element.style[key] = "";
+              }
+            }
+            for (var key in style) {
+              var value = style[key];
+              if (value != null && (value = String(value)) !== String(old[key])) {
+                if (key.includes("-")) element.style.setProperty(key, value);
+                else element.style[key] = value;
+              }
+            }
+          }
+        }
+        function EventDict() {
+          this._ = currentRedraw;
+        }
+        EventDict.prototype = /* @__PURE__ */ Object.create(null);
+        EventDict.prototype.handleEvent = function(ev) {
+          var handler = this["on" + ev.type];
+          var result;
+          if (typeof handler === "function") result = handler.call(ev.currentTarget, ev);
+          else if (typeof handler.handleEvent === "function") handler.handleEvent(ev);
+          var self = this;
+          if (self._ != null) {
+            if (ev.redraw !== false) (0, self._)();
+            if (result != null && typeof result.then === "function") {
+              Promise.resolve(result).then(function() {
+                if (self._ != null && ev.redraw !== false) (0, self._)();
+              });
+            }
+          }
+          if (result === false) {
+            ev.preventDefault();
+            ev.stopPropagation();
+          }
+        };
+        function updateEvent(vnode, key, value) {
+          if (vnode.events != null) {
+            vnode.events._ = currentRedraw;
+            if (vnode.events[key] === value) return;
+            if (value != null && (typeof value === "function" || typeof value === "object")) {
+              if (vnode.events[key] == null) vnode.dom.addEventListener(key.slice(2), vnode.events, false);
+              vnode.events[key] = value;
+            } else {
+              if (vnode.events[key] != null) vnode.dom.removeEventListener(key.slice(2), vnode.events, false);
+              vnode.events[key] = void 0;
+            }
+          } else if (value != null && (typeof value === "function" || typeof value === "object")) {
+            vnode.events = new EventDict();
+            vnode.dom.addEventListener(key.slice(2), vnode.events, false);
+            vnode.events[key] = value;
+          }
+        }
+        function initLifecycle(source, vnode, hooks) {
+          if (typeof source.oninit === "function") callHook.call(source.oninit, vnode);
+          if (typeof source.oncreate === "function") hooks.push(callHook.bind(source.oncreate, vnode));
+        }
+        function updateLifecycle(source, vnode, hooks) {
+          if (typeof source.onupdate === "function") hooks.push(callHook.bind(source.onupdate, vnode));
+        }
+        function shouldNotUpdate(vnode, old) {
+          do {
+            if (vnode.attrs != null && typeof vnode.attrs.onbeforeupdate === "function") {
+              var force = callHook.call(vnode.attrs.onbeforeupdate, vnode, old);
+              if (force !== void 0 && !force) break;
+            }
+            if (typeof vnode.tag !== "string" && typeof vnode.state.onbeforeupdate === "function") {
+              var force = callHook.call(vnode.state.onbeforeupdate, vnode, old);
+              if (force !== void 0 && !force) break;
+            }
+            return false;
+          } while (false);
+          vnode.dom = old.dom;
+          vnode.domSize = old.domSize;
+          vnode.instance = old.instance;
+          vnode.attrs = old.attrs;
+          vnode.children = old.children;
+          vnode.text = old.text;
+          return true;
+        }
+        var currentDOM;
+        return function(dom, vnodes, redraw) {
+          if (!dom) throw new TypeError("DOM element being rendered to does not exist.");
+          if (currentDOM != null && dom.contains(currentDOM)) {
+            throw new TypeError("Node is currently being rendered to and thus is locked.");
+          }
+          var prevRedraw = currentRedraw;
+          var prevDOM = currentDOM;
+          var hooks = [];
+          var active = activeElement(dom);
+          var namespace = dom.namespaceURI;
+          currentDOM = dom;
+          currentRedraw = typeof redraw === "function" ? redraw : void 0;
+          currentRender = {};
+          try {
+            if (dom.vnodes == null) dom.textContent = "";
+            vnodes = Vnode.normalizeChildren(Array.isArray(vnodes) ? vnodes : [vnodes]);
+            updateNodes(dom, dom.vnodes, vnodes, hooks, null, namespace === "http://www.w3.org/1999/xhtml" ? void 0 : namespace);
+            dom.vnodes = vnodes;
+            if (active != null && activeElement(dom) !== active && typeof active.focus === "function") active.focus();
+            for (var i = 0; i < hooks.length; i++) hooks[i]();
+          } finally {
+            currentRedraw = prevRedraw;
+            currentDOM = prevDOM;
+          }
+        };
+      };
+    }
+  });
+
+  // node_modules/mithril/render.js
+  var require_render2 = __commonJS({
+    "node_modules/mithril/render.js"(exports, module) {
+      "use strict";
+      module.exports = require_render()(typeof window !== "undefined" ? window : null);
+    }
+  });
+
+  // node_modules/mithril/api/mount-redraw.js
+  var require_mount_redraw = __commonJS({
+    "node_modules/mithril/api/mount-redraw.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      module.exports = function(render, schedule, console2) {
+        var subscriptions = [];
+        var pending = false;
+        var offset = -1;
+        function sync() {
+          for (offset = 0; offset < subscriptions.length; offset += 2) {
+            try {
+              render(subscriptions[offset], Vnode(subscriptions[offset + 1]), redraw);
+            } catch (e) {
+              console2.error(e);
+            }
+          }
+          offset = -1;
+        }
+        function redraw() {
+          if (!pending) {
+            pending = true;
+            schedule(function() {
+              pending = false;
+              sync();
+            });
+          }
+        }
+        redraw.sync = sync;
+        function mount(root, component) {
+          if (component != null && component.view == null && typeof component !== "function") {
+            throw new TypeError("m.mount expects a component, not a vnode.");
+          }
+          var index = subscriptions.indexOf(root);
+          if (index >= 0) {
+            subscriptions.splice(index, 2);
+            if (index <= offset) offset -= 2;
+            render(root, []);
+          }
+          if (component != null) {
+            subscriptions.push(root, component);
+            render(root, Vnode(component), redraw);
+          }
+        }
+        return { mount, redraw };
+      };
+    }
+  });
+
+  // node_modules/mithril/mount-redraw.js
+  var require_mount_redraw2 = __commonJS({
+    "node_modules/mithril/mount-redraw.js"(exports, module) {
+      "use strict";
+      var render = require_render2();
+      module.exports = require_mount_redraw()(render, typeof requestAnimationFrame !== "undefined" ? requestAnimationFrame : null, typeof console !== "undefined" ? console : null);
+    }
+  });
+
+  // node_modules/mithril/querystring/build.js
+  var require_build = __commonJS({
+    "node_modules/mithril/querystring/build.js"(exports, module) {
+      "use strict";
+      module.exports = function(object) {
+        if (Object.prototype.toString.call(object) !== "[object Object]") return "";
+        var args = [];
+        for (var key in object) {
+          destructure(key, object[key]);
+        }
+        return args.join("&");
+        function destructure(key2, value) {
+          if (Array.isArray(value)) {
+            for (var i = 0; i < value.length; i++) {
+              destructure(key2 + "[" + i + "]", value[i]);
+            }
+          } else if (Object.prototype.toString.call(value) === "[object Object]") {
+            for (var i in value) {
+              destructure(key2 + "[" + i + "]", value[i]);
+            }
+          } else args.push(encodeURIComponent(key2) + (value != null && value !== "" ? "=" + encodeURIComponent(value) : ""));
+        }
+      };
+    }
+  });
+
+  // node_modules/mithril/pathname/build.js
+  var require_build2 = __commonJS({
+    "node_modules/mithril/pathname/build.js"(exports, module) {
+      "use strict";
+      var buildQueryString = require_build();
+      module.exports = function(template, params) {
+        if (/:([^\/\.-]+)(\.{3})?:/.test(template)) {
+          throw new SyntaxError("Template parameter names must be separated by either a '/', '-', or '.'.");
+        }
+        if (params == null) return template;
+        var queryIndex = template.indexOf("?");
+        var hashIndex = template.indexOf("#");
+        var queryEnd = hashIndex < 0 ? template.length : hashIndex;
+        var pathEnd = queryIndex < 0 ? queryEnd : queryIndex;
+        var path = template.slice(0, pathEnd);
+        var query = {};
+        Object.assign(query, params);
+        var resolved = path.replace(/:([^\/\.-]+)(\.{3})?/g, function(m3, key, variadic) {
+          delete query[key];
+          if (params[key] == null) return m3;
+          return variadic ? params[key] : encodeURIComponent(String(params[key]));
+        });
+        var newQueryIndex = resolved.indexOf("?");
+        var newHashIndex = resolved.indexOf("#");
+        var newQueryEnd = newHashIndex < 0 ? resolved.length : newHashIndex;
+        var newPathEnd = newQueryIndex < 0 ? newQueryEnd : newQueryIndex;
+        var result = resolved.slice(0, newPathEnd);
+        if (queryIndex >= 0) result += template.slice(queryIndex, queryEnd);
+        if (newQueryIndex >= 0) result += (queryIndex < 0 ? "?" : "&") + resolved.slice(newQueryIndex, newQueryEnd);
+        var querystring = buildQueryString(query);
+        if (querystring) result += (queryIndex < 0 && newQueryIndex < 0 ? "?" : "&") + querystring;
+        if (hashIndex >= 0) result += template.slice(hashIndex);
+        if (newHashIndex >= 0) result += (hashIndex < 0 ? "" : "&") + resolved.slice(newHashIndex);
+        return result;
+      };
+    }
+  });
+
+  // node_modules/mithril/request/request.js
+  var require_request = __commonJS({
+    "node_modules/mithril/request/request.js"(exports, module) {
+      "use strict";
+      var buildPathname = require_build2();
+      var hasOwn = require_hasOwn();
+      module.exports = function($window, oncompletion) {
+        function PromiseProxy(executor) {
+          return new Promise(executor);
+        }
+        function makeRequest(url, args) {
+          return new Promise(function(resolve, reject) {
+            url = buildPathname(url, args.params);
+            var method = args.method != null ? args.method.toUpperCase() : "GET";
+            var body = args.body;
+            var assumeJSON = (args.serialize == null || args.serialize === JSON.serialize) && !(body instanceof $window.FormData || body instanceof $window.URLSearchParams);
+            var responseType = args.responseType || (typeof args.extract === "function" ? "" : "json");
+            var xhr = new $window.XMLHttpRequest(), aborted = false, isTimeout = false;
+            var original = xhr, replacedAbort;
+            var abort = xhr.abort;
+            xhr.abort = function() {
+              aborted = true;
+              abort.call(this);
+            };
+            xhr.open(method, url, args.async !== false, typeof args.user === "string" ? args.user : void 0, typeof args.password === "string" ? args.password : void 0);
+            if (assumeJSON && body != null && !hasHeader(args, "content-type")) {
+              xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            }
+            if (typeof args.deserialize !== "function" && !hasHeader(args, "accept")) {
+              xhr.setRequestHeader("Accept", "application/json, text/*");
+            }
+            if (args.withCredentials) xhr.withCredentials = args.withCredentials;
+            if (args.timeout) xhr.timeout = args.timeout;
+            xhr.responseType = responseType;
+            for (var key in args.headers) {
+              if (hasOwn.call(args.headers, key)) {
+                xhr.setRequestHeader(key, args.headers[key]);
+              }
+            }
+            xhr.onreadystatechange = function(ev) {
+              if (aborted) return;
+              if (ev.target.readyState === 4) {
+                try {
+                  var success = ev.target.status >= 200 && ev.target.status < 300 || ev.target.status === 304 || /^file:\/\//i.test(url);
+                  var response = ev.target.response, message;
+                  if (responseType === "json") {
+                    if (!ev.target.responseType && typeof args.extract !== "function") {
+                      try {
+                        response = JSON.parse(ev.target.responseText);
+                      } catch (e) {
+                        response = null;
+                      }
+                    }
+                  } else if (!responseType || responseType === "text") {
+                    if (response == null) response = ev.target.responseText;
+                  }
+                  if (typeof args.extract === "function") {
+                    response = args.extract(ev.target, args);
+                    success = true;
+                  } else if (typeof args.deserialize === "function") {
+                    response = args.deserialize(response);
+                  }
+                  if (success) {
+                    if (typeof args.type === "function") {
+                      if (Array.isArray(response)) {
+                        for (var i = 0; i < response.length; i++) {
+                          response[i] = new args.type(response[i]);
+                        }
+                      } else response = new args.type(response);
+                    }
+                    resolve(response);
+                  } else {
+                    var completeErrorResponse = function() {
+                      try {
+                        message = ev.target.responseText;
+                      } catch (e) {
+                        message = response;
+                      }
+                      var error = new Error(message);
+                      error.code = ev.target.status;
+                      error.response = response;
+                      reject(error);
+                    };
+                    if (xhr.status === 0) {
+                      setTimeout(function() {
+                        if (isTimeout) return;
+                        completeErrorResponse();
+                      });
+                    } else completeErrorResponse();
+                  }
+                } catch (e) {
+                  reject(e);
+                }
+              }
+            };
+            xhr.ontimeout = function(ev) {
+              isTimeout = true;
+              var error = new Error("Request timed out");
+              error.code = ev.target.status;
+              reject(error);
+            };
+            if (typeof args.config === "function") {
+              xhr = args.config(xhr, args, url) || xhr;
+              if (xhr !== original) {
+                replacedAbort = xhr.abort;
+                xhr.abort = function() {
+                  aborted = true;
+                  replacedAbort.call(this);
+                };
+              }
+            }
+            if (body == null) xhr.send();
+            else if (typeof args.serialize === "function") xhr.send(args.serialize(body));
+            else if (body instanceof $window.FormData || body instanceof $window.URLSearchParams) xhr.send(body);
+            else xhr.send(JSON.stringify(body));
+          });
+        }
+        PromiseProxy.prototype = Promise.prototype;
+        PromiseProxy.__proto__ = Promise;
+        function hasHeader(args, name) {
+          for (var key in args.headers) {
+            if (hasOwn.call(args.headers, key) && key.toLowerCase() === name) return true;
+          }
+          return false;
+        }
+        return {
+          request: function(url, args) {
+            if (typeof url !== "string") {
+              args = url;
+              url = url.url;
+            } else if (args == null) args = {};
+            var promise = makeRequest(url, args);
+            if (args.background === true) return promise;
+            var count = 0;
+            function complete() {
+              if (--count === 0 && typeof oncompletion === "function") oncompletion();
+            }
+            return wrap(promise);
+            function wrap(promise2) {
+              var then = promise2.then;
+              promise2.constructor = PromiseProxy;
+              promise2.then = function() {
+                count++;
+                var next = then.apply(promise2, arguments);
+                next.then(complete, function(e) {
+                  complete();
+                  if (count === 0) throw e;
+                });
+                return wrap(next);
+              };
+              return promise2;
+            }
+          }
+        };
+      };
+    }
+  });
+
+  // node_modules/mithril/request.js
+  var require_request2 = __commonJS({
+    "node_modules/mithril/request.js"(exports, module) {
+      "use strict";
+      var mountRedraw = require_mount_redraw2();
+      module.exports = require_request()(typeof window !== "undefined" ? window : null, mountRedraw.redraw);
+    }
+  });
+
+  // node_modules/mithril/querystring/parse.js
+  var require_parse = __commonJS({
+    "node_modules/mithril/querystring/parse.js"(exports, module) {
+      "use strict";
+      function decodeURIComponentSave(str) {
+        try {
+          return decodeURIComponent(str);
+        } catch (err) {
+          return str;
+        }
+      }
+      module.exports = function(string) {
+        if (string === "" || string == null) return {};
+        if (string.charAt(0) === "?") string = string.slice(1);
+        var entries = string.split("&"), counters = {}, data = {};
+        for (var i = 0; i < entries.length; i++) {
+          var entry = entries[i].split("=");
+          var key = decodeURIComponentSave(entry[0]);
+          var value = entry.length === 2 ? decodeURIComponentSave(entry[1]) : "";
+          if (value === "true") value = true;
+          else if (value === "false") value = false;
+          var levels = key.split(/\]\[?|\[/);
+          var cursor = data;
+          if (key.indexOf("[") > -1) levels.pop();
+          for (var j = 0; j < levels.length; j++) {
+            var level = levels[j], nextLevel = levels[j + 1];
+            var isNumber = nextLevel == "" || !isNaN(parseInt(nextLevel, 10));
+            if (level === "") {
+              var key = levels.slice(0, j).join();
+              if (counters[key] == null) {
+                counters[key] = Array.isArray(cursor) ? cursor.length : 0;
+              }
+              level = counters[key]++;
+            } else if (level === "__proto__") break;
+            if (j === levels.length - 1) cursor[level] = value;
+            else {
+              var desc = Object.getOwnPropertyDescriptor(cursor, level);
+              if (desc != null) desc = desc.value;
+              if (desc == null) cursor[level] = desc = isNumber ? [] : {};
+              cursor = desc;
+            }
+          }
+        }
+        return data;
+      };
+    }
+  });
+
+  // node_modules/mithril/pathname/parse.js
+  var require_parse2 = __commonJS({
+    "node_modules/mithril/pathname/parse.js"(exports, module) {
+      "use strict";
+      var parseQueryString = require_parse();
+      module.exports = function(url) {
+        var queryIndex = url.indexOf("?");
+        var hashIndex = url.indexOf("#");
+        var queryEnd = hashIndex < 0 ? url.length : hashIndex;
+        var pathEnd = queryIndex < 0 ? queryEnd : queryIndex;
+        var path = url.slice(0, pathEnd).replace(/\/{2,}/g, "/");
+        if (!path) path = "/";
+        else {
+          if (path[0] !== "/") path = "/" + path;
+        }
+        return {
+          path,
+          params: queryIndex < 0 ? {} : parseQueryString(url.slice(queryIndex + 1, queryEnd))
+        };
+      };
+    }
+  });
+
+  // node_modules/mithril/pathname/compileTemplate.js
+  var require_compileTemplate = __commonJS({
+    "node_modules/mithril/pathname/compileTemplate.js"(exports, module) {
+      "use strict";
+      var parsePathname = require_parse2();
+      module.exports = function(template) {
+        var templateData = parsePathname(template);
+        var templateKeys = Object.keys(templateData.params);
+        var keys = [];
+        var regexp = new RegExp("^" + templateData.path.replace(
+          // I escape literal text so people can use things like `:file.:ext` or
+          // `:lang-:locale` in routes. This is all merged into one pass so I
+          // don't also accidentally escape `-` and make it harder to detect it to
+          // ban it from template parameters.
+          /:([^\/.-]+)(\.{3}|\.(?!\.)|-)?|[\\^$*+.()|\[\]{}]/g,
+          function(m3, key, extra) {
+            if (key == null) return "\\" + m3;
+            keys.push({ k: key, r: extra === "..." });
+            if (extra === "...") return "(.*)";
+            if (extra === ".") return "([^/]+)\\.";
+            return "([^/]+)" + (extra || "");
+          }
+        ) + "\\/?$");
+        return function(data) {
+          for (var i = 0; i < templateKeys.length; i++) {
+            if (templateData.params[templateKeys[i]] !== data.params[templateKeys[i]]) return false;
+          }
+          if (!keys.length) return regexp.test(data.path);
+          var values = regexp.exec(data.path);
+          if (values == null) return false;
+          for (var i = 0; i < keys.length; i++) {
+            data.params[keys[i].k] = keys[i].r ? values[i + 1] : decodeURIComponent(values[i + 1]);
+          }
+          return true;
+        };
+      };
+    }
+  });
+
+  // node_modules/mithril/util/censor.js
+  var require_censor = __commonJS({
+    "node_modules/mithril/util/censor.js"(exports, module) {
+      "use strict";
+      var hasOwn = require_hasOwn();
+      var magic = new RegExp("^(?:key|oninit|oncreate|onbeforeupdate|onupdate|onbeforeremove|onremove)$");
+      module.exports = function(attrs, extras) {
+        var result = {};
+        if (extras != null) {
+          for (var key in attrs) {
+            if (hasOwn.call(attrs, key) && !magic.test(key) && extras.indexOf(key) < 0) {
+              result[key] = attrs[key];
+            }
+          }
+        } else {
+          for (var key in attrs) {
+            if (hasOwn.call(attrs, key) && !magic.test(key)) {
+              result[key] = attrs[key];
+            }
+          }
+        }
+        return result;
+      };
+    }
+  });
+
+  // node_modules/mithril/api/router.js
+  var require_router = __commonJS({
+    "node_modules/mithril/api/router.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      var m3 = require_hyperscript();
+      var buildPathname = require_build2();
+      var parsePathname = require_parse2();
+      var compileTemplate = require_compileTemplate();
+      var censor = require_censor();
+      function decodeURIComponentSave(component) {
+        try {
+          return decodeURIComponent(component);
+        } catch (e) {
+          return component;
+        }
+      }
+      module.exports = function($window, mountRedraw) {
+        var callAsync = $window == null ? null : typeof $window.setImmediate === "function" ? $window.setImmediate : $window.setTimeout;
+        var p = Promise.resolve();
+        var scheduled = false;
+        var ready = false;
+        var hasBeenResolved = false;
+        var dom, compiled, fallbackRoute;
+        var currentResolver, component, attrs, currentPath, lastUpdate;
+        var RouterRoot = {
+          onremove: function() {
+            ready = hasBeenResolved = false;
+            $window.removeEventListener("popstate", fireAsync, false);
+          },
+          view: function() {
+            var vnode = Vnode(component, attrs.key, attrs);
+            if (currentResolver) return currentResolver.render(vnode);
+            return [vnode];
+          }
+        };
+        var SKIP = route.SKIP = {};
+        function resolveRoute() {
+          scheduled = false;
+          var prefix = $window.location.hash;
+          if (route.prefix[0] !== "#") {
+            prefix = $window.location.search + prefix;
+            if (route.prefix[0] !== "?") {
+              prefix = $window.location.pathname + prefix;
+              if (prefix[0] !== "/") prefix = "/" + prefix;
+            }
+          }
+          var path = prefix.concat().replace(/(?:%[a-f89][a-f0-9])+/gim, decodeURIComponentSave).slice(route.prefix.length);
+          var data = parsePathname(path);
+          Object.assign(data.params, $window.history.state);
+          function reject(e) {
+            console.error(e);
+            route.set(fallbackRoute, null, { replace: true });
+          }
+          loop(0);
+          function loop(i) {
+            for (; i < compiled.length; i++) {
+              if (compiled[i].check(data)) {
+                var payload = compiled[i].component;
+                var matchedRoute = compiled[i].route;
+                var localComp = payload;
+                var update = lastUpdate = function(comp) {
+                  if (update !== lastUpdate) return;
+                  if (comp === SKIP) return loop(i + 1);
+                  component = comp != null && (typeof comp.view === "function" || typeof comp === "function") ? comp : "div";
+                  attrs = data.params, currentPath = path, lastUpdate = null;
+                  currentResolver = payload.render ? payload : null;
+                  if (hasBeenResolved) mountRedraw.redraw();
+                  else {
+                    hasBeenResolved = true;
+                    mountRedraw.mount(dom, RouterRoot);
+                  }
+                };
+                if (payload.view || typeof payload === "function") {
+                  payload = {};
+                  update(localComp);
+                } else if (payload.onmatch) {
+                  p.then(function() {
+                    return payload.onmatch(data.params, path, matchedRoute);
+                  }).then(update, path === fallbackRoute ? null : reject);
+                } else update(
+                  /* "div" */
+                );
+                return;
+              }
+            }
+            if (path === fallbackRoute) {
+              throw new Error("Could not resolve default route " + fallbackRoute + ".");
+            }
+            route.set(fallbackRoute, null, { replace: true });
+          }
+        }
+        function fireAsync() {
+          if (!scheduled) {
+            scheduled = true;
+            callAsync(resolveRoute);
+          }
+        }
+        function route(root, defaultRoute, routes) {
+          if (!root) throw new TypeError("DOM element being rendered to does not exist.");
+          compiled = Object.keys(routes).map(function(route2) {
+            if (route2[0] !== "/") throw new SyntaxError("Routes must start with a '/'.");
+            if (/:([^\/\.-]+)(\.{3})?:/.test(route2)) {
+              throw new SyntaxError("Route parameter names must be separated with either '/', '.', or '-'.");
+            }
+            return {
+              route: route2,
+              component: routes[route2],
+              check: compileTemplate(route2)
+            };
+          });
+          fallbackRoute = defaultRoute;
+          if (defaultRoute != null) {
+            var defaultData = parsePathname(defaultRoute);
+            if (!compiled.some(function(i) {
+              return i.check(defaultData);
+            })) {
+              throw new ReferenceError("Default route doesn't match any known routes.");
+            }
+          }
+          dom = root;
+          $window.addEventListener("popstate", fireAsync, false);
+          ready = true;
+          resolveRoute();
+        }
+        route.set = function(path, data, options) {
+          if (lastUpdate != null) {
+            options = options || {};
+            options.replace = true;
+          }
+          lastUpdate = null;
+          path = buildPathname(path, data);
+          if (ready) {
+            fireAsync();
+            var state = options ? options.state : null;
+            var title = options ? options.title : null;
+            if (options && options.replace) $window.history.replaceState(state, title, route.prefix + path);
+            else $window.history.pushState(state, title, route.prefix + path);
+          } else {
+            $window.location.href = route.prefix + path;
+          }
+        };
+        route.get = function() {
+          return currentPath;
+        };
+        route.prefix = "#!";
+        route.Link = {
+          view: function(vnode) {
+            var child = m3(
+              vnode.attrs.selector || "a",
+              censor(vnode.attrs, ["options", "params", "selector", "onclick"]),
+              vnode.children
+            );
+            var options, onclick, href;
+            if (child.attrs.disabled = Boolean(child.attrs.disabled)) {
+              child.attrs.href = null;
+              child.attrs["aria-disabled"] = "true";
+            } else {
+              options = vnode.attrs.options;
+              onclick = vnode.attrs.onclick;
+              href = buildPathname(child.attrs.href, vnode.attrs.params);
+              child.attrs.href = route.prefix + href;
+              child.attrs.onclick = function(e) {
+                var result;
+                if (typeof onclick === "function") {
+                  result = onclick.call(e.currentTarget, e);
+                } else if (onclick == null || typeof onclick !== "object") {
+                } else if (typeof onclick.handleEvent === "function") {
+                  onclick.handleEvent(e);
+                }
+                if (
+                  // Skip if `onclick` prevented default
+                  result !== false && !e.defaultPrevented && // Ignore everything but left clicks
+                  (e.button === 0 || e.which === 0 || e.which === 1) && // Let the browser handle `target=_blank`, etc.
+                  (!e.currentTarget.target || e.currentTarget.target === "_self") && // No modifier keys
+                  !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey
+                ) {
+                  e.preventDefault();
+                  e.redraw = false;
+                  route.set(href, null, options);
+                }
+              };
+            }
+            return child;
+          }
+        };
+        route.param = function(key) {
+          return attrs && key != null ? attrs[key] : attrs;
+        };
+        return route;
+      };
+    }
+  });
+
+  // node_modules/mithril/route.js
+  var require_route = __commonJS({
+    "node_modules/mithril/route.js"(exports, module) {
+      "use strict";
+      var mountRedraw = require_mount_redraw2();
+      module.exports = require_router()(typeof window !== "undefined" ? window : null, mountRedraw);
+    }
+  });
+
+  // node_modules/mithril/index.js
+  var require_mithril = __commonJS({
+    "node_modules/mithril/index.js"(exports, module) {
+      "use strict";
+      var hyperscript = require_hyperscript2();
+      var request = require_request2();
+      var mountRedraw = require_mount_redraw2();
+      var domFor = require_domFor();
+      var m3 = function m4() {
+        return hyperscript.apply(this, arguments);
+      };
+      m3.m = hyperscript;
+      m3.trust = hyperscript.trust;
+      m3.fragment = hyperscript.fragment;
+      m3.Fragment = "[";
+      m3.mount = mountRedraw.mount;
+      m3.route = require_route();
+      m3.render = require_render2();
+      m3.redraw = mountRedraw.redraw;
+      m3.request = request.request;
+      m3.parseQueryString = require_parse();
+      m3.buildQueryString = require_build();
+      m3.parsePathname = require_parse2();
+      m3.buildPathname = require_build2();
+      m3.vnode = require_vnode();
+      m3.censor = require_censor();
+      m3.domFor = domFor.domFor;
+      module.exports = m3;
+    }
+  });
+
+  // src/index.js
+  var import_mithril2 = __toESM(require_mithril(), 1);
+
+  // src/views/SignupForm.js
+  var import_mithril = __toESM(require_mithril(), 1);
+  var SignupForm = {
+    getPasswordStrength(password) {
+      if (!password) return 0;
+      let score = 0;
+      if (password.length >= 8) score++;
+      if (/[A-Z]/.test(password)) score++;
+      if (/[a-z]/.test(password)) score++;
+      if (/[0-9]/.test(password)) score++;
+      if (/[^A-Za-z0-9]/.test(password)) score++;
+      return score;
+    },
+    validateForm() {
+      SignupForm.isFormValid = SignupForm.fullName.trim() && SignupForm.userName.trim() && SignupForm.email.trim() && SignupForm.password && SignupForm.confirmPassword && SignupForm.password === SignupForm.confirmPassword && SignupForm.userNameAvailable === true;
+    },
+    fullName: "",
+    userName: "",
+    userNameAvailable: null,
+    // true, false, or null  
+    email: "",
+    password: "",
+    confirmPassword: "",
+    error: "",
+    success: "",
+    isFormValid: false,
+    view: () => {
+      const strength = SignupForm.getPasswordStrength(SignupForm.password);
+      const strengthLabels = ["Too Weak", "Weak", "Fair", "Strong", "Very Strong"];
+      const strengthColors = ["error", "warning", "info", "success", "primary"];
+      SignupForm.validateForm();
+      return (0, import_mithril.default)(
+        "section.min-h-screen.bg-base-200.flex.items-center.justify-center.p-4",
+        (0, import_mithril.default)(
+          "form.card.w-full.max-w-sm.bg-base-100.shadow-xl",
+          {
+            onsubmit: async (e) => {
+              e.preventDefault();
+              SignupForm.error = SignupForm.success = "";
+              if (SignupForm.password !== SignupForm.confirmPassword) {
+                SignupForm.error = "Passwords do not match";
+                return;
+              }
+              try {
+                const res = await import_mithril.default.request({
+                  method: "POST",
+                  url: "/api/signup",
+                  body: {
+                    fullName: SignupForm.fullName,
+                    userName: SignupForm.userName,
+                    email: SignupForm.email,
+                    password: SignupForm.password
+                  }
+                });
+                SignupForm.success = res.msg;
+                localStorage.setItem("token", res.token);
+              } catch (err) {
+                SignupForm.error = err.message || "Signup failed";
+                console.error("Signup error:", err);
+                if (err.status === 409) {
+                  SignupForm.error = "Username or email already exists";
+                }
+              }
+            }
+          },
+          (0, import_mithril.default)(".card-body.space-y-4", [
+            (0, import_mithril.default)("h2.card-title.text-primary.justify-center", "Create Account"),
+            SignupForm.error && (0, import_mithril.default)(".alert.alert-error.shadow-sm", (0, import_mithril.default)("span", SignupForm.error)),
+            SignupForm.success && (0, import_mithril.default)(".alert.alert-success.shadow-sm", (0, import_mithril.default)("span", SignupForm.success)),
+            (0, import_mithril.default)(".form-control", [
+              (0, import_mithril.default)("label.label", (0, import_mithril.default)("span.label-text", "Full Name")),
+              (0, import_mithril.default)("input.input.input-bordered", {
+                type: "text",
+                placeholder: "Guntur D",
+                value: SignupForm.fullName,
+                oninput: (e) => (SignupForm.fullName = e.target.value, SignupForm.validateForm())
+              })
+            ]),
+            (0, import_mithril.default)(".form-control", [
+              (0, import_mithril.default)("label.label", (0, import_mithril.default)("span.label-text", "Username")),
+              (0, import_mithril.default)("input.input.input-bordered", {
+                type: "text",
+                placeholder: "gdev",
+                value: SignupForm.userName,
+                oninput: (e) => {
+                  SignupForm.userName = e.target.value;
+                  SignupForm.userNameAvailable = null;
+                  SignupForm.validateForm();
+                },
+                onblur: async () => {
+                  if (!SignupForm.userName) return;
+                  try {
+                    const res = await import_mithril.default.request({
+                      method: "GET",
+                      url: `/api/check-username?userName=${SignupForm.userName}`
+                    });
+                    SignupForm.userNameAvailable = res.available;
+                    SignupForm.validateForm();
+                  } catch (err) {
+                    SignupForm.userNameAvailable = false;
+                    SignupForm.validateForm();
+                  }
+                }
+              }),
+              SignupForm.userName && SignupForm.userNameAvailable === true && (0, import_mithril.default)("span.text-success.text-sm", "\u2705 Username is available"),
+              SignupForm.userName && SignupForm.userNameAvailable === false && (0, import_mithril.default)("span.text-error.text-sm", "\u274C Username is taken"),
+              ,
+            ]),
+            (0, import_mithril.default)(".form-control", [
+              (0, import_mithril.default)("label.label", (0, import_mithril.default)("span.label-text", "Email")),
+              (0, import_mithril.default)("input.input.input-bordered", {
+                type: "email",
+                placeholder: "you@example.com",
+                value: SignupForm.email,
+                oninput: (e) => (SignupForm.email = e.target.value, SignupForm.validateForm())
+              })
+            ]),
+            (0, import_mithril.default)(".form-control", [
+              (0, import_mithril.default)("label.label", (0, import_mithril.default)("span.label-text", "Password")),
+              (0, import_mithril.default)("input.input.input-bordered", {
+                type: "password",
+                placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
+                value: SignupForm.password,
+                oninput: (e) => {
+                  SignupForm.password = e.target.value;
+                  SignupForm.validateForm();
+                }
+              }),
+              SignupForm.password && (0, import_mithril.default)(`.text-${strengthColors[strength - 1] || "error"}.text-sm.mt-1`, strengthLabels[strength - 1] || "Too Weak"),
+              SignupForm.password && (0, import_mithril.default)("progress.progress", {
+                class: `progress-${strengthColors[strength - 1] || "error"} w-full`,
+                value: strength,
+                max: 5
+              })
+            ]),
+            (0, import_mithril.default)(".form-control", [
+              (0, import_mithril.default)("label.label", (0, import_mithril.default)("span.label-text", "Confirm Password")),
+              (0, import_mithril.default)("input.input.input-bordered", {
+                type: "password",
+                placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
+                value: SignupForm.confirmPassword,
+                oninput: (e) => (SignupForm.confirmPassword = e.target.value, SignupForm.validateForm())
+              })
+            ]),
+            (0, import_mithril.default)(".card-actions.justify-center.mt-2", [
+              (0, import_mithril.default)("button.btn.btn-primary.w-full", {
+                type: "submit",
+                // ...existing code...
+                disabled: !SignupForm.isFormValid || SignupForm.userNameAvailable === null
+                // ...existing code...
+              }, "Sign Up"),
+              !SignupForm.isFormValid && (0, import_mithril.default)("p.text-xs.text-warning", "Please complete all fields correctly.")
+              // m("a.btn.btn-ghost.w-full", {
+              //   href: "/login",
+              //   oncreate: m.route.link,
+              // }, "Already have an account? Log in"), 
+            ])
+          ])
+        )
+      );
+    }
+  };
+  var SignupForm_default = SignupForm;
+
+  // src/index.js
+  console.log("\u2714\uFE0F Mounting SignupForm");
+  import_mithril2.default.mount(document.getElementById("app"), SignupForm_default);
+})();

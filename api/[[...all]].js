@@ -63,6 +63,15 @@ app.post("/api/signup", async (req, reply) => {
   reply.send({ msg: "Account created", token })
 })
 
+app.get("/api/check-username", async (req, reply) => {
+  await connectDB()
+  const { userName } = req.query
+  if (!userName) return reply.code(400).send({ error: "Missing username" })
+
+  const exists = await User.exists({ userName })
+  reply.send({ available: !exists })
+}) 
+
 
 // (Add more routes here: login, protected data, etc.)
 export default async function handler(req, res) {
