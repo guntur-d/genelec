@@ -3,17 +3,35 @@
   "version": "1.0.0",
   "description": "A simple Fastify application for testing on Vercel.",
   "main": "src/server.js",
+  "type": "module",
   "scripts": {
-    "start": "node src/server.js"
+    "build:css": "tailwindcss -i src/styles.css  -o public/styles.css",
+    "build:js": "esbuild src/index.js --bundle --outfile=public/bundle.js --minify --sourcemap",
+    "build": "yarn build:css && yarn build:js",
+    "dev:css": "tailwindcss -i src/styles.css  -o public/styles.css --watch",
+    "dev:js": "esbuild src/index.js --bundle --outfile=public/bundle.js --watch",
+    "develop": "concurrently \"yarn dev:css\" \"yarn dev:js\""
   },
   "dependencies": {
+    "@fastify/jwt": "^9.1.0",
     "@fastify/view": "^11.1.0",
+    "bcrypt": "^6.0.0",
+    "daisyui": "^5.0.43",
+    "dotenv": "^17.0.1",
     "fastify": "^5",
-    "pug": "^3.0.3",
+    "mithril": "^2.3.3",
+    "mongodb": "^6.17.0",
+    "mongoose": "^8.16.1",
     "vercel": "^44.2.12"
   },
   "engines": {
     "node": ">=14.x"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@tailwindcss/cli": "4.1.11",
+    "concurrently": "^9.2.0",
+    "esbuild": "^0.25.5",
+    "tailwindcss": "^4.1.11"
+  }
 }
