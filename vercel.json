@@ -1,12 +1,16 @@
 {
   "rewrites": [
-   
-    { "source": "/", "destination": "/api" },
-
-  
+    {
+      "source": "/signup",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/login",
+      "destination": "/index.html"
+    },
     {
       "source": "/:path((?!api/).+)",
-      "destination": "/api/:path"
+      "destination": "/index.html"
     }
   ]
 }

@@ -1,5 +1,19 @@
 import m from "mithril"
+import LandingPage from "./views/LandingPage.js"
 import SignupForm from "./views/SignupForm.js"
+import LoginForm from "./views/LoginForm.js"
+import ProfilePage from "./views/ProfilePage.js"
 
-console.log("✔️ Mounting SignupForm")    // ← add this to see if script runs
-m.mount(document.getElementById("app"), SignupForm)
+// ✨ Add this line:
+m.route.prefix = ""
+
+ 
+
+
+
+m.route(document.getElementById("app"), "/", {
+  "/": LandingPage,
+  "/signup": SignupForm,
+  "/login": LoginForm,
+  "/profile": ProfilePage
+})
