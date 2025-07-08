@@ -1,11 +1,34 @@
 import m from "mithril"
 
-
-
+function debounce(fn, delay) {
+  let timer
+  return function (...args) {
+    clearTimeout(timer)
+    timer = setTimeout(() => fn.apply(this, args), delay)
+  }
+}
 
 const SignupForm = {
+  fullName: "",
+  userName: "",
+  userNameAvailable: null,
+  email: "",
+  password: "",
+  confirmPassword: "",
+  error: "",
+  success: "",
+  isFormValid: false,
 
-
+  validateForm() {
+    SignupForm.isFormValid =
+      SignupForm.fullName.trim() &&
+      SignupForm.userName.trim() &&
+      SignupForm.email.trim() &&
+      SignupForm.password &&
+      SignupForm.confirmPassword &&
+      SignupForm.password === SignupForm.confirmPassword &&
+      SignupForm.userNameAvailable === true
+  },
 
   getPasswordStrength(password) {
     if (!password) return 0
@@ -18,42 +41,40 @@ const SignupForm = {
     return score
   },
 
-  validateForm() {
-    SignupForm.isFormValid =
-      SignupForm.fullName.trim() &&
-      SignupForm.userName.trim() &&
-      SignupForm.email.trim() &&
-      SignupForm.password &&
-      SignupForm.confirmPassword &&
-      SignupForm.password === SignupForm.confirmPassword &&
-      SignupForm.userNameAvailable === true
-  },
-  fullName: "",
+  checkUsernameAvailability: debounce(async function () {
+    if (!SignupForm.userName) return
 
+    try {
+      const res = await m.request({
+        method: "GET",
+        url: `/api/check-username?userName=${SignupForm.userName}`,
+      })
+      SignupForm.userNameAvailable = res.available
+    } catch (err) {
+      SignupForm.userNameAvailable = false
+    }
 
-  userName: "",
-  userNameAvailable: null, // true, false, or null  
-
-
-  email: "",
-  password: "",
-  confirmPassword: "",
-  error: "",
-  success: "",
-
-  isFormValid: false,
+    SignupForm.validateForm()
+    m.redraw()
+  }, 750),
 
   view: () => {
     const strength = SignupForm.getPasswordStrength(SignupForm.password)
     const strengthLabels = ["Too Weak", "Weak", "Fair", "Strong", "Very Strong"]
-    const strengthColors = ["error", "warning", "info", "success", "primary"]
-    SignupForm.validateForm() // Initial validation
 
-    return m(
-      "section.min-h-screen.bg-base-200.flex.items-center.justify-center.p-4",
-      m(
-        "form.card.w-full.max-w-sm.bg-base-100.shadow-xl",
-        {
+    SignupForm.validateForm()
+
+    return m("main.container", [
+      m("article", [
+        m("hgroup", [
+          m("h1", "Create Account"),
+          m("h2", "Join us and start your journey"),
+        ]),
+
+        SignupForm.error && m("p", { class: "text-red-600" }, SignupForm.error),
+        SignupForm.success && m("p", { class: "text-green-600" }, SignupForm.success),
+
+        m("form", {
           onsubmit: async (e) => {
             e.preventDefault()
             SignupForm.error = SignupForm.success = ""
@@ -77,138 +98,101 @@ const SignupForm = {
               SignupForm.success = res.msg
               localStorage.setItem("token", res.token)
             } catch (err) {
-              // ...existing code...
               SignupForm.error = err.message || "Signup failed"
-              // ...existing code...
-              console.error("Signup error:", err)
               if (err.status === 409) {
                 SignupForm.error = "Username or email already exists"
               }
             }
           },
-        },
-        m(".card-body.space-y-4", [
-          m("h2.card-title.text-primary.justify-center", "Create Account"),
+        }, [
+          m("label", { for: "fullName" }, "Full Name"),
+          m("input", {
+            id: "fullName",
+            type: "text",
+            placeholder: "Guntur D",
+            value: SignupForm.fullName,
+            oninput: (e) => {
+              SignupForm.fullName = e.target.value
+              SignupForm.validateForm()
+            },
+          }),
 
-          SignupForm.error &&
-          m(".alert.alert-error.shadow-sm", m("span", SignupForm.error)),
-          SignupForm.success &&
-          m(".alert.alert-success.shadow-sm", m("span", SignupForm.success)),
+          m("label", { for: "userName" }, "Username"),
+          m("input", {
+            id: "userName",
+            type: "text",
+            placeholder: "username123",
+            value: SignupForm.userName,
+            oninput: (e) => {
+              SignupForm.userName = e.target.value
+              SignupForm.userNameAvailable = null
+              SignupForm.validateForm()
+              SignupForm.checkUsernameAvailability()
+            },
+          }),
+          SignupForm.userName && SignupForm.userNameAvailable === null &&
+            m("small", "⏳ Checking availability..."),
+          SignupForm.userName && SignupForm.userNameAvailable === true &&
+            m("small", { style: "color:green" }, "✅ Username is available"),
+          SignupForm.userName && SignupForm.userNameAvailable === false &&
+            m("small", { style: "color:red" }, "❌ Username is taken"),
 
-          m(".form-control", [
-            m("label.label", m("span.label-text", "Full Name")),
-            m("input.input.input-bordered", {
-              type: "text",
-              placeholder: "Guntur D",
-              value: SignupForm.fullName,
-              oninput: (e) => (SignupForm.fullName = e.target.value, SignupForm.validateForm()),
-            }),
-          ]),
+          m("label", { for: "email" }, "Email"),
+          m("input", {
+            id: "email",
+            type: "email",
+            placeholder: "you@example.com",
+            value: SignupForm.email,
+            oninput: (e) => {
+              SignupForm.email = e.target.value
+              SignupForm.validateForm()
+            },
+          }),
 
-          m(".form-control", [
-            m("label.label", m("span.label-text", "Username")),
-            m("input.input.input-bordered", {
-              type: "text",
-              placeholder: "gdev",
-              value: SignupForm.userName,
-              oninput: (e) => {
-                SignupForm.userName = e.target.value
-                SignupForm.userNameAvailable = null
-                SignupForm.validateForm()
-
-              },
-              onblur: async () => {
-                if (!SignupForm.userName) return
-                try {
-                  const res = await m.request({
-                    method: "GET",
-                    url: `/api/check-username?userName=${SignupForm.userName}`,
-                  })
-                  SignupForm.userNameAvailable = res.available
-                  SignupForm.validateForm()
-                } catch (err) {
-                  SignupForm.userNameAvailable = false
-                  SignupForm.validateForm()
-                }
-
-              },
-            }),
-            SignupForm.userName &&
-            SignupForm.userNameAvailable === true &&
-            m("span.text-success.text-sm", "✅ Username is available"),
-            SignupForm.userName &&
-            SignupForm.userNameAvailable === false &&
-            m("span.text-error.text-sm", "❌ Username is taken"), ,
-          ]),
-
-          m(".form-control", [
-            m("label.label", m("span.label-text", "Email")),
-            m("input.input.input-bordered", {
-              type: "email",
-              placeholder: "you@example.com",
-              value: SignupForm.email,
-              oninput: (e) => (SignupForm.email = e.target.value, SignupForm.validateForm()),
-            }),
-          ]),
-
-
-
-          m(".form-control", [
-            m("label.label", m("span.label-text", "Password")),
-            m("input.input.input-bordered", {
-              type: "password",
-              placeholder: "••••••••",
-              value: SignupForm.password,
-              oninput: (e) => {
-                SignupForm.password = e.target.value
-
-                SignupForm.validateForm()
-
-
-
-              },
-            }),
-            SignupForm.password &&
-            m(`.text-${strengthColors[strength - 1] || "error"}.text-sm.mt-1`, strengthLabels[strength - 1] || "Too Weak"),
-
-            SignupForm.password &&
-            m("progress.progress", {
-              class: `progress-${strengthColors[strength - 1] || "error"} w-full`,
+          m("label", { for: "password" }, "Password"),
+          m("input", {
+            id: "password",
+            type: "password",
+            placeholder: "••••••••",
+            value: SignupForm.password,
+            oninput: (e) => {
+              SignupForm.password = e.target.value
+              SignupForm.validateForm()
+            },
+          }),
+          SignupForm.password &&
+            m("small", strengthLabels[strength - 1] || "Too Weak"),
+          SignupForm.password &&
+            m("progress", {
               value: strength,
               max: 5,
-            })
-          ]),
-
-          m(".form-control", [
-            m("label.label", m("span.label-text", "Confirm Password")),
-            m("input.input.input-bordered", {
-              type: "password",
-              placeholder: "••••••••",
-              value: SignupForm.confirmPassword,
-              oninput: (e) =>
-                (SignupForm.confirmPassword = e.target.value, SignupForm.validateForm()),
+              style: "width:100%; height: 8px;",
             }),
-          ]),
 
-          m(".card-actions.justify-center.mt-2", [
-            m("button.btn.btn-primary.w-full", {
-              type: "submit",
-              // ...existing code...
-              disabled: !SignupForm.isFormValid || SignupForm.userNameAvailable === null,
-              // ...existing code...
-            }, "Sign Up"), !SignupForm.isFormValid &&
-            m("p.text-xs.text-warning", "Please complete all fields correctly.")
-            // m("a.btn.btn-ghost.w-full", {
-            //   href: "/login",
-            //   oncreate: m.route.link,
-            // }, "Already have an account? Log in"), 
-          ]),
-        ])
-      ),
+          m("label", { for: "confirmPassword" }, "Confirm Password"),
+          m("input", {
+            id: "confirmPassword",
+            type: "password",
+            placeholder: "••••••••",
+            value: SignupForm.confirmPassword,
+            oninput: (e) => {
+              SignupForm.confirmPassword = e.target.value
+              SignupForm.validateForm()
+            },
+          }),
 
-    )
+          m("input", {
+            type: "submit",
+            value: "Sign Up",
+            disabled: !SignupForm.isFormValid || SignupForm.userNameAvailable === null,
+          }),
+
+          !SignupForm.isFormValid &&
+            m("p", { style: "color:#e1a500" }, "Please complete all fields correctly."),
+        ]),
+      ]),
+    ])
   }
-
 }
 
 export default SignupForm
