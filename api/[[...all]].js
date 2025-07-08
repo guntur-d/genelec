@@ -4,6 +4,8 @@ import FastifyJwt from "@fastify/jwt"
 import bcrypt from "bcrypt"
 
 import { config as loadEnv } from "dotenv"
+
+ 
  
 
  console.log("Loading environment variables...")
@@ -49,11 +51,21 @@ app.register(FastifyJwt, {
 
 app.decorate("authenticate", async (req, reply) => {
   try {
-    await req.jwtVerify() // 👈 MUST call this or req.user stays null
-    // Optionally: log decoded payload
-    console.log("Decoded:", req.user)
+    await req.jwtVerify()
+
+    const tokenFp = req.user.fingerprint
+    const headerFp = req.headers["x-device-fingerprint"]
+
+    console.log("Decoded token:", req.user)
+    console.log("Device fingerprint from header:", headerFp)
+
+    if (!tokenFp || !headerFp || tokenFp !== headerFp) {
+      console.warn("⚠️ Fingerprint mismatch")
+      return reply.code(403).send({ error: "Access denied: device mismatch" })
+    }
   } catch (err) {
-    reply.code(401).send({ error: "Invalid or missing token" })
+    console.error("❌ Auth error:", err)
+    return reply.code(401).send({ error: "Invalid or missing token" })
   }
 })
 
@@ -64,10 +76,10 @@ app.post("/api/login", async (req, reply) => {
 
   await connectDB()
 
-  const { email, password } = req.body || {}
+  const { email, password, fingerprint } = req.body || {}
 
-  if (!email || !password) {
-    return reply.code(400).send({ error: "Email and password required" })
+  if (!email || !password || !fingerprint) {
+    return reply.code(400).send({ error: "Email, password, and fingerprint required" })
   }
 
   const user = await User.findOne({ email })
@@ -80,7 +92,15 @@ app.post("/api/login", async (req, reply) => {
     return reply.code(401).send({ error: "Invalid email or password" })
   }
 
-  const token = app.jwt.sign({ email: user.email })
+  // Optional: Store the fingerprint for future comparisons or trusted devices
+  user.fingerprint = fingerprint
+  await user.save()
+
+  const token = app.jwt.sign({
+    email: user.email,
+    fingerprint: fingerprint // 🔐 embed in token
+  })
+
   reply.send({ msg: "Login successful", token })
 })
 

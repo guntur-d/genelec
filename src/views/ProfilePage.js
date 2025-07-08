@@ -1,27 +1,32 @@
 import m from "mithril"
+import { getFingerprint } from "../../lib/fingerprint.js"
 
 const ProfilePage = {
-    user: null,
-    error: "",
+  user: null,
+  error: "",
+  loading: true,
 
-    oninit: async () => {
-        try {
-            const res = await m.request({
-                method: "GET",
-                url: "/api/profile",
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem("token")}`
-                }
-            })
-            ProfilePage.user = res.user
-        } catch (err) {
-            console.error("❌ Unauthorized or server error:", err)
-            ProfilePage.error = err
+  oninit: async () => {
+    const visitorId = await getFingerprint()
 
+    try {
+      const res = await m.request({
+        method: "GET",
+        url: "/api/profile",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "X-Device-Fingerprint": visitorId // 👈 send it here!
         }
-    },
+      })
 
-    view: () => {
+      ProfilePage.user = res.user
+    } catch (err) {
+      ProfilePage.error = err.message || "Unauthorized"
+    }
+
+    ProfilePage.loading = false
+  },
+     view: () => {
         return m("main.container", [
             m("h1", "👤 Profile"),
             ProfilePage.error
@@ -33,4 +38,5 @@ const ProfilePage = {
     }
 }
 
+ 
 export default ProfilePage

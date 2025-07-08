@@ -1,4 +1,6 @@
 import m from "mithril"
+ 
+import { getFingerprint } from "../../lib/fingerprint.js"
 
 const i18n = {
   en: {
@@ -20,7 +22,8 @@ const i18n = {
 }
 
 const LoginForm = {
-  lang: localStorage.getItem("lang") || "en",
+    
+ 
   email: "",
   password: "",
   error: "",
@@ -28,7 +31,10 @@ const LoginForm = {
   loading: false, // ⏳ Track whether request is in progress
 
   view: () => {
-    const t = i18n[LoginForm.lang]
+    
+    const lang = localStorage.getItem("lang") || "en"
+  const t = i18n[lang]
+
 
     return m("main.container", [
       m("article", [
@@ -51,9 +57,10 @@ const LoginForm = {
       method: "POST",
       url: "/api/login",
       body: {
-        email: LoginForm.email,
-        password: LoginForm.password,
-      },
+  email: LoginForm.email,
+  password: LoginForm.password,
+  fingerprint: await getFingerprint()
+},
     })
 
     LoginForm.success = res.msg || "Logged in"
@@ -87,7 +94,7 @@ const LoginForm = {
 
           m("input", {
             type: "submit",
-            value: LoginForm.loading ? "⏳ Please wait..." : t.login,
+           value: LoginForm.loading ? "⏳ " + t.login : t.login,
             disabled: !(LoginForm.email && LoginForm.password),
           }),
         ]),
