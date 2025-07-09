@@ -9,6 +9,7 @@ const i18n = {
         loggedIn: "You are already signed in",
         theme: "Theme",
         language: "Language",
+        changePassword: "Change Password",
     },
     id: {
         welcome: "Selamat Datang",
@@ -18,6 +19,7 @@ const i18n = {
         loggedIn: "Anda sudah masuk",
         theme: "Tema",
         language: "Bahasa",
+        changePassword: "Ubah Kata Sandi",
     },
 }
 
@@ -48,19 +50,25 @@ const LandingPage = {
             isLoggedIn
                 ? m("div", [
                     m("p", { style: "color: green" }, `✅ ${t.loggedIn}`),
-                    m("button", {
-                        onclick: () => {
-                            localStorage.removeItem("token")
-                            const lang = localStorage.getItem("lang")
-                            const theme = localStorage.getItem("theme")
 
-                            localStorage.clear()
-                            localStorage.setItem("lang", lang)
-                            localStorage.setItem("theme", theme)
-                            location.reload()
-                            location.reload() // Reload to reset auth check
-                        }
-                    }, "🚪 Log Out")
+                    m("nav", { style: "display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;" }, [
+                        m("a", {
+                            href: "/change-password",
+                            oncreate: m.route.link,
+                            style: "text-decoration: underline; color: var(--primary);"  // pretty, Pico-style
+                        }, `🔑 ${t.changePassword}`),
+
+                        m("button", {
+                            onclick: () => {
+                                const lang = localStorage.getItem("lang")
+                                const theme = localStorage.getItem("theme")
+                                localStorage.clear()
+                                localStorage.setItem("lang", lang)
+                                localStorage.setItem("theme", theme)
+                                location.reload()
+                            }
+                        }, "🚪 Log Out"),
+                    ])
                 ])
                 : m("nav", { style: "display: flex; gap: 1rem;" }, [
                     m("a", {

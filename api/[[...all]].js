@@ -4,10 +4,6 @@ import FastifyJwt from "@fastify/jwt"
 import bcrypt from "bcrypt"
 
 import { config as loadEnv } from "dotenv"
-
- 
- 
-
  console.log("Loading environment variables...")
 
 // Load .env locally
@@ -19,6 +15,9 @@ if (!process.env.VERCEL) loadEnv()
 
 import mongoose from "mongoose"
 import User from "../models/User.js"
+import nodemailer from "nodemailer"
+ 
+
 
 let isConnected = false
 
@@ -127,6 +126,44 @@ app.post("/api/signup", async (req, reply) => {
   reply.send({ msg: "Account created", token })
 })
 
+ 
+
+app.post("/api/change-password", { preValidation: app.authenticate }, async (req, reply) => {
+  console.log("🔐 /api/change-password route hit")
+
+  const { oldPassword, newPassword, fingerprint } = req.body || {}
+
+// ✅ Replace with:
+if (!oldPassword || !newPassword) {
+  return reply.code(400).send({ error: "All fields are required" })
+}
+
+
+  await connectDB()
+
+  try {
+    const user = await User.findOne({ email: req.user.email })
+
+    if (!user) return reply.code(404).send({ error: "User not found" })
+
+    if (user.fingerprint !== fingerprint) {
+      return reply.code(403).send({ error: "Fingerprint mismatch" })
+    }
+
+    const match = await bcrypt.compare(oldPassword, user.hash)
+    if (!match) return reply.code(401).send({ error: "Incorrect current password" })
+
+    const hash = await bcrypt.hash(newPassword, 10)
+    user.hash = hash
+    await user.save()
+
+    reply.send({ msg: "Password updated successfully" })
+  } catch (err) {
+    console.error("❌ Change password error:", err)
+    reply.code(500).send({ error: "Server error while changing password" })
+  }
+})
+
 app.get("/api/check-username", async (req, reply) => {
   await connectDB()
   const { userName } = req.query
@@ -159,6 +196,47 @@ app.get("/api/profile", { preValidation: app.authenticate }, async (req, reply) 
   }
 })
 
+const transporter = nodemailer.createTransport({
+  service: "gmail", // or SMTP config
+  auth: {
+    user: process.env.EMAIL_USER,
+    pass: process.env.EMAIL_PASS,
+  },
+})
+
+app.post("/api/request-password-reset", async (req, reply) => {
+  const { email } = req.body || {}
+  const lang = req.headers["x-lang"] || "en"  // detect user language
+
+  if (!email) return reply.code(400).send({ error: "Email required" })
+
+  await connectDB()
+  const user = await User.findOne({ email })
+  if (!user) return reply.code(404).send({ error: "Email not found" })
+
+  const resetCode = Math.floor(100000 + Math.random() * 900000).toString()
+  const expiresAt = Date.now() + 15 * 60 * 1000 // valid for 15 minutes
+
+  user.resetCode = resetCode
+  user.resetExpires = expiresAt
+  await user.save()
+
+  const url = `http://localhost:3000/reset/?code=${encodeURIComponent(resetCode)}&email=${encodeURIComponent(email)}`
+
+  const subject = lang === "id" ? "Atur Ulang Kata Sandi Anda" : "Reset Your Password"
+  const html = lang === "id"
+    ? `<p>Berikut adalah kode atur ulang kata sandi Anda: <b>${resetCode}</b></p><p>Atau klik <a href="${url}">tautan ini</a> untuk membuka formulir atur ulang.</p>`
+    : `<p>Here is your password reset code: <b>${resetCode}</b></p><p>Or click <a href="${url}">this link</a> to open the reset form.</p>`
+
+  await transporter.sendMail({
+    to: email,
+    subject,
+    html,
+    from: `No-Reply <${process.env.EMAIL_USER}>`,
+  })
+
+  reply.send({ msg: "Reset instructions sent" })
+})
 
 
 

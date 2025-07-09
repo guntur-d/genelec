@@ -19,6 +19,7 @@
     "mithril": "^2.3.3",
     "mongodb": "^6.17.0",
     "mongoose": "^8.16.1",
+    "nodemailer": "^7.0.5",
     "vercel": "^44.2.12"
   },
   "engines": {
@@ -26,7 +27,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "concurrently": "^9.2.0",
     "esbuild": "^0.25.5"
   }
 }

@@ -8,6 +8,67 @@ function debounce(fn, delay) {
   }
 }
 
+// Language dictionary
+const i18n = {
+  en: {
+    createAccount: "Create Account",
+    subtitle: "Join us and start your journey",
+    fullName: "Full Name",
+    username: "Username",
+    email: "Email",
+    password: "Password",
+    confirmPassword: "Confirm Password",
+    usernameAvailable: "✅ Username is available",
+    usernameTaken: "❌ Username is taken",
+    checking: "⏳ Checking availability...",
+    signUp: "Sign Up",
+    signingUp: "Signing Up...",
+    passwordMismatch: "Passwords do not match",
+    usernameOrEmailExists: "Username or email already exists",
+    signupFailed: "Signup failed",
+    completeFields: "Please complete all fields correctly.",
+    tooWeak: "Too Weak",
+    weak: "Weak",
+    fair: "Fair",
+    strong: "Strong",
+    veryStrong: "Very Strong",
+  },
+  id: {
+    createAccount: "Buat Akun",
+    subtitle: "Bergabunglah dan mulai perjalanan Anda",
+    fullName: "Nama Lengkap",
+    username: "Nama Pengguna",
+    email: "Surel",
+    password: "Kata Sandi",
+    confirmPassword: "Konfirmasi Kata Sandi",
+    usernameAvailable: "✅ Nama pengguna tersedia",
+    usernameTaken: "❌ Nama pengguna sudah dipakai",
+    checking: "⏳ Memeriksa ketersediaan...",
+    signUp: "Daftar",
+    signingUp: "Mendaftar...",
+    passwordMismatch: "Kata sandi tidak cocok",
+    usernameOrEmailExists: "Nama pengguna atau email sudah ada",
+    signupFailed: "Pendaftaran gagal",
+    completeFields: "Silakan lengkapi semua kolom dengan benar.",
+    tooWeak: "Terlalu Lemah",
+    weak: "Lemah",
+    fair: "Cukup",
+    strong: "Kuat",
+    veryStrong: "Sangat Kuat",
+  }
+}
+
+const lang = localStorage.getItem("lang") || "en"
+const t = i18n[lang]
+
+const strengthLabels = [
+  t.tooWeak,
+  t.weak,
+  t.fair,
+  t.strong,
+  t.veryStrong
+]
+
 const SignupForm = {
   fullName: "",
   userName: "",
@@ -18,6 +79,7 @@ const SignupForm = {
   error: "",
   success: "",
   isFormValid: false,
+  isLoading: false,
 
   validateForm() {
     SignupForm.isFormValid =
@@ -59,16 +121,16 @@ const SignupForm = {
   }, 750),
 
   view: () => {
+    document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto")
     const strength = SignupForm.getPasswordStrength(SignupForm.password)
-    const strengthLabels = ["Too Weak", "Weak", "Fair", "Strong", "Very Strong"]
 
     SignupForm.validateForm()
 
     return m("main.container", [
       m("article", [
         m("hgroup", [
-          m("h1", "Create Account"),
-          m("h2", "Join us and start your journey"),
+          m("h1", t.createAccount),
+          m("h2", t.subtitle),
         ]),
 
         SignupForm.error && m("p", { class: "text-red-600" }, SignupForm.error),
@@ -78,9 +140,13 @@ const SignupForm = {
           onsubmit: async (e) => {
             e.preventDefault()
             SignupForm.error = SignupForm.success = ""
+            SignupForm.isLoading = true
+            m.redraw()
 
             if (SignupForm.password !== SignupForm.confirmPassword) {
-              SignupForm.error = "Passwords do not match"
+              SignupForm.error = t.passwordMismatch
+              SignupForm.isLoading = false
+              m.redraw()
               return
             }
 
@@ -98,14 +164,16 @@ const SignupForm = {
               SignupForm.success = res.msg
               localStorage.setItem("token", res.token)
             } catch (err) {
-              SignupForm.error = err.message || "Signup failed"
+              SignupForm.error = err.message || t.signupFailed
               if (err.status === 409) {
-                SignupForm.error = "Username or email already exists"
+                SignupForm.error = t.usernameOrEmailExists
               }
             }
+            SignupForm.isLoading = false
+            m.redraw()
           },
         }, [
-          m("label", { for: "fullName" }, "Full Name"),
+          m("label", { for: "fullName" }, t.fullName),
           m("input", {
             id: "fullName",
             type: "text",
@@ -117,7 +185,7 @@ const SignupForm = {
             },
           }),
 
-          m("label", { for: "userName" }, "Username"),
+          m("label", { for: "userName" }, t.username),
           m("input", {
             id: "userName",
             type: "text",
@@ -131,13 +199,13 @@ const SignupForm = {
             },
           }),
           SignupForm.userName && SignupForm.userNameAvailable === null &&
-            m("small", "⏳ Checking availability..."),
+            m("small", t.checking),
           SignupForm.userName && SignupForm.userNameAvailable === true &&
-            m("small", { style: "color:green" }, "✅ Username is available"),
+            m("small", { style: "color:green" }, t.usernameAvailable),
           SignupForm.userName && SignupForm.userNameAvailable === false &&
-            m("small", { style: "color:red" }, "❌ Username is taken"),
+            m("small", { style: "color:red" }, t.usernameTaken),
 
-          m("label", { for: "email" }, "Email"),
+          m("label", { for: "email" }, t.email),
           m("input", {
             id: "email",
             type: "email",
@@ -149,7 +217,7 @@ const SignupForm = {
             },
           }),
 
-          m("label", { for: "password" }, "Password"),
+          m("label", { for: "password" }, t.password),
           m("input", {
             id: "password",
             type: "password",
@@ -161,7 +229,7 @@ const SignupForm = {
             },
           }),
           SignupForm.password &&
-            m("small", strengthLabels[strength - 1] || "Too Weak"),
+            m("small", strengthLabels[strength - 1] || t.tooWeak),
           SignupForm.password &&
             m("progress", {
               value: strength,
@@ -169,7 +237,7 @@ const SignupForm = {
               style: "width:100%; height: 8px;",
             }),
 
-          m("label", { for: "confirmPassword" }, "Confirm Password"),
+          m("label", { for: "confirmPassword" }, t.confirmPassword),
           m("input", {
             id: "confirmPassword",
             type: "password",
@@ -181,21 +249,22 @@ const SignupForm = {
             },
           }),
 
-          m("input", {
+          m("button", {
             type: "submit",
-            value: "Sign Up",
-            disabled: !SignupForm.isFormValid || SignupForm.userNameAvailable === null,
-          }),
+            value: t.signUp,
+            disabled: SignupForm.isLoading || !SignupForm.isFormValid || SignupForm.userNameAvailable === null,
+            "aria-busy": SignupForm.isLoading ? "true" : null,
+          }, SignupForm.isLoading ? m("span", [
+            m("span", { "aria-hidden": "true", style: "margin-right: 0.5em;" }, "⏳"),
+            t.signingUp
+          ]) : t.signUp),
 
           !SignupForm.isFormValid &&
-            m("p", { style: "color:#e1a500" }, "Please complete all fields correctly."),
+            m("p", { style: "color:#e1a500" }, t.completeFields),
         ]),
       ]),
     ])
   }
 }
 
-
 export default SignupForm
-
- 

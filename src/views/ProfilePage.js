@@ -27,6 +27,7 @@ const ProfilePage = {
     ProfilePage.loading = false
   },
      view: () => {
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto")
         return m("main.container", [
             m("h1", "👤 Profile"),
             ProfilePage.error
