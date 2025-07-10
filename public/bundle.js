@@ -4639,6 +4639,12 @@
     resetSuccess: false,
     resetError: "",
     showResetModal: false,
+    resetLoading: false,
+    resetStep: 1,
+    // 1: email, 2: code
+    resetCode: "",
+    serverCode: "",
+    // store code from backend (for demo, in real app, validate on backend)
     view: () => {
       document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto");
       const lang3 = localStorage.getItem("lang") || "en";
@@ -4723,53 +4729,109 @@
               "p",
               lang3 === "id" ? "Masukkan email yang terdaftar untuk menerima kode reset." : "Enter your registered email to receive a reset code."
             ),
-            LoginForm.resetSuccess && (0, import_mithril3.default)(
-              "p",
-              { style: "color: green" },
-              lang3 === "id" ? "\u2705 Kode berhasil dikirim. Silakan cek email Anda." : "\u2705 Code sent successfully. Please check your email."
-            ),
-            LoginForm.resetError && (0, import_mithril3.default)(
-              "p",
-              { style: "color: red" },
-              lang3 === "id" ? "\u274C Gagal mengirim tautan reset" : "\u274C Failed to send reset email"
-            ),
-            (0, import_mithril3.default)("form", {
-              onsubmit: async (e) => {
-                e.preventDefault();
-                LoginForm.resetSuccess = LoginForm.resetError = "";
-                try {
-                  await import_mithril3.default.request({
-                    method: "POST",
-                    url: "/api/request-password-reset",
-                    body: { email: LoginForm.forgotEmail },
-                    headers: { "x-lang": lang3 }
-                  });
-                  LoginForm.resetSuccess = true;
-                } catch (err) {
-                  LoginForm.resetError = true;
-                }
-              }
-            }, [
-              (0, import_mithril3.default)("label", { for: "forgotEmail" }, lang3 === "id" ? "Email Terdaftar" : "Registered Email"),
-              (0, import_mithril3.default)("input", {
-                id: "forgotEmail",
-                type: "email",
-                value: LoginForm.forgotEmail,
-                oninput: (e) => LoginForm.forgotEmail = e.target.value
-              }),
-              (0, import_mithril3.default)("div", { style: "display: flex; gap: 0.5rem; margin-top: 1rem;" }, [
-                (0, import_mithril3.default)("button.secondary", {
-                  type: "button",
-                  onclick: () => {
-                    LoginForm.showResetModal = false;
+            // Step 1: Email input
+            LoginForm.resetStep === 1 && [
+              LoginForm.resetSuccess && (0, import_mithril3.default)(
+                "p",
+                { style: "color: green" },
+                lang3 === "id" ? "\u2705 Kode berhasil dikirim. Silakan cek email Anda." : "\u2705 Code sent successfully. Please check your email."
+              ),
+              LoginForm.resetError && (0, import_mithril3.default)(
+                "p",
+                { style: "color: red" },
+                lang3 === "id" ? "\u274C Gagal mengirim tautan reset" : "\u274C Failed to send reset email"
+              ),
+              (0, import_mithril3.default)("form", {
+                onsubmit: async (e) => {
+                  e.preventDefault();
+                  LoginForm.resetSuccess = LoginForm.resetError = "";
+                  LoginForm.resetLoading = true;
+                  try {
+                    const res = await import_mithril3.default.request({
+                      method: "POST",
+                      url: "/api/request-password-reset",
+                      body: { email: LoginForm.forgotEmail },
+                      headers: { "x-lang": lang3 }
+                    });
+                    LoginForm.resetSuccess = true;
+                    LoginForm.serverCode = res.code;
+                    LoginForm.resetStep = 2;
+                  } catch (err) {
+                    LoginForm.resetError = true;
                   }
-                }, lang3 === "id" ? "Batal" : "Cancel"),
-                (0, import_mithril3.default)("button", {
-                  type: "submit",
-                  disabled: !LoginForm.forgotEmail
-                }, lang3 === "id" ? "Kirim Kode" : "Send Code")
+                  LoginForm.resetLoading = false;
+                }
+              }, [
+                (0, import_mithril3.default)("label", { for: "forgotEmail" }, lang3 === "id" ? "Email Terdaftar" : "Registered Email"),
+                (0, import_mithril3.default)("input", {
+                  id: "forgotEmail",
+                  type: "email",
+                  value: LoginForm.forgotEmail,
+                  oninput: (e) => LoginForm.forgotEmail = e.target.value
+                }),
+                (0, import_mithril3.default)("div", { style: "display: flex; gap: 0.5rem; margin-top: 1rem;" }, [
+                  (0, import_mithril3.default)("button.secondary", {
+                    type: "button",
+                    onclick: () => {
+                      LoginForm.showResetModal = false;
+                      LoginForm.resetStep = 1;
+                      LoginForm.resetSuccess = LoginForm.resetError = "";
+                      LoginForm.forgotEmail = "";
+                      LoginForm.resetCode = "";
+                    }
+                  }, lang3 === "id" ? "Batal" : "Cancel"),
+                  (0, import_mithril3.default)("button", {
+                    type: "submit",
+                    disabled: !LoginForm.forgotEmail || LoginForm.resetLoading
+                  }, LoginForm.resetLoading ? lang3 === "id" ? "Mengirim..." : "Sending..." : lang3 === "id" ? "Kirim Kode" : "Send Code")
+                ])
               ])
-            ])
+            ],
+            // Step 2: Code input
+            LoginForm.resetStep === 2 && [
+              (0, import_mithril3.default)("form", {
+                onsubmit: (e) => {
+                  e.preventDefault();
+                  if (LoginForm.resetCode === LoginForm.serverCode) {
+                    window.location.href = `/reset/?code=${encodeURIComponent(LoginForm.resetCode)}&email=${encodeURIComponent(LoginForm.forgotEmail)}`;
+                  } else {
+                    LoginForm.resetError = true;
+                  }
+                }
+              }, [
+                (0, import_mithril3.default)("label", { for: "resetCode" }, lang3 === "id" ? "Kode 6 Digit" : "6 Digit Code"),
+                (0, import_mithril3.default)("input", {
+                  id: "resetCode",
+                  type: "text",
+                  maxlength: 6,
+                  pattern: "\\d{6}",
+                  value: LoginForm.resetCode,
+                  oninput: (e) => {
+                    LoginForm.resetCode = e.target.value.replace(/\D/g, "").slice(0, 6);
+                    LoginForm.resetError = false;
+                  }
+                }),
+                LoginForm.resetError && (0, import_mithril3.default)(
+                  "p",
+                  { style: "color: red" },
+                  lang3 === "id" ? "\u274C Kode salah" : "\u274C Incorrect code"
+                ),
+                (0, import_mithril3.default)("div", { style: "display: flex; gap: 0.5rem; margin-top: 1rem;" }, [
+                  (0, import_mithril3.default)("button.secondary", {
+                    type: "button",
+                    onclick: () => {
+                      LoginForm.resetStep = 1;
+                      LoginForm.resetCode = "";
+                      LoginForm.resetError = false;
+                    }
+                  }, lang3 === "id" ? "Kembali" : "Back"),
+                  (0, import_mithril3.default)("button", {
+                    type: "submit",
+                    disabled: LoginForm.resetCode.length !== 6
+                  }, lang3 === "id" ? "Konfirmasi" : "Confirm")
+                ])
+              ])
+            ]
           ])
         ])
       );

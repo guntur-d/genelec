@@ -196,6 +196,11 @@ app.get("/api/profile", { preValidation: app.authenticate }, async (req, reply) 
   }
 })
 
+if (!process.env.VERCEL) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+}
+
+
 const transporter = nodemailer.createTransport({
   service: "gmail", // or SMTP config
   auth: {

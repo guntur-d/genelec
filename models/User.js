@@ -24,6 +24,14 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+    resetCode: {
+    type: String,
+    default: null,
+  },
+  resetExpires: {
+    type: Date,
+    default: null,
+  },
 })
 
 export default mongoose.models.User || mongoose.model("User", userSchema)
