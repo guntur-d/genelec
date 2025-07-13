@@ -20,7 +20,7 @@
     "mongodb": "^6.17.0",
     "mongoose": "^8.16.1",
     "nodemailer": "^7.0.5",
-    "vercel": "^44.2.12"
+    "vercel": "^44.4.1"
   },
   "engines": {
     "node": ">=14.x"

@@ -4,19 +4,19 @@ import FastifyJwt from "@fastify/jwt"
 import bcrypt from "bcrypt"
 
 import { config as loadEnv } from "dotenv"
- console.log("Loading environment variables...")
+console.log("Loading environment variables...")
 
 // Load .env locally
 if (!process.env.VERCEL) loadEnv()
 
-  
 
-  console.log("Connecting to:", process.env.MONGODB_URI)
+
+console.log("Connecting to:", process.env.MONGODB_URI)
 
 import mongoose from "mongoose"
 import User from "../models/User.js"
 import nodemailer from "nodemailer"
- 
+
 
 
 let isConnected = false
@@ -106,7 +106,7 @@ app.post("/api/login", async (req, reply) => {
 // Signup route
 app.post("/api/signup", async (req, reply) => {
 
-  console.log("✅ Signup route triggered") 
+  console.log("✅ Signup route triggered")
 
   await connectDB()
 
@@ -126,24 +126,45 @@ app.post("/api/signup", async (req, reply) => {
   reply.send({ msg: "Account created", token })
 })
 
- 
 
-app.post("/api/change-password", { preValidation: app.authenticate }, async (req, reply) => {
+
+app.post("/api/change-password", async (req, reply) => {
   console.log("🔐 /api/change-password route hit")
 
-  const { oldPassword, newPassword, fingerprint } = req.body || {}
+  const { oldPassword, newPassword, fingerprint, email, resetCode } = req.body || {}
 
-// ✅ Replace with:
-if (!oldPassword || !newPassword) {
-  return reply.code(400).send({ error: "All fields are required" })
-}
-
+  if (!newPassword) {
+    return reply.code(400).send({ error: "New password is required" })
+  }
 
   await connectDB()
 
-  try {
-    const user = await User.findOne({ email: req.user.email })
+  // 📦 Reset Flow: coming from password reset page
+  if (email && resetCode) {
+    const user = await User.findOne({ email })
+    if (!user) return reply.code(404).send({ error: "User not found" })
 
+    if (user.resetCode !== resetCode) {
+      return reply.code(401).send({ error: "Invalid reset code" })
+    }
+
+    if (Date.now() > user.resetExpires) {
+      return reply.code(410).send({ error: "Reset code expired" })
+    }
+
+    user.hash = await bcrypt.hash(newPassword, 10)
+    user.resetCode = undefined
+    user.resetExpires = undefined
+    await user.save()
+
+    return reply.send({ msg: "Password updated via reset link" })
+  }
+
+  // 🔐 Authenticated Flow (original logic with JWT + oldPassword)
+  try {
+    await req.jwtVerify()
+
+    const user = await User.findOne({ email: req.user.email })
     if (!user) return reply.code(404).send({ error: "User not found" })
 
     if (user.fingerprint !== fingerprint) {
@@ -153,14 +174,13 @@ if (!oldPassword || !newPassword) {
     const match = await bcrypt.compare(oldPassword, user.hash)
     if (!match) return reply.code(401).send({ error: "Incorrect current password" })
 
-    const hash = await bcrypt.hash(newPassword, 10)
-    user.hash = hash
+    user.hash = await bcrypt.hash(newPassword, 10)
     await user.save()
 
     reply.send({ msg: "Password updated successfully" })
   } catch (err) {
-    console.error("❌ Change password error:", err)
-    reply.code(500).send({ error: "Server error while changing password" })
+    console.error("❌ Auth error:", err)
+    reply.code(401).send({ error: "Unauthorized or invalid token" })
   }
 })
 
@@ -171,7 +191,7 @@ app.get("/api/check-username", async (req, reply) => {
 
   const exists = await User.exists({ userName })
   reply.send({ available: !exists })
-}) 
+})
 
 app.get("/api/profile", { preValidation: app.authenticate }, async (req, reply) => {
   console.log("📍 /api/profile route hit")
@@ -233,14 +253,39 @@ app.post("/api/request-password-reset", async (req, reply) => {
     ? `<p>Berikut adalah kode atur ulang kata sandi Anda: <b>${resetCode}</b></p><p>Atau klik <a href="${url}">tautan ini</a> untuk membuka formulir atur ulang.</p>`
     : `<p>Here is your password reset code: <b>${resetCode}</b></p><p>Or click <a href="${url}">this link</a> to open the reset form.</p>`
 
-  await transporter.sendMail({
-    to: email,
-    subject,
-    html,
-    from: `No-Reply <${process.env.EMAIL_USER}>`,
-  })
 
-  reply.send({ msg: "Reset instructions sent" })
+  try {
+    await transporter.sendMail({
+      to: email,
+      subject,
+      html,
+      from: `No-Reply <${process.env.EMAIL_USER}>`,
+    });
+
+    reply.send({ msg: "Reset instructions sent" });
+  } catch (err) {
+    console.error("Error sending reset email:", err);
+
+    // You could customize the response here based on error type
+    reply.status(500).send({ error: "Failed to send reset instructions. Please try again later." });
+  }
+})
+
+app.post("/api/verify-reset-code", async (req, reply) => {
+  const { email, code } = req.body || {}
+  if (!email || !code) return reply.code(400).send({ error: "Email and code required" })
+
+  await connectDB()
+  const user = await User.findOne({ email })
+  if (!user || user.resetCode !== code) {
+    return reply.code(401).send({ error: "Invalid code" })
+  }
+
+  if (Date.now() > user.resetExpires) {
+    return reply.code(410).send({ error: "Code expired" })
+  }
+
+  reply.send({ msg: "Code verified" })
 })
 
 
@@ -249,6 +294,6 @@ app.post("/api/request-password-reset", async (req, reply) => {
 export default async function handler(req, res) {
   console.log("🔍 Fastify sees URL:", req.url)
   await app.ready()
- 
+
   app.server.emit("request", req, res)
 }

@@ -1025,9 +1025,9 @@
         var path = template.slice(0, pathEnd);
         var query = {};
         Object.assign(query, params);
-        var resolved = path.replace(/:([^\/\.-]+)(\.{3})?/g, function(m8, key, variadic) {
+        var resolved = path.replace(/:([^\/\.-]+)(\.{3})?/g, function(m9, key, variadic) {
           delete query[key];
-          if (params[key] == null) return m8;
+          if (params[key] == null) return m9;
           return variadic ? params[key] : encodeURIComponent(String(params[key]));
         });
         var newQueryIndex = resolved.indexOf("?");
@@ -1299,8 +1299,8 @@
           // don't also accidentally escape `-` and make it harder to detect it to
           // ban it from template parameters.
           /:([^\/.-]+)(\.{3}|\.(?!\.)|-)?|[\\^$*+.()|\[\]{}]/g,
-          function(m8, key, extra) {
-            if (key == null) return "\\" + m8;
+          function(m9, key, extra) {
+            if (key == null) return "\\" + m9;
             keys.push({ k: key, r: extra === "..." });
             if (extra === "...") return "(.*)";
             if (extra === ".") return "([^/]+)\\.";
@@ -1354,7 +1354,7 @@
     "node_modules/mithril/api/router.js"(exports, module) {
       "use strict";
       var Vnode = require_vnode();
-      var m8 = require_hyperscript();
+      var m9 = require_hyperscript();
       var buildPathname = require_build2();
       var parsePathname = require_parse2();
       var compileTemplate = require_compileTemplate();
@@ -1497,7 +1497,7 @@
         route.prefix = "#!";
         route.Link = {
           view: function(vnode) {
-            var child = m8(
+            var child = m9(
               vnode.attrs.selector || "a",
               censor(vnode.attrs, ["options", "params", "selector", "onclick"]),
               vnode.children
@@ -1560,31 +1560,31 @@
       var request = require_request2();
       var mountRedraw = require_mount_redraw2();
       var domFor = require_domFor();
-      var m8 = function m9() {
+      var m9 = function m10() {
         return hyperscript.apply(this, arguments);
       };
-      m8.m = hyperscript;
-      m8.trust = hyperscript.trust;
-      m8.fragment = hyperscript.fragment;
-      m8.Fragment = "[";
-      m8.mount = mountRedraw.mount;
-      m8.route = require_route();
-      m8.render = require_render2();
-      m8.redraw = mountRedraw.redraw;
-      m8.request = request.request;
-      m8.parseQueryString = require_parse();
-      m8.buildQueryString = require_build();
-      m8.parsePathname = require_parse2();
-      m8.buildPathname = require_build2();
-      m8.vnode = require_vnode();
-      m8.censor = require_censor();
-      m8.domFor = domFor.domFor;
-      module.exports = m8;
+      m9.m = hyperscript;
+      m9.trust = hyperscript.trust;
+      m9.fragment = hyperscript.fragment;
+      m9.Fragment = "[";
+      m9.mount = mountRedraw.mount;
+      m9.route = require_route();
+      m9.render = require_render2();
+      m9.redraw = mountRedraw.redraw;
+      m9.request = request.request;
+      m9.parseQueryString = require_parse();
+      m9.buildQueryString = require_build();
+      m9.parsePathname = require_parse2();
+      m9.buildPathname = require_build2();
+      m9.vnode = require_vnode();
+      m9.censor = require_censor();
+      m9.domFor = domFor.domFor;
+      module.exports = m9;
     }
   });
 
   // src/index.js
-  var import_mithril7 = __toESM(require_mithril(), 1);
+  var import_mithril8 = __toESM(require_mithril(), 1);
 
   // src/views/LandingPage.js
   var import_mithril = __toESM(require_mithril(), 1);
@@ -2219,8 +2219,8 @@
     }
     return result;
   }
-  function x64Add(m8, n) {
-    var m0 = m8[0] >>> 16, m1 = m8[0] & 65535, m22 = m8[1] >>> 16, m32 = m8[1] & 65535;
+  function x64Add(m9, n) {
+    var m0 = m9[0] >>> 16, m1 = m9[0] & 65535, m22 = m9[1] >>> 16, m32 = m9[1] & 65535;
     var n0 = n[0] >>> 16, n1 = n[0] & 65535, n2 = n[1] >>> 16, n3 = n[1] & 65535;
     var o0 = 0, o1 = 0, o2 = 0, o3 = 0;
     o3 += m32 + n3;
@@ -2234,11 +2234,11 @@
     o1 &= 65535;
     o0 += m0 + n0;
     o0 &= 65535;
-    m8[0] = o0 << 16 | o1;
-    m8[1] = o2 << 16 | o3;
+    m9[0] = o0 << 16 | o1;
+    m9[1] = o2 << 16 | o3;
   }
-  function x64Multiply(m8, n) {
-    var m0 = m8[0] >>> 16, m1 = m8[0] & 65535, m22 = m8[1] >>> 16, m32 = m8[1] & 65535;
+  function x64Multiply(m9, n) {
+    var m0 = m9[0] >>> 16, m1 = m9[0] & 65535, m22 = m9[1] >>> 16, m32 = m9[1] & 65535;
     var n0 = n[0] >>> 16, n1 = n[0] & 65535, n2 = n[1] >>> 16, n3 = n[1] & 65535;
     var o0 = 0, o1 = 0, o2 = 0, o3 = 0;
     o3 += m32 * n3;
@@ -2261,39 +2261,39 @@
     o1 &= 65535;
     o0 += m0 * n3 + m1 * n2 + m22 * n1 + m32 * n0;
     o0 &= 65535;
-    m8[0] = o0 << 16 | o1;
-    m8[1] = o2 << 16 | o3;
+    m9[0] = o0 << 16 | o1;
+    m9[1] = o2 << 16 | o3;
   }
-  function x64Rotl(m8, bits) {
-    var m0 = m8[0];
+  function x64Rotl(m9, bits) {
+    var m0 = m9[0];
     bits %= 64;
     if (bits === 32) {
-      m8[0] = m8[1];
-      m8[1] = m0;
+      m9[0] = m9[1];
+      m9[1] = m0;
     } else if (bits < 32) {
-      m8[0] = m0 << bits | m8[1] >>> 32 - bits;
-      m8[1] = m8[1] << bits | m0 >>> 32 - bits;
+      m9[0] = m0 << bits | m9[1] >>> 32 - bits;
+      m9[1] = m9[1] << bits | m0 >>> 32 - bits;
     } else {
       bits -= 32;
-      m8[0] = m8[1] << bits | m0 >>> 32 - bits;
-      m8[1] = m0 << bits | m8[1] >>> 32 - bits;
+      m9[0] = m9[1] << bits | m0 >>> 32 - bits;
+      m9[1] = m0 << bits | m9[1] >>> 32 - bits;
     }
   }
-  function x64LeftShift(m8, bits) {
+  function x64LeftShift(m9, bits) {
     bits %= 64;
     if (bits === 0) {
       return;
     } else if (bits < 32) {
-      m8[0] = m8[1] >>> 32 - bits;
-      m8[1] = m8[1] << bits;
+      m9[0] = m9[1] >>> 32 - bits;
+      m9[1] = m9[1] << bits;
     } else {
-      m8[0] = m8[1] << bits - 32;
-      m8[1] = 0;
+      m9[0] = m9[1] << bits - 32;
+      m9[1] = 0;
     }
   }
-  function x64Xor(m8, n) {
-    m8[0] ^= n[0];
-    m8[1] ^= n[1];
+  function x64Xor(m9, n) {
+    m9[0] ^= n[0];
+    m9[1] ^= n[1];
   }
   var F1 = [4283543511, 3981806797];
   var F2 = [3301882366, 444984403];
@@ -4608,7 +4608,8 @@
         button: "Send Reset Link",
         success: "Reset link sent! Please check your email.",
         error: "Could not send reset email. Try again."
-      }
+      },
+      passwordResetSuccess: "Password reset successfully! Please log in with your new password."
     },
     id: {
       heading: "Masuk",
@@ -4625,7 +4626,8 @@
         button: "Kirim Tautan Atur Ulang",
         success: "Tautan atur ulang dikirim! Silakan periksa email Anda.",
         error: "Gagal mengirim email atur ulang. Coba lagi."
-      }
+      },
+      passwordResetSuccess: "Kata sandi berhasil diatur ulang! Silakan masuk dengan kata sandi baru Anda."
     }
   };
   var LoginForm = {
@@ -4643,8 +4645,26 @@
     resetStep: 1,
     // 1: email, 2: code
     resetCode: "",
-    serverCode: "",
-    // store code from backend (for demo, in real app, validate on backend)
+    oninit: () => {
+      LoginForm.email = "";
+      LoginForm.password = "";
+      LoginForm.error = "";
+      LoginForm.loading = false;
+      LoginForm.forgotEmail = "";
+      LoginForm.resetSuccess = false;
+      LoginForm.resetError = "";
+      LoginForm.showResetModal = false;
+      LoginForm.resetLoading = false;
+      LoginForm.resetStep = 1;
+      LoginForm.resetCode = "";
+      const params = import_mithril3.default.route.param();
+      if (params.success === "password_reset") {
+        const lang3 = localStorage.getItem("lang") || "en";
+        LoginForm.success = i18n3[lang3].passwordResetSuccess;
+      } else {
+        LoginForm.success = "";
+      }
+    },
     view: () => {
       document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto");
       const lang3 = localStorage.getItem("lang") || "en";
@@ -4657,8 +4677,8 @@
               (0, import_mithril3.default)("h1", t2.heading),
               (0, import_mithril3.default)("h2", t2.subheading)
             ]),
-            LoginForm.error && (0, import_mithril3.default)("p", { style: "color: red;" }, `\u274C ${t2.error}`),
-            LoginForm.success && (0, import_mithril3.default)("p", { style: "color: green;" }, "\u2705 Login successful"),
+            LoginForm.error && (0, import_mithril3.default)("p", { style: "color: red;" }, `\u274C ${LoginForm.error}`),
+            LoginForm.success && (0, import_mithril3.default)("p", { style: "color: green;" }, `\u2705 ${LoginForm.success}`),
             (0, import_mithril3.default)("form", {
               onsubmit: async (e) => {
                 e.preventDefault();
@@ -4754,7 +4774,6 @@
                       headers: { "x-lang": lang3 }
                     });
                     LoginForm.resetSuccess = true;
-                    LoginForm.serverCode = res.code;
                     LoginForm.resetStep = 2;
                   } catch (err) {
                     LoginForm.resetError = true;
@@ -4770,7 +4789,8 @@
                   oninput: (e) => LoginForm.forgotEmail = e.target.value
                 }),
                 (0, import_mithril3.default)("div", { style: "display: flex; gap: 0.5rem; margin-top: 1rem;" }, [
-                  (0, import_mithril3.default)("button.secondary", {
+                  (0, import_mithril3.default)("button", {
+                    style: { "border-color": "#D93526", "background-color": "#D93526" },
                     type: "button",
                     onclick: () => {
                       LoginForm.showResetModal = false;
@@ -4790,13 +4810,27 @@
             // Step 2: Code input
             LoginForm.resetStep === 2 && [
               (0, import_mithril3.default)("form", {
-                onsubmit: (e) => {
+                onsubmit: async (e) => {
                   e.preventDefault();
-                  if (LoginForm.resetCode === LoginForm.serverCode) {
-                    window.location.href = `/reset/?code=${encodeURIComponent(LoginForm.resetCode)}&email=${encodeURIComponent(LoginForm.forgotEmail)}`;
-                  } else {
+                  LoginForm.resetError = false;
+                  LoginForm.resetLoading = true;
+                  try {
+                    await import_mithril3.default.request({
+                      method: "POST",
+                      url: "/api/verify-reset-code",
+                      body: {
+                        email: LoginForm.forgotEmail,
+                        code: LoginForm.resetCode
+                      }
+                    });
+                    import_mithril3.default.route.set("/reset", {
+                      code: LoginForm.resetCode,
+                      email: LoginForm.forgotEmail
+                    });
+                  } catch (err) {
                     LoginForm.resetError = true;
                   }
+                  LoginForm.resetLoading = false;
                 }
               }, [
                 (0, import_mithril3.default)("label", { for: "resetCode" }, lang3 === "id" ? "Kode 6 Digit" : "6 Digit Code"),
@@ -4827,8 +4861,9 @@
                   }, lang3 === "id" ? "Kembali" : "Back"),
                   (0, import_mithril3.default)("button", {
                     type: "submit",
-                    disabled: LoginForm.resetCode.length !== 6
-                  }, lang3 === "id" ? "Konfirmasi" : "Confirm")
+                    disabled: LoginForm.resetCode.length !== 6 || LoginForm.resetLoading,
+                    "aria-busy": LoginForm.resetLoading ? "true" : false
+                  }, LoginForm.resetLoading ? lang3 === "id" ? "Mengonfirmasi..." : "Confirming..." : lang3 === "id" ? "Konfirmasi" : "Confirm")
                 ])
               ])
             ]
@@ -5085,16 +5120,119 @@
   };
   var ForgotPasswordForm_default = ForgotPasswordForm;
 
+  // src/views/ResetPassword.js
+  var import_mithril7 = __toESM(require_mithril(), 1);
+  var ResetPassword = {
+    email: "",
+    code: "",
+    newPassword: "",
+    confirmPassword: "",
+    error: "",
+    success: "",
+    loading: false,
+    oninit: () => {
+      ResetPassword.email = import_mithril7.default.route.param("email") || "";
+      ResetPassword.code = import_mithril7.default.route.param("code") || "";
+    },
+    view: () => {
+      const lang3 = localStorage.getItem("lang") || "en";
+      const t2 = {
+        en: {
+          heading: "Reset Password",
+          subheading: "Enter your new password below.",
+          newPassword: "New Password",
+          confirmPassword: "Confirm Password",
+          submit: "Update Password",
+          success: "\u2705 Password updated successfully!",
+          error: "\u274C Error updating password. Try again.",
+          mismatch: "\u274C Passwords do not match.",
+          short: "\u274C Password too short (min 6 characters)."
+        },
+        id: {
+          heading: "Atur Ulang Kata Sandi",
+          subheading: "Masukkan kata sandi baru Anda.",
+          newPassword: "Kata Sandi Baru",
+          confirmPassword: "Konfirmasi Kata Sandi",
+          submit: "Perbarui Kata Sandi",
+          success: "\u2705 Kata sandi berhasil diperbarui!",
+          error: "\u274C Gagal memperbarui kata sandi. Coba lagi.",
+          mismatch: "\u274C Kata sandi tidak cocok.",
+          short: "\u274C Kata sandi terlalu pendek (min 6 karakter)."
+        }
+      }[lang3];
+      return (0, import_mithril7.default)("main.container", [
+        (0, import_mithril7.default)("article", [
+          (0, import_mithril7.default)("hgroup", [
+            (0, import_mithril7.default)("h1", t2.heading),
+            (0, import_mithril7.default)("h2", t2.subheading)
+          ]),
+          ResetPassword.success && (0, import_mithril7.default)("p", { style: "color: green" }, t2.success),
+          ResetPassword.error && (0, import_mithril7.default)("p", { style: "color: red" }, ResetPassword.error),
+          (0, import_mithril7.default)("form", {
+            onsubmit: async (e) => {
+              e.preventDefault();
+              ResetPassword.error = ResetPassword.success = "";
+              if (ResetPassword.newPassword !== ResetPassword.confirmPassword) {
+                ResetPassword.error = t2.mismatch;
+                return;
+              }
+              if (ResetPassword.newPassword.length < 6) {
+                ResetPassword.error = t2.short;
+                return;
+              }
+              ResetPassword.loading = true;
+              try {
+                const res = await import_mithril7.default.request({
+                  method: "POST",
+                  url: "/api/change-password",
+                  body: {
+                    email: ResetPassword.email,
+                    resetCode: ResetPassword.code,
+                    newPassword: ResetPassword.newPassword
+                  }
+                });
+                import_mithril7.default.route.set("/login", { success: "password_reset" });
+              } catch (err) {
+                ResetPassword.error = err.message || t2.error;
+              }
+              ResetPassword.loading = false;
+            }
+          }, [
+            (0, import_mithril7.default)("label", { for: "newPassword" }, t2.newPassword),
+            (0, import_mithril7.default)("input", {
+              id: "newPassword",
+              type: "password",
+              value: ResetPassword.newPassword,
+              oninput: (e) => ResetPassword.newPassword = e.target.value
+            }),
+            (0, import_mithril7.default)("label", { for: "confirmPassword" }, t2.confirmPassword),
+            (0, import_mithril7.default)("input", {
+              id: "confirmPassword",
+              type: "password",
+              value: ResetPassword.confirmPassword,
+              oninput: (e) => ResetPassword.confirmPassword = e.target.value
+            }),
+            (0, import_mithril7.default)("button", {
+              type: "submit",
+              disabled: ResetPassword.loading,
+              "aria-busy": ResetPassword.loading ? "true" : false
+            }, t2.submit)
+          ])
+        ])
+      ]);
+    }
+  };
+  var ResetPassword_default = ResetPassword;
+
   // src/index.js
-  import_mithril7.default.route.prefix = "";
-  import_mithril7.default.route(document.getElementById("app"), "/", {
+  import_mithril8.default.route.prefix = "";
+  import_mithril8.default.route(document.getElementById("app"), "/", {
     "/": LandingPage_default,
     "/signup": SignupForm_default,
     "/login": LoginForm_default,
     "/profile": ProfilePage_default,
     "/change-password": ChangePasswordForm_default,
-    // ✅ Route now available
-    "/forgot-password": ForgotPasswordForm_default
-    // ✅ New route
+    "/forgot-password": ForgotPasswordForm_default,
+    "/reset": ResetPassword_default
   });
 })();
