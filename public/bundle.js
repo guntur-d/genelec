@@ -4607,7 +4607,8 @@
         email: "Registered Email",
         button: "Send Reset Link",
         success: "Reset link sent! Please check your email.",
-        error: "Could not send reset email. Try again."
+        error: "Could not send reset email. Try again.",
+        serverError: "Server error. Please try again later."
       },
       passwordResetSuccess: "Password reset successfully! Please log in with your new password."
     },
@@ -4625,7 +4626,8 @@
         email: "Email Terdaftar",
         button: "Kirim Tautan Atur Ulang",
         success: "Tautan atur ulang dikirim! Silakan periksa email Anda.",
-        error: "Gagal mengirim email atur ulang. Coba lagi."
+        error: "Gagal mengirim email atur ulang. Coba lagi.",
+        serverError: "Kesalahan server. Silakan coba lagi nanti."
       },
       passwordResetSuccess: "Kata sandi berhasil diatur ulang! Silakan masuk dengan kata sandi baru Anda."
     }
@@ -4759,7 +4761,7 @@
               LoginForm.resetError && (0, import_mithril3.default)(
                 "p",
                 { style: "color: red" },
-                lang3 === "id" ? "\u274C Gagal mengirim tautan reset" : "\u274C Failed to send reset email"
+                `\u274C ${LoginForm.resetError}`
               ),
               (0, import_mithril3.default)("form", {
                 onsubmit: async (e) => {
@@ -4776,7 +4778,7 @@
                     LoginForm.resetSuccess = true;
                     LoginForm.resetStep = 2;
                   } catch (err) {
-                    LoginForm.resetError = true;
+                    LoginForm.resetError = err.message || t2.reset.serverError;
                   }
                   LoginForm.resetLoading = false;
                 }
@@ -5133,6 +5135,11 @@
     oninit: () => {
       ResetPassword.email = import_mithril7.default.route.param("email") || "";
       ResetPassword.code = import_mithril7.default.route.param("code") || "";
+      ResetPassword.newPassword = "";
+      ResetPassword.confirmPassword = "";
+      ResetPassword.error = "";
+      ResetPassword.success = "";
+      ResetPassword.loading = false;
     },
     view: () => {
       const lang3 = localStorage.getItem("lang") || "en";

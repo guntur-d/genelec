@@ -233,41 +233,47 @@ app.post("/api/request-password-reset", async (req, reply) => {
   const { email } = req.body || {}
   const lang = req.headers["x-lang"] || "en"  // detect user language
 
-  if (!email) return reply.code(400).send({ error: "Email required" })
-
-  await connectDB()
-  const user = await User.findOne({ email })
-  if (!user) return reply.code(404).send({ error: "Email not found" })
-
-  const resetCode = Math.floor(100000 + Math.random() * 900000).toString()
-  const expiresAt = Date.now() + 15 * 60 * 1000 // valid for 15 minutes
-
-  user.resetCode = resetCode
-  user.resetExpires = expiresAt
-  await user.save()
-
-  const url = `http://localhost:3000/reset/?code=${encodeURIComponent(resetCode)}&email=${encodeURIComponent(email)}`
-
-  const subject = lang === "id" ? "Atur Ulang Kata Sandi Anda" : "Reset Your Password"
-  const html = lang === "id"
-    ? `<p>Berikut adalah kode atur ulang kata sandi Anda: <b>${resetCode}</b></p><p>Atau klik <a href="${url}">tautan ini</a> untuk membuka formulir atur ulang.</p>`
-    : `<p>Here is your password reset code: <b>${resetCode}</b></p><p>Or click <a href="${url}">this link</a> to open the reset form.</p>`
-
+  if (!email) {
+    return reply.code(400).send({ error: "Email required" })
+  }
 
   try {
-    await transporter.sendMail({
-      to: email,
-      subject,
-      html,
-      from: `No-Reply <${process.env.EMAIL_USER}>`,
-    });
+    await connectDB()
+    const user = await User.findOne({ email })
 
-    reply.send({ msg: "Reset instructions sent" });
+    // Security: Don't reveal if an email is registered.
+    // We proceed as if sending, but only do it if the user exists.
+    if (user) {
+      const resetCode = Math.floor(100000 + Math.random() * 900000).toString()
+      const expiresAt = Date.now() + 15 * 60 * 1000 // 15 minutes
+
+      user.resetCode = resetCode
+      user.resetExpires = expiresAt
+      await user.save()
+
+      const protocol = process.env.VERCEL_URL ? 'https' : 'http'
+      const host = process.env.VERCEL_URL || req.headers.host
+      const baseUrl = `${protocol}://${host}`
+      const url = `${baseUrl}/reset/?code=${encodeURIComponent(resetCode)}&email=${encodeURIComponent(email)}`
+
+      const subject = lang === "id" ? "Atur Ulang Kata Sandi Anda" : "Reset Your Password"
+      const html = lang === "id"
+        ? `<p>Berikut adalah kode atur ulang kata sandi Anda: <b>${resetCode}</b></p><p>Atau klik <a href="${url}">tautan ini</a> untuk membuka formulir atur ulang.</p>`
+        : `<p>Here is your password reset code: <b>${resetCode}</b></p><p>Or click <a href="${url}">this link</a> to open the reset form.</p>`
+
+      // This is a slow operation, the user must wait for it to complete.
+      await transporter.sendMail({
+        to: email, subject, html, from: `No-Reply <${process.env.EMAIL_USER}>`,
+      })
+      console.log(`Password reset email sent to ${email}`)
+    }
+
+    // Send success response after all operations are done.
+    reply.send({ msg: "If your email is registered, you will receive reset instructions." })
   } catch (err) {
-    console.error("Error sending reset email:", err);
-
-    // You could customize the response here based on error type
-    reply.status(500).send({ error: "Failed to send reset instructions. Please try again later." });
+    console.error("Error sending reset email:", err)
+    // Send a generic error to the client, but log the real error on the server.
+    reply.status(500).send({ error: "Failed to send reset instructions. Please try again later." })
   }
 })
 

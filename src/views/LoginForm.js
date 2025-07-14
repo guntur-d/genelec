@@ -20,6 +20,7 @@ const i18n = {
       button: "Send Reset Link",
       success: "Reset link sent! Please check your email.",
       error: "Could not send reset email. Try again.",
+      serverError: "Server error. Please try again later.",
     },
     passwordResetSuccess: "Password reset successfully! Please log in with your new password.",
   },
@@ -38,6 +39,7 @@ const i18n = {
       button: "Kirim Tautan Atur Ulang",
       success: "Tautan atur ulang dikirim! Silakan periksa email Anda.",
       error: "Gagal mengirim email atur ulang. Coba lagi.",
+      serverError: "Kesalahan server. Silakan coba lagi nanti.",
     },
     passwordResetSuccess: "Kata sandi berhasil diatur ulang! Silakan masuk dengan kata sandi baru Anda.",
   },
@@ -180,7 +182,7 @@ const LoginForm = {
             lang === "id" ? "✅ Kode berhasil dikirim. Silakan cek email Anda." : "✅ Code sent successfully. Please check your email."
           ),
           LoginForm.resetError && m("p", { style: "color: red" },
-            lang === "id" ? "❌ Gagal mengirim tautan reset" : "❌ Failed to send reset email"
+            `❌ ${LoginForm.resetError}`
           ),
           m("form", {
             onsubmit: async (e) => {
@@ -197,7 +199,7 @@ const LoginForm = {
                 LoginForm.resetSuccess = true
                 LoginForm.resetStep = 2
               } catch (err) {
-                LoginForm.resetError = true
+                LoginForm.resetError = err.message || t.reset.serverError
               }
               LoginForm.resetLoading = false
             }

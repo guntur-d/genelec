@@ -12,6 +12,12 @@ const ResetPassword = {
   oninit: () => {
     ResetPassword.email = m.route.param("email") || ""
     ResetPassword.code = m.route.param("code") || ""
+    // Reset other state properties for a clean slate
+    ResetPassword.newPassword = ""
+    ResetPassword.confirmPassword = ""
+    ResetPassword.error = ""
+    ResetPassword.success = ""
+    ResetPassword.loading = false
   },
 
   view: () => {
