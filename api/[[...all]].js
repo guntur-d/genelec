@@ -222,8 +222,11 @@ if (!process.env.VERCEL) {
 
 
 const transporter = nodemailer.createTransport({
-  service: "gmail", // or SMTP config
+  host: "mail.efin.site",
+  port: 465,
+  secure: true,
   auth: {
+    // These values are configured in your .env file
     user: process.env.EMAIL_USER,
     pass: process.env.EMAIL_PASS,
   },
@@ -261,11 +264,21 @@ app.post("/api/request-password-reset", async (req, reply) => {
         ? `<p>Berikut adalah kode atur ulang kata sandi Anda: <b>${resetCode}</b></p><p>Atau klik <a href="${url}">tautan ini</a> untuk membuka formulir atur ulang.</p>`
         : `<p>Here is your password reset code: <b>${resetCode}</b></p><p>Or click <a href="${url}">this link</a> to open the reset form.</p>`
 
-      // This is a slow operation, the user must wait for it to complete.
-      await transporter.sendMail({
+      const mailOptions = {
         to: email, subject, html, from: `No-Reply <${process.env.EMAIL_USER}>`,
+      }
+
+      // This is a slow operation, so we wait for it to complete by wrapping the callback in a Promise.
+      await new Promise((resolve, reject) => {
+        transporter.sendMail(mailOptions, function (error, info) {
+          if (error) {
+            console.error("Nodemailer error:", error);
+            return reject(error);
+          }
+          console.log('Email sent: ' + info.response);
+          resolve(info);
+        });
       })
-      console.log(`Password reset email sent to ${email}`)
     }
 
     // Send success response after all operations are done.
