@@ -7,9 +7,9 @@ import { config as loadEnv } from "dotenv"
 console.log("Loading environment variables...")
 
 // Load .env locally
-if (!process.env.VERCEL) loadEnv()
+//if (!process.env.VERCEL) loadEnv()
 
-
+loadEnv()
 
 console.log("Connecting to:", process.env.MONGODB_URI)
 
