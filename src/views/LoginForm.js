@@ -87,7 +87,11 @@ const LoginForm = {
   view: () => {
 
     document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto")
-    const lang = localStorage.getItem("lang") || "en"
+    let lang = localStorage.getItem("lang")
+    // Validate that the language from localStorage is a valid key in our i18n object.
+    if (!i18n.hasOwnProperty(lang)) {
+      lang = "en"
+    }
     const t = i18n[lang]
 
 

@@ -4676,7 +4676,10 @@
     },
     view: () => {
       document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto");
-      const lang2 = localStorage.getItem("lang") || "en";
+      let lang2 = localStorage.getItem("lang");
+      if (!i18n3.hasOwnProperty(lang2)) {
+        lang2 = "en";
+      }
       const t = i18n3[lang2];
       return (0, import_mithril3.default)(
         "main.container",
