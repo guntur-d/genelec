@@ -1,7 +1,7 @@
 {
-  "name": "fastify-vercel-app",
+  "name": "mithril-fastify-vercel-boilerplate",
   "version": "1.0.0",
-  "description": "A simple Fastify application for testing on Vercel.",
+  "description": "A full-stack boilerplate with Mithril.js, Fastify, and MongoDB, ready for serverless deployment on Vercel.",
   "main": "src/server.js",
   "type": "module",
   "scripts": {
