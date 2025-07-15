@@ -1,9 +1,5248 @@
-(()=>{var wn=Object.create;var Dr=Object.defineProperty;var bn=Object.getOwnPropertyDescriptor;var Sn=Object.getOwnPropertyNames;var Pn=Object.getPrototypeOf,xn=Object.prototype.hasOwnProperty;var X=(e,r)=>()=>(r||e((r={exports:{}}).exports,r),r.exports);var kn=(e,r,t,i)=>{if(r&&typeof r=="object"||typeof r=="function")for(let l of Sn(r))!xn.call(e,l)&&l!==t&&Dr(e,l,{get:()=>r[l],enumerable:!(i=bn(r,l))||i.enumerable});return e};var xe=(e,r,t)=>(t=e!=null?wn(Pn(e)):{},kn(r||!e||!e.__esModule?Dr(t,"default",{value:e,enumerable:!0}):t,e));var ye=X((vo,Gr)=>{"use strict";function Le(e,r,t,i,l,s){return{tag:e,key:r,attrs:t,children:i,text:l,dom:s,is:void 0,domSize:void 0,state:void 0,events:void 0,instance:void 0}}Le.normalize=function(e){return Array.isArray(e)?Le("[",void 0,void 0,Le.normalizeChildren(e),void 0,void 0):e==null||typeof e=="boolean"?null:typeof e=="object"?e:Le("#",void 0,void 0,String(e),void 0,void 0)};Le.normalizeChildren=function(e){var r=[];if(e.length){for(var t=e[0]!=null&&e[0].key!=null,i=1;i<e.length;i++)if((e[i]!=null&&e[i].key!=null)!==t)throw new TypeError(t&&(e[i]!=null||typeof e[i]=="boolean")?"In fragments, vnodes must either all have keys or none have keys. You may wish to consider using an explicit keyed empty fragment, m.fragment({key: ...}), instead of a hole.":"In fragments, vnodes must either all have keys or none have keys.");for(var i=0;i<e.length;i++)r[i]=Le.normalize(e[i])}return r};Gr.exports=Le});var lr=X((yo,Zr)=>{"use strict";var Ln=ye();Zr.exports=function(){var e=arguments[this],r=this+1,t;if(e==null?e={}:(typeof e!="object"||e.tag!=null||Array.isArray(e))&&(e={},r=this),arguments.length===r+1)t=arguments[r],Array.isArray(t)||(t=[t]);else for(t=[];r<arguments.length;)t.push(arguments[r++]);return Ln("",e.key,e,t)}});var Ze=X((wo,_r)=>{"use strict";_r.exports={}.hasOwnProperty});var fr=X((bo,Hr)=>{"use strict";var En=ye(),Cn=lr(),cr=Ze(),An=/(?:(^|#|\.)([^#\.\[\]]+))|(\[(.+?)(?:\s*=\s*("|'|)((?:\\["'\]]|.)*?)\5)?\])/g,zr=Object.create(null);function Fn(e){for(var r in e)if(cr.call(e,r))return!1;return!0}function In(e){for(var r,t="div",i=[],l={};r=An.exec(e);){var s=r[1],o=r[2];if(s===""&&o!=="")t=o;else if(s==="#")l.id=o;else if(s===".")i.push(o);else if(r[3][0]==="["){var c=r[6];c&&(c=c.replace(/\\(["'])/g,"$1").replace(/\\\\/g,"\\")),r[4]==="class"?i.push(c):l[r[4]]=c===""?c:c||!0}}return i.length>0&&(l.className=i.join(" ")),Fn(l)&&(l=null),zr[e]={tag:t,attrs:l}}function Rn(e,r){var t=r.attrs,i=cr.call(t,"class"),l=i?t.class:t.className;return r.tag=e.tag,e.attrs!=null?(t=Object.assign({},e.attrs,t),(l!=null||e.attrs.className!=null)&&(t.className=l!=null?e.attrs.className!=null?String(e.attrs.className)+" "+String(l):l:e.attrs.className!=null?e.attrs.className:null)):l!=null&&(t.className=l),i&&(t.class=null),e.tag==="input"&&cr.call(t,"type")&&(t=Object.assign({type:t.type},t)),r.is=t.is,r.attrs=t,r}function Tn(e){if(e==null||typeof e!="string"&&typeof e!="function"&&typeof e.view!="function")throw Error("The selector must be either a string or a component.");var r=Cn.apply(1,arguments);return typeof e=="string"&&(r.children=En.normalizeChildren(r.children),e!=="[")?Rn(zr[e]||In(e),r):(r.tag=e,r)}Hr.exports=Tn});var Xr=X((So,Yr)=>{"use strict";var Nn=ye();Yr.exports=function(e){return e==null&&(e=""),Nn("<",void 0,void 0,e,void 0,void 0)}});var Ur=X((Po,Br)=>{"use strict";var Mn=ye(),On=lr();Br.exports=function(){var e=On.apply(0,arguments);return e.tag="[",e.children=Mn.normalizeChildren(e.children),e}});var qr=X((xo,Jr)=>{"use strict";var mr=fr();mr.trust=Xr();mr.fragment=Ur();Jr.exports=mr});var pr=X((ko,Kr)=>{"use strict";var dr=new WeakMap;function*jn(e){var r=e.dom,t=e.domSize,i=dr.get(r);if(r!=null)do{var l=r.nextSibling;dr.get(r)===i&&(yield r,t--),r=l}while(t)}Kr.exports={delayedRemoval:dr,domFor:jn}});var et=X((Lo,$r)=>{"use strict";var gr=ye(),Qr=pr(),Vn=Qr.delayedRemoval,hr=Qr.domFor;$r.exports=function(){var e={svg:"http://www.w3.org/2000/svg",math:"http://www.w3.org/1998/Math/MathML"},r,t;function i(a){return a.ownerDocument}function l(a){return a.attrs&&a.attrs.xmlns||e[a.tag]}function s(a,n){if(a.state!==n)throw new Error("'vnode.state' must not be modified.")}function o(a){var n=a.state;try{return this.apply(n,arguments)}finally{s(a,n)}}function c(a){try{return i(a).activeElement}catch{return null}}function f(a,n,u,g,h,w,O){for(var j=u;j<g;j++){var k=n[j];k!=null&&m(a,k,h,O,w)}}function m(a,n,u,g,h){var w=n.tag;if(typeof w=="string")switch(n.state={},n.attrs!=null&&rr(n.attrs,n,u),w){case"#":p(a,n,h);break;case"<":b(a,n,g,h);break;case"[":y(a,n,u,g,h);break;default:E(a,n,u,g,h)}else Z(a,n,u,g,h)}function p(a,n,u){n.dom=i(a).createTextNode(n.children),se(a,n.dom,u)}var d={caption:"table",thead:"table",tbody:"table",tfoot:"table",tr:"tbody",th:"tr",td:"tr",colgroup:"table",col:"colgroup"};function b(a,n,u,g){var h=n.children.match(/^\s*?<(\w+)/im)||[],w=i(a).createElement(d[h[1]]||"div");u==="http://www.w3.org/2000/svg"?(w.innerHTML='<svg xmlns="http://www.w3.org/2000/svg">'+n.children+"</svg>",w=w.firstChild):w.innerHTML=n.children,n.dom=w.firstChild,n.domSize=w.childNodes.length;for(var O=i(a).createDocumentFragment(),j;j=w.firstChild;)O.appendChild(j);se(a,O,g)}function y(a,n,u,g,h){var w=i(a).createDocumentFragment();if(n.children!=null){var O=n.children;f(w,O,0,O.length,u,null,g)}n.dom=w.firstChild,n.domSize=w.childNodes.length,se(a,w,h)}function E(a,n,u,g,h){var w=n.tag,O=n.attrs,j=n.is;g=l(n)||g;var k=g?j?i(a).createElementNS(g,w,{is:j}):i(a).createElementNS(g,w):j?i(a).createElement(w,{is:j}):i(a).createElement(w);if(n.dom=k,O!=null&&mn(n,O,g),se(a,k,h),!he(n)&&n.children!=null){var G=n.children;f(k,G,0,G.length,u,null,g),n.tag==="select"&&O!=null&&pn(n,O)}}function D(a,n){var u;if(typeof a.tag.view=="function"){if(a.state=Object.create(a.tag),u=a.state.view,u.$$reentrantLock$$!=null)return;u.$$reentrantLock$$=!0}else{if(a.state=void 0,u=a.tag,u.$$reentrantLock$$!=null)return;u.$$reentrantLock$$=!0,a.state=a.tag.prototype!=null&&typeof a.tag.prototype.view=="function"?new a.tag(a):a.tag(a)}if(rr(a.state,a,n),a.attrs!=null&&rr(a.attrs,a,n),a.instance=gr.normalize(o.call(a.state.view,a)),a.instance===a)throw Error("A view cannot return the vnode it received as argument");u.$$reentrantLock$$=null}function Z(a,n,u,g,h){D(n,u),n.instance!=null?(m(a,n.instance,u,g,h),n.dom=n.instance.dom,n.domSize=n.dom!=null?n.instance.domSize:0):n.domSize=0}function A(a,n,u,g,h,w){if(!(n===u||n==null&&u==null))if(n==null||n.length===0)f(a,u,0,u.length,g,h,w);else if(u==null||u.length===0)Te(a,n,0,n.length);else{var O=n[0]!=null&&n[0].key!=null,j=u[0]!=null&&u[0].key!=null,k=0,G=0;if(!O)for(;G<n.length&&n[G]==null;)G++;if(!j)for(;k<u.length&&u[k]==null;)k++;if(O!==j)Te(a,n,G,n.length),f(a,u,k,u.length,g,h,w);else if(j){for(var te=n.length-1,K=u.length-1,Ge,ne,q,re,z,ar;te>=G&&K>=k&&(re=n[te],z=u[K],re.key===z.key);)re!==z&&N(a,re,z,g,h,w),z.dom!=null&&(h=z.dom),te--,K--;for(;te>=G&&K>=k&&(ne=n[G],q=u[k],ne.key===q.key);)G++,k++,ne!==q&&N(a,ne,q,g,fe(n,G,h),w);for(;te>=G&&K>=k&&!(k===K||ne.key!==z.key||re.key!==q.key);)ar=fe(n,G,h),Pe(a,re,ar),re!==q&&N(a,re,q,g,ar,w),++k<=--K&&Pe(a,ne,h),ne!==z&&N(a,ne,z,g,h,w),z.dom!=null&&(h=z.dom),G++,te--,re=n[te],z=u[K],ne=n[G],q=u[k];for(;te>=G&&K>=k&&re.key===z.key;)re!==z&&N(a,re,z,g,h,w),z.dom!=null&&(h=z.dom),te--,K--,re=n[te],z=u[K];if(k>K)Te(a,n,G,te+1);else if(G>te)f(a,u,k,K+1,g,h,w);else{var yn=h,Wr=K-k+1,Me=new Array(Wr),ir=0,J=0,or=2147483647,sr=0,Ge,ur;for(J=0;J<Wr;J++)Me[J]=-1;for(J=K;J>=k;J--){Ge==null&&(Ge=x(n,G,te+1)),z=u[J];var Ce=Ge[z.key];Ce!=null&&(or=Ce<or?Ce:-1,Me[J-k]=Ce,re=n[Ce],n[Ce]=null,re!==z&&N(a,re,z,g,h,w),z.dom!=null&&(h=z.dom),sr++)}if(h=yn,sr!==te-G+1&&Te(a,n,G,te+1),sr===0)f(a,u,k,K+1,g,h,w);else if(or===-1)for(ur=Y(Me),ir=ur.length-1,J=K;J>=k;J--)q=u[J],Me[J-k]===-1?m(a,q,g,w,h):ur[ir]===J-k?ir--:Pe(a,q,h),q.dom!=null&&(h=u[J].dom);else for(J=K;J>=k;J--)q=u[J],Me[J-k]===-1&&m(a,q,g,w,h),q.dom!=null&&(h=u[J].dom)}}else{var nr=n.length<u.length?n.length:u.length;for(k=k<G?k:G;k<nr;k++)ne=n[k],q=u[k],!(ne===q||ne==null&&q==null)&&(ne==null?m(a,q,g,w,fe(n,k+1,h)):q==null?De(a,ne):N(a,ne,q,g,fe(n,k+1,h),w));n.length>nr&&Te(a,n,k,n.length),u.length>nr&&f(a,u,k,u.length,g,h,w)}}}function N(a,n,u,g,h,w){var O=n.tag,j=u.tag;if(O===j&&n.is===u.is){if(u.state=n.state,u.events=n.events,vn(u,n))return;if(typeof O=="string")switch(u.attrs!=null&&tr(u.attrs,u,g),O){case"#":I(n,u);break;case"<":P(a,n,u,w,h);break;case"[":T(a,n,u,g,h,w);break;default:L(n,u,g,w)}else _(a,n,u,g,h,w)}else De(a,n),m(a,u,g,w,h)}function I(a,n){a.children.toString()!==n.children.toString()&&(a.dom.nodeValue=n.children),n.dom=a.dom}function P(a,n,u,g,h){n.children!==u.children?(Nr(a,n),b(a,u,g,h)):(u.dom=n.dom,u.domSize=n.domSize)}function T(a,n,u,g,h,w){A(a,n.children,u.children,g,h,w);var O=0,j=u.children;if(u.dom=null,j!=null){for(var k=0;k<j.length;k++){var G=j[k];G!=null&&G.dom!=null&&(u.dom==null&&(u.dom=G.dom),O+=G.domSize||1)}O!==1&&(u.domSize=O)}}function L(a,n,u,g){var h=n.dom=a.dom;g=l(n)||g,gn(n,a.attrs,n.attrs,g),he(n)||A(h,a.children,n.children,u,null,g)}function _(a,n,u,g,h,w){if(u.instance=gr.normalize(o.call(u.state.view,u)),u.instance===u)throw Error("A view cannot return the vnode it received as argument");tr(u.state,u,g),u.attrs!=null&&tr(u.attrs,u,g),u.instance!=null?(n.instance==null?m(a,u.instance,g,w,h):N(a,n.instance,u.instance,g,h,w),u.dom=u.instance.dom,u.domSize=u.instance.domSize):n.instance!=null?(De(a,n.instance),u.dom=void 0,u.domSize=0):(u.dom=n.dom,u.domSize=n.domSize)}function x(a,n,u){for(var g=Object.create(null);n<u;n++){var h=a[n];if(h!=null){var w=h.key;w!=null&&(g[w]=n)}}return g}var R=[];function Y(a){for(var n=[0],u=0,g=0,h=0,w=R.length=a.length,h=0;h<w;h++)R[h]=a[h];for(var h=0;h<w;++h)if(a[h]!==-1){var O=n[n.length-1];if(a[O]<a[h]){R[h]=O,n.push(h);continue}for(u=0,g=n.length-1;u<g;){var j=(u>>>1)+(g>>>1)+(u&g&1);a[n[j]]<a[h]?u=j+1:g=j}a[h]<a[n[u]]&&(u>0&&(R[h]=n[u-1]),n[u]=h)}for(u=n.length,g=n[u-1];u-- >0;)n[u]=g,g=R[g];return R.length=0,n}function fe(a,n,u){for(;n<a.length;n++)if(a[n]!=null&&a[n].dom!=null)return a[n].dom;return u}function Pe(a,n,u){if(n.dom!=null){var g;if(n.domSize==null)g=n.dom;else{g=i(a).createDocumentFragment();for(var h of hr(n))g.appendChild(h)}se(a,g,u)}}function se(a,n,u){u!=null?a.insertBefore(n,u):a.appendChild(n)}function he(a){if(a.attrs==null||a.attrs.contenteditable==null&&a.attrs.contentEditable==null)return!1;var n=a.children;if(n!=null&&n.length===1&&n[0].tag==="<"){var u=n[0].children;a.dom.innerHTML!==u&&(a.dom.innerHTML=u)}else if(n!=null&&n.length!==0)throw new Error("Child node of a contenteditable must be trusted.");return!0}function Te(a,n,u,g){for(var h=u;h<g;h++){var w=n[h];w!=null&&De(a,w)}}function Rr(a,n,u,g){var h=n.state,w=o.call(u.onbeforeremove,n);if(w!=null){var O=t;for(var j of hr(n))Vn.set(j,O);g.v++,Promise.resolve(w).finally(function(){s(n,h),Tr(a,n,g)})}}function Tr(a,n,u){--u.v===0&&(Qe(n),Nr(a,n))}function De(a,n){var u={v:1};typeof n.tag!="string"&&typeof n.state.onbeforeremove=="function"&&Rr(a,n,n.state,u),n.attrs&&typeof n.attrs.onbeforeremove=="function"&&Rr(a,n,n.attrs,u),Tr(a,n,u)}function Nr(a,n){if(n.dom!=null)if(n.domSize==null)a.removeChild(n.dom);else for(var u of hr(n))a.removeChild(u)}function Qe(a){if(typeof a.tag!="string"&&typeof a.state.onremove=="function"&&o.call(a.state.onremove,a),a.attrs&&typeof a.attrs.onremove=="function"&&o.call(a.attrs.onremove,a),typeof a.tag!="string")a.instance!=null&&Qe(a.instance);else{a.events!=null&&(a.events._=null);var n=a.children;if(Array.isArray(n))for(var u=0;u<n.length;u++){var g=n[u];g!=null&&Qe(g)}}}function mn(a,n,u){for(var g in n)$e(a,g,null,n[g],u)}function $e(a,n,u,g,h){if(!(n==="key"||g==null||Mr(n)||u===g&&!hn(a,n)&&typeof g!="object")){if(n[0]==="o"&&n[1]==="n")return Vr(a,n,g);if(n.slice(0,6)==="xlink:")a.dom.setAttributeNS("http://www.w3.org/1999/xlink",n.slice(6),g);else if(n==="style")jr(a.dom,u,g);else if(Or(a,n,h)){if(n==="value"){if((a.tag==="input"||a.tag==="textarea")&&a.dom.value===""+g||a.tag==="select"&&u!==null&&a.dom.value===""+g||a.tag==="option"&&u!==null&&a.dom.value===""+g)return;if(a.tag==="input"&&a.attrs.type==="file"&&""+g!=""){console.error("`value` is read-only on file inputs!");return}}a.tag==="input"&&n==="type"?a.dom.setAttribute(n,g):a.dom[n]=g}else typeof g=="boolean"?g?a.dom.setAttribute(n,""):a.dom.removeAttribute(n):a.dom.setAttribute(n==="className"?"class":n,g)}}function dn(a,n,u,g){if(!(n==="key"||u==null||Mr(n)))if(n[0]==="o"&&n[1]==="n")Vr(a,n,void 0);else if(n==="style")jr(a.dom,u,null);else if(Or(a,n,g)&&n!=="className"&&n!=="title"&&!(n==="value"&&(a.tag==="option"||a.tag==="select"&&a.dom.selectedIndex===-1&&a.dom===c(a.dom)))&&!(a.tag==="input"&&n==="type"))a.dom[n]=null;else{var h=n.indexOf(":");h!==-1&&(n=n.slice(h+1)),u!==!1&&a.dom.removeAttribute(n==="className"?"class":n)}}function pn(a,n){if("value"in n)if(n.value===null)a.dom.selectedIndex!==-1&&(a.dom.value=null);else{var u=""+n.value;(a.dom.value!==u||a.dom.selectedIndex===-1)&&(a.dom.value=u)}"selectedIndex"in n&&$e(a,"selectedIndex",null,n.selectedIndex,void 0)}function gn(a,n,u,g){var h;if(n!=null){n===u&&console.warn("Don't reuse attrs object, use new object for every redraw, this will throw in next major");for(var w in n)(h=n[w])!=null&&(u==null||u[w]==null)&&dn(a,w,h,g)}if(u!=null)for(var w in u)$e(a,w,n&&n[w],u[w],g)}function hn(a,n){return n==="value"||n==="checked"||n==="selectedIndex"||n==="selected"&&(a.dom===c(a.dom)||a.tag==="option"&&a.dom.parentNode===c(a.dom))}function Mr(a){return a==="oninit"||a==="oncreate"||a==="onupdate"||a==="onremove"||a==="onbeforeremove"||a==="onbeforeupdate"}function Or(a,n,u){return u===void 0&&(a.tag.indexOf("-")>-1||a.is||n!=="href"&&n!=="list"&&n!=="form"&&n!=="width"&&n!=="height")&&n in a.dom}function jr(a,n,u){if(n!==u)if(u==null)a.style="";else if(typeof u!="object")a.style=u;else if(n==null||typeof n!="object"){a.style="";for(var g in u){var h=u[g];h!=null&&(g.includes("-")?a.style.setProperty(g,String(h)):a.style[g]=String(h))}}else{for(var g in n)n[g]!=null&&u[g]==null&&(g.includes("-")?a.style.removeProperty(g):a.style[g]="");for(var g in u){var h=u[g];h!=null&&(h=String(h))!==String(n[g])&&(g.includes("-")?a.style.setProperty(g,h):a.style[g]=h)}}}function er(){this._=r}er.prototype=Object.create(null),er.prototype.handleEvent=function(a){var n=this["on"+a.type],u;typeof n=="function"?u=n.call(a.currentTarget,a):typeof n.handleEvent=="function"&&n.handleEvent(a);var g=this;g._!=null&&(a.redraw!==!1&&(0,g._)(),u!=null&&typeof u.then=="function"&&Promise.resolve(u).then(function(){g._!=null&&a.redraw!==!1&&(0,g._)()})),u===!1&&(a.preventDefault(),a.stopPropagation())};function Vr(a,n,u){if(a.events!=null){if(a.events._=r,a.events[n]===u)return;u!=null&&(typeof u=="function"||typeof u=="object")?(a.events[n]==null&&a.dom.addEventListener(n.slice(2),a.events,!1),a.events[n]=u):(a.events[n]!=null&&a.dom.removeEventListener(n.slice(2),a.events,!1),a.events[n]=void 0)}else u!=null&&(typeof u=="function"||typeof u=="object")&&(a.events=new er,a.dom.addEventListener(n.slice(2),a.events,!1),a.events[n]=u)}function rr(a,n,u){typeof a.oninit=="function"&&o.call(a.oninit,n),typeof a.oncreate=="function"&&u.push(o.bind(a.oncreate,n))}function tr(a,n,u){typeof a.onupdate=="function"&&u.push(o.bind(a.onupdate,n))}function vn(a,n){do{if(a.attrs!=null&&typeof a.attrs.onbeforeupdate=="function"){var u=o.call(a.attrs.onbeforeupdate,a,n);if(u!==void 0&&!u)break}if(typeof a.tag!="string"&&typeof a.state.onbeforeupdate=="function"){var u=o.call(a.state.onbeforeupdate,a,n);if(u!==void 0&&!u)break}return!1}while(!1);return a.dom=n.dom,a.domSize=n.domSize,a.instance=n.instance,a.attrs=n.attrs,a.children=n.children,a.text=n.text,!0}var Ne;return function(a,n,u){if(!a)throw new TypeError("DOM element being rendered to does not exist.");if(Ne!=null&&a.contains(Ne))throw new TypeError("Node is currently being rendered to and thus is locked.");var g=r,h=Ne,w=[],O=c(a),j=a.namespaceURI;Ne=a,r=typeof u=="function"?u:void 0,t={};try{a.vnodes==null&&(a.textContent=""),n=gr.normalizeChildren(Array.isArray(n)?n:[n]),A(a,a.vnodes,n,w,null,j==="http://www.w3.org/1999/xhtml"?void 0:j),a.vnodes=n,O!=null&&c(a)!==O&&typeof O.focus=="function"&&O.focus();for(var k=0;k<w.length;k++)w[k]()}finally{r=g,Ne=h}}}});var vr=X((Eo,rt)=>{"use strict";rt.exports=et()(typeof window<"u"?window:null)});var at=X((Co,nt)=>{"use strict";var tt=ye();nt.exports=function(e,r,t){var i=[],l=!1,s=-1;function o(){for(s=0;s<i.length;s+=2)try{e(i[s],tt(i[s+1]),c)}catch(m){t.error(m)}s=-1}function c(){l||(l=!0,r(function(){l=!1,o()}))}c.sync=o;function f(m,p){if(p!=null&&p.view==null&&typeof p!="function")throw new TypeError("m.mount expects a component, not a vnode.");var d=i.indexOf(m);d>=0&&(i.splice(d,2),d<=s&&(s-=2),e(m,[])),p!=null&&(i.push(m,p),e(m,tt(p),c))}return{mount:f,redraw:c}}});var _e=X((Ao,it)=>{"use strict";var Wn=vr();it.exports=at()(Wn,typeof requestAnimationFrame<"u"?requestAnimationFrame:null,typeof console<"u"?console:null)});var yr=X((Fo,ot)=>{"use strict";ot.exports=function(e){if(Object.prototype.toString.call(e)!=="[object Object]")return"";var r=[];for(var t in e)i(t,e[t]);return r.join("&");function i(l,s){if(Array.isArray(s))for(var o=0;o<s.length;o++)i(l+"["+o+"]",s[o]);else if(Object.prototype.toString.call(s)==="[object Object]")for(var o in s)i(l+"["+o+"]",s[o]);else r.push(encodeURIComponent(l)+(s!=null&&s!==""?"="+encodeURIComponent(s):""))}}});var ze=X((Io,st)=>{"use strict";var Dn=yr();st.exports=function(e,r){if(/:([^\/\.-]+)(\.{3})?:/.test(e))throw new SyntaxError("Template parameter names must be separated by either a '/', '-', or '.'.");if(r==null)return e;var t=e.indexOf("?"),i=e.indexOf("#"),l=i<0?e.length:i,s=t<0?l:t,o=e.slice(0,s),c={};Object.assign(c,r);var f=o.replace(/:([^\/\.-]+)(\.{3})?/g,function(D,Z,A){return delete c[Z],r[Z]==null?D:A?r[Z]:encodeURIComponent(String(r[Z]))}),m=f.indexOf("?"),p=f.indexOf("#"),d=p<0?f.length:p,b=m<0?d:m,y=f.slice(0,b);t>=0&&(y+=e.slice(t,l)),m>=0&&(y+=(t<0?"?":"&")+f.slice(m,d));var E=Dn(c);return E&&(y+=(t<0&&m<0?"?":"&")+E),i>=0&&(y+=e.slice(i)),p>=0&&(y+=(i<0?"":"&")+f.slice(p)),y}});var ct=X((Ro,lt)=>{"use strict";var Gn=ze(),ut=Ze();lt.exports=function(e,r){function t(s){return new Promise(s)}function i(s,o){return new Promise(function(c,f){s=Gn(s,o.params);var m=o.method!=null?o.method.toUpperCase():"GET",p=o.body,d=(o.serialize==null||o.serialize===JSON.serialize)&&!(p instanceof e.FormData||p instanceof e.URLSearchParams),b=o.responseType||(typeof o.extract=="function"?"":"json"),y=new e.XMLHttpRequest,E=!1,D=!1,Z=y,A,N=y.abort;y.abort=function(){E=!0,N.call(this)},y.open(m,s,o.async!==!1,typeof o.user=="string"?o.user:void 0,typeof o.password=="string"?o.password:void 0),d&&p!=null&&!l(o,"content-type")&&y.setRequestHeader("Content-Type","application/json; charset=utf-8"),typeof o.deserialize!="function"&&!l(o,"accept")&&y.setRequestHeader("Accept","application/json, text/*"),o.withCredentials&&(y.withCredentials=o.withCredentials),o.timeout&&(y.timeout=o.timeout),y.responseType=b;for(var I in o.headers)ut.call(o.headers,I)&&y.setRequestHeader(I,o.headers[I]);y.onreadystatechange=function(P){if(!E&&P.target.readyState===4)try{var T=P.target.status>=200&&P.target.status<300||P.target.status===304||/^file:\/\//i.test(s),L=P.target.response,_;if(b==="json"){if(!P.target.responseType&&typeof o.extract!="function")try{L=JSON.parse(P.target.responseText)}catch{L=null}}else(!b||b==="text")&&L==null&&(L=P.target.responseText);if(typeof o.extract=="function"?(L=o.extract(P.target,o),T=!0):typeof o.deserialize=="function"&&(L=o.deserialize(L)),T){if(typeof o.type=="function")if(Array.isArray(L))for(var x=0;x<L.length;x++)L[x]=new o.type(L[x]);else L=new o.type(L);c(L)}else{var R=function(){try{_=P.target.responseText}catch{_=L}var Y=new Error(_);Y.code=P.target.status,Y.response=L,f(Y)};y.status===0?setTimeout(function(){D||R()}):R()}}catch(Y){f(Y)}},y.ontimeout=function(P){D=!0;var T=new Error("Request timed out");T.code=P.target.status,f(T)},typeof o.config=="function"&&(y=o.config(y,o,s)||y,y!==Z&&(A=y.abort,y.abort=function(){E=!0,A.call(this)})),p==null?y.send():typeof o.serialize=="function"?y.send(o.serialize(p)):p instanceof e.FormData||p instanceof e.URLSearchParams?y.send(p):y.send(JSON.stringify(p))})}t.prototype=Promise.prototype,t.__proto__=Promise;function l(s,o){for(var c in s.headers)if(ut.call(s.headers,c)&&c.toLowerCase()===o)return!0;return!1}return{request:function(s,o){typeof s!="string"?(o=s,s=s.url):o==null&&(o={});var c=i(s,o);if(o.background===!0)return c;var f=0;function m(){--f===0&&typeof r=="function"&&r()}return p(c);function p(d){var b=d.then;return d.constructor=t,d.then=function(){f++;var y=b.apply(d,arguments);return y.then(m,function(E){if(m(),f===0)throw E}),p(y)},d}}}}});var mt=X((To,ft)=>{"use strict";var Zn=_e();ft.exports=ct()(typeof window<"u"?window:null,Zn.redraw)});var wr=X((No,pt)=>{"use strict";function dt(e){try{return decodeURIComponent(e)}catch{return e}}pt.exports=function(e){if(e===""||e==null)return{};e.charAt(0)==="?"&&(e=e.slice(1));for(var r=e.split("&"),t={},i={},l=0;l<r.length;l++){var s=r[l].split("="),o=dt(s[0]),c=s.length===2?dt(s[1]):"";c==="true"?c=!0:c==="false"&&(c=!1);var f=o.split(/\]\[?|\[/),m=i;o.indexOf("[")>-1&&f.pop();for(var p=0;p<f.length;p++){var d=f[p],b=f[p+1],y=b==""||!isNaN(parseInt(b,10));if(d===""){var o=f.slice(0,p).join();t[o]==null&&(t[o]=Array.isArray(m)?m.length:0),d=t[o]++}else if(d==="__proto__")break;if(p===f.length-1)m[d]=c;else{var E=Object.getOwnPropertyDescriptor(m,d);E!=null&&(E=E.value),E==null&&(m[d]=E=y?[]:{}),m=E}}}return i}});var He=X((Mo,gt)=>{"use strict";var _n=wr();gt.exports=function(e){var r=e.indexOf("?"),t=e.indexOf("#"),i=t<0?e.length:t,l=r<0?i:r,s=e.slice(0,l).replace(/\/{2,}/g,"/");return s?s[0]!=="/"&&(s="/"+s):s="/",{path:s,params:r<0?{}:_n(e.slice(r+1,i))}}});var vt=X((Oo,ht)=>{"use strict";var zn=He();ht.exports=function(e){var r=zn(e),t=Object.keys(r.params),i=[],l=new RegExp("^"+r.path.replace(/:([^\/.-]+)(\.{3}|\.(?!\.)|-)?|[\\^$*+.()|\[\]{}]/g,function(s,o,c){return o==null?"\\"+s:(i.push({k:o,r:c==="..."}),c==="..."?"(.*)":c==="."?"([^/]+)\\.":"([^/]+)"+(c||""))})+"\\/?$");return function(s){for(var o=0;o<t.length;o++)if(r.params[t[o]]!==s.params[t[o]])return!1;if(!i.length)return l.test(s.path);var c=l.exec(s.path);if(c==null)return!1;for(var o=0;o<i.length;o++)s.params[i[o].k]=i[o].r?c[o+1]:decodeURIComponent(c[o+1]);return!0}}});var br=X((jo,bt)=>{"use strict";var yt=Ze(),wt=new RegExp("^(?:key|oninit|oncreate|onbeforeupdate|onupdate|onbeforeremove|onremove)$");bt.exports=function(e,r){var t={};if(r!=null)for(var i in e)yt.call(e,i)&&!wt.test(i)&&r.indexOf(i)<0&&(t[i]=e[i]);else for(var i in e)yt.call(e,i)&&!wt.test(i)&&(t[i]=e[i]);return t}});var kt=X((Vo,xt)=>{"use strict";var Hn=ye(),Yn=fr(),St=ze(),Pt=He(),Xn=vt(),Bn=br();function Un(e){try{return decodeURIComponent(e)}catch{return e}}xt.exports=function(e,r){var t=e==null?null:typeof e.setImmediate=="function"?e.setImmediate:e.setTimeout,i=Promise.resolve(),l=!1,s=!1,o=!1,c,f,m,p,d,b,y,E,D={onremove:function(){s=o=!1,e.removeEventListener("popstate",N,!1)},view:function(){var P=Hn(d,b.key,b);return p?p.render(P):[P]}},Z=I.SKIP={};function A(){l=!1;var P=e.location.hash;I.prefix[0]!=="#"&&(P=e.location.search+P,I.prefix[0]!=="?"&&(P=e.location.pathname+P,P[0]!=="/"&&(P="/"+P)));var T=P.concat().replace(/(?:%[a-f89][a-f0-9])+/gim,Un).slice(I.prefix.length),L=Pt(T);Object.assign(L.params,e.history.state);function _(R){console.error(R),I.set(m,null,{replace:!0})}x(0);function x(R){for(;R<f.length;R++)if(f[R].check(L)){var Y=f[R].component,fe=f[R].route,Pe=Y,se=E=function(he){if(se===E){if(he===Z)return x(R+1);d=he!=null&&(typeof he.view=="function"||typeof he=="function")?he:"div",b=L.params,y=T,E=null,p=Y.render?Y:null,o?r.redraw():(o=!0,r.mount(c,D))}};Y.view||typeof Y=="function"?(Y={},se(Pe)):Y.onmatch?i.then(function(){return Y.onmatch(L.params,T,fe)}).then(se,T===m?null:_):se();return}if(T===m)throw new Error("Could not resolve default route "+m+".");I.set(m,null,{replace:!0})}}function N(){l||(l=!0,t(A))}function I(P,T,L){if(!P)throw new TypeError("DOM element being rendered to does not exist.");if(f=Object.keys(L).map(function(x){if(x[0]!=="/")throw new SyntaxError("Routes must start with a '/'.");if(/:([^\/\.-]+)(\.{3})?:/.test(x))throw new SyntaxError("Route parameter names must be separated with either '/', '.', or '-'.");return{route:x,component:L[x],check:Xn(x)}}),m=T,T!=null){var _=Pt(T);if(!f.some(function(x){return x.check(_)}))throw new ReferenceError("Default route doesn't match any known routes.")}c=P,e.addEventListener("popstate",N,!1),s=!0,A()}return I.set=function(P,T,L){if(E!=null&&(L=L||{},L.replace=!0),E=null,P=St(P,T),s){N();var _=L?L.state:null,x=L?L.title:null;L&&L.replace?e.history.replaceState(_,x,I.prefix+P):e.history.pushState(_,x,I.prefix+P)}else e.location.href=I.prefix+P},I.get=function(){return y},I.prefix="#!",I.Link={view:function(P){var T=Yn(P.attrs.selector||"a",Bn(P.attrs,["options","params","selector","onclick"]),P.children),L,_,x;return(T.attrs.disabled=!!T.attrs.disabled)?(T.attrs.href=null,T.attrs["aria-disabled"]="true"):(L=P.attrs.options,_=P.attrs.onclick,x=St(T.attrs.href,P.attrs.params),T.attrs.href=I.prefix+x,T.attrs.onclick=function(R){var Y;typeof _=="function"?Y=_.call(R.currentTarget,R):_==null||typeof _!="object"||typeof _.handleEvent=="function"&&_.handleEvent(R),Y!==!1&&!R.defaultPrevented&&(R.button===0||R.which===0||R.which===1)&&(!R.currentTarget.target||R.currentTarget.target==="_self")&&!R.ctrlKey&&!R.metaKey&&!R.shiftKey&&!R.altKey&&(R.preventDefault(),R.redraw=!1,I.set(x,null,L))}),T}},I.param=function(P){return b&&P!=null?b[P]:b},I}});var Et=X((Wo,Lt)=>{"use strict";var Jn=_e();Lt.exports=kt()(typeof window<"u"?window:null,Jn)});var we=X((Do,At)=>{"use strict";var Ye=qr(),qn=mt(),Ct=_e(),Kn=pr(),$=function(){return Ye.apply(this,arguments)};$.m=Ye;$.trust=Ye.trust;$.fragment=Ye.fragment;$.Fragment="[";$.mount=Ct.mount;$.route=Et();$.render=vr();$.redraw=Ct.redraw;$.request=qn.request;$.parseQueryString=wr();$.buildQueryString=yr();$.parsePathname=He();$.buildPathname=ze();$.vnode=ye();$.censor=br();$.domFor=Kn.domFor;At.exports=$});var Ir=xe(we(),1);var B=xe(we(),1),Qn={en:{welcome:"Welcome",subtitle:"Select your language and theme below",login:"Log In",signup:"Sign Up",loggedIn:"You are already signed in",theme:"Theme",language:"Language",changePassword:"Change Password"},id:{welcome:"Selamat Datang",subtitle:"Pilih bahasa dan tema di bawah ini",login:"Masuk",signup:"Daftar",loggedIn:"Anda sudah masuk",theme:"Tema",language:"Bahasa",changePassword:"Ubah Kata Sandi"}},ve={lang:localStorage.getItem("lang")||"en",selectedTheme:localStorage.getItem("theme")||"auto",themes:["auto","light","dark"],oninit:()=>{document.documentElement.setAttribute("data-theme",ve.selectedTheme),document.documentElement.setAttribute("lang",ve.lang)},view:()=>{let e=Qn[ve.lang],r=localStorage.getItem("token")!==null;return document.documentElement.setAttribute("data-theme",ve.selectedTheme),(0,B.default)("main.container",[(0,B.default)("hgroup",[(0,B.default)("h1",e.welcome),(0,B.default)("h2",e.subtitle)]),r?(0,B.default)("div",[(0,B.default)("p",{style:"color: green"},`\u2705 ${e.loggedIn}`),(0,B.default)("nav",{style:"display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;"},[(0,B.default)("a",{href:"/change-password",oncreate:B.default.route.link,style:"text-decoration: underline; color: var(--primary);"},`\u{1F511} ${e.changePassword}`),(0,B.default)("button",{onclick:()=>{let t=localStorage.getItem("lang"),i=localStorage.getItem("theme");localStorage.clear(),localStorage.setItem("lang",t),localStorage.setItem("theme",i),location.reload()}},"\u{1F6AA} Log Out")])]):(0,B.default)("nav",{style:"display: flex; gap: 1rem;"},[(0,B.default)("a",{href:"/login",oncreate:B.default.route.link},`\u{1F510} ${e.login}`),(0,B.default)("a",{href:"/signup",oncreate:B.default.route.link},`\u{1F4DD} ${e.signup}`)]),(0,B.default)("section",[(0,B.default)("label",`${e.theme}:`),(0,B.default)("select",{onchange:t=>{let i=t.target.value;ve.selectedTheme=i,localStorage.setItem("theme",i),document.documentElement.setAttribute("data-theme",i)}},ve.themes.map(t=>(0,B.default)("option",{value:t,selected:ve.selectedTheme===t},t.charAt(0).toUpperCase()+t.slice(1)))),(0,B.default)("label",`${e.language}:`),(0,B.default)("select",{onchange:t=>{let i=t.target.value;ve.lang=i,localStorage.setItem("lang",i)}},["en","id"].map(t=>(0,B.default)("option",{value:t,selected:ve.lang===t},t==="en"?"\u{1F1FA}\u{1F1F8} English":"\u{1F1EE}\u{1F1E9} Bahasa Indonesia")))])])}},Ft=ve;var M=xe(we(),1);function $n(e,r){let t;return function(...i){clearTimeout(t),t=setTimeout(()=>e.apply(this,i),r)}}var ea={en:{createAccount:"Create Account",subtitle:"Join us and start your journey",fullName:"Full Name",username:"Username",email:"Email",password:"Password",confirmPassword:"Confirm Password",usernameAvailable:"\u2705 Username is available",usernameTaken:"\u274C Username is taken",checking:"\u23F3 Checking availability...",signUp:"Sign Up",signingUp:"Signing Up...",passwordMismatch:"Passwords do not match",usernameOrEmailExists:"Username or email already exists",signupFailed:"Signup failed",completeFields:"Please complete all fields correctly.",tooWeak:"Too Weak",weak:"Weak",fair:"Fair",strong:"Strong",veryStrong:"Very Strong"},id:{createAccount:"Buat Akun",subtitle:"Bergabunglah dan mulai perjalanan Anda",fullName:"Nama Lengkap",username:"Nama Pengguna",email:"Surel",password:"Kata Sandi",confirmPassword:"Konfirmasi Kata Sandi",usernameAvailable:"\u2705 Nama pengguna tersedia",usernameTaken:"\u274C Nama pengguna sudah dipakai",checking:"\u23F3 Memeriksa ketersediaan...",signUp:"Daftar",signingUp:"Mendaftar...",passwordMismatch:"Kata sandi tidak cocok",usernameOrEmailExists:"Nama pengguna atau email sudah ada",signupFailed:"Pendaftaran gagal",completeFields:"Silakan lengkapi semua kolom dengan benar.",tooWeak:"Terlalu Lemah",weak:"Lemah",fair:"Cukup",strong:"Kuat",veryStrong:"Sangat Kuat"}},ra=localStorage.getItem("lang")||"en",U=ea[ra],ta=[U.tooWeak,U.weak,U.fair,U.strong,U.veryStrong],S={fullName:"",userName:"",userNameAvailable:null,email:"",password:"",confirmPassword:"",error:"",success:"",isFormValid:!1,isLoading:!1,validateForm(){S.isFormValid=S.fullName.trim()&&S.userName.trim()&&S.email.trim()&&S.password&&S.confirmPassword&&S.password===S.confirmPassword&&S.userNameAvailable===!0},getPasswordStrength(e){if(!e)return 0;let r=0;return e.length>=8&&r++,/[A-Z]/.test(e)&&r++,/[a-z]/.test(e)&&r++,/[0-9]/.test(e)&&r++,/[^A-Za-z0-9]/.test(e)&&r++,r},checkUsernameAvailability:$n(async function(){if(S.userName){try{let e=await M.default.request({method:"GET",url:`/api/check-username?userName=${S.userName}`});S.userNameAvailable=e.available}catch{S.userNameAvailable=!1}S.validateForm(),M.default.redraw()}},750),view:()=>{document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||"auto");let e=S.getPasswordStrength(S.password);return S.validateForm(),(0,M.default)("main.container",[(0,M.default)("article",[(0,M.default)("hgroup",[(0,M.default)("h1",U.createAccount),(0,M.default)("h2",U.subtitle)]),S.error&&(0,M.default)("p",{class:"text-red-600"},S.error),S.success&&(0,M.default)("p",{class:"text-green-600"},S.success),(0,M.default)("form",{onsubmit:async r=>{if(r.preventDefault(),S.error=S.success="",S.isLoading=!0,M.default.redraw(),S.password!==S.confirmPassword){S.error=U.passwordMismatch,S.isLoading=!1,M.default.redraw();return}try{let t=await M.default.request({method:"POST",url:"/api/signup",body:{fullName:S.fullName,userName:S.userName,email:S.email,password:S.password}});S.success=t.msg,localStorage.setItem("token",t.token)}catch(t){S.error=t.message||U.signupFailed,t.status===409&&(S.error=U.usernameOrEmailExists)}S.isLoading=!1,M.default.redraw()}},[(0,M.default)("label",{for:"fullName"},U.fullName),(0,M.default)("input",{id:"fullName",type:"text",placeholder:"Guntur D",value:S.fullName,oninput:r=>{S.fullName=r.target.value,S.validateForm()}}),(0,M.default)("label",{for:"userName"},U.username),(0,M.default)("input",{id:"userName",type:"text",placeholder:"username123",value:S.userName,oninput:r=>{S.userName=r.target.value,S.userNameAvailable=null,S.validateForm(),S.checkUsernameAvailability()}}),S.userName&&S.userNameAvailable===null&&(0,M.default)("small",U.checking),S.userName&&S.userNameAvailable===!0&&(0,M.default)("small",{style:"color:green"},U.usernameAvailable),S.userName&&S.userNameAvailable===!1&&(0,M.default)("small",{style:"color:red"},U.usernameTaken),(0,M.default)("label",{for:"email"},U.email),(0,M.default)("input",{id:"email",type:"email",placeholder:"you@example.com",value:S.email,oninput:r=>{S.email=r.target.value,S.validateForm()}}),(0,M.default)("label",{for:"password"},U.password),(0,M.default)("input",{id:"password",type:"password",placeholder:"\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",value:S.password,oninput:r=>{S.password=r.target.value,S.validateForm()}}),S.password&&(0,M.default)("small",ta[e-1]||U.tooWeak),S.password&&(0,M.default)("progress",{value:e,max:5,style:"width:100%; height: 8px;"}),(0,M.default)("label",{for:"confirmPassword"},U.confirmPassword),(0,M.default)("input",{id:"confirmPassword",type:"password",placeholder:"\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",value:S.confirmPassword,oninput:r=>{S.confirmPassword=r.target.value,S.validateForm()}}),(0,M.default)("button",{type:"submit",value:U.signUp,disabled:S.isLoading||!S.isFormValid||S.userNameAvailable===null,"aria-busy":S.isLoading?"true":null},S.isLoading?(0,M.default)("span",[(0,M.default)("span",{"aria-hidden":"true",style:"margin-right: 0.5em;"},"\u23F3"),U.signingUp]):U.signUp),!S.isFormValid&&(0,M.default)("p",{style:"color:#e1a500"},U.completeFields)])])])}},It=S;var F=xe(we(),1);var Xe=function(){return Xe=Object.assign||function(r){for(var t,i=1,l=arguments.length;i<l;i++){t=arguments[i];for(var s in t)Object.prototype.hasOwnProperty.call(t,s)&&(r[s]=t[s])}return r},Xe.apply(this,arguments)};function me(e,r,t,i){function l(s){return s instanceof t?s:new t(function(o){o(s)})}return new(t||(t=Promise))(function(s,o){function c(p){try{m(i.next(p))}catch(d){o(d)}}function f(p){try{m(i.throw(p))}catch(d){o(d)}}function m(p){p.done?s(p.value):l(p.value).then(c,f)}m((i=i.apply(e,r||[])).next())})}function de(e,r){var t={label:0,sent:function(){if(s[0]&1)throw s[1];return s[1]},trys:[],ops:[]},i,l,s,o=Object.create((typeof Iterator=="function"?Iterator:Object).prototype);return o.next=c(0),o.throw=c(1),o.return=c(2),typeof Symbol=="function"&&(o[Symbol.iterator]=function(){return this}),o;function c(m){return function(p){return f([m,p])}}function f(m){if(i)throw new TypeError("Generator is already executing.");for(;o&&(o=0,m[0]&&(t=0)),t;)try{if(i=1,l&&(s=m[0]&2?l.return:m[0]?l.throw||((s=l.return)&&s.call(l),0):l.next)&&!(s=s.call(l,m[1])).done)return s;switch(l=0,s&&(m=[m[0]&2,s.value]),m[0]){case 0:case 1:s=m;break;case 4:return t.label++,{value:m[1],done:!1};case 5:t.label++,l=m[1],m=[0];continue;case 7:m=t.ops.pop(),t.trys.pop();continue;default:if(s=t.trys,!(s=s.length>0&&s[s.length-1])&&(m[0]===6||m[0]===2)){t=0;continue}if(m[0]===3&&(!s||m[1]>s[0]&&m[1]<s[3])){t.label=m[1];break}if(m[0]===6&&t.label<s[1]){t.label=s[1],s=m;break}if(s&&t.label<s[2]){t.label=s[2],t.ops.push(m);break}s[2]&&t.ops.pop(),t.trys.pop();continue}m=r.call(e,t)}catch(p){m=[6,p],l=0}finally{i=s=0}if(m[0]&5)throw m[1];return{value:m[0]?m[1]:void 0,done:!0}}}function Sr(e,r,t){if(t||arguments.length===2)for(var i=0,l=r.length,s;i<l;i++)(s||!(i in r))&&(s||(s=Array.prototype.slice.call(r,0,i)),s[i]=r[i]);return e.concat(s||Array.prototype.slice.call(r))}var Ht="4.6.2";function qe(e,r){return new Promise(function(t){return setTimeout(t,e,r)})}function na(){return new Promise(function(e){var r=new MessageChannel;r.port1.onmessage=function(){return e()},r.port2.postMessage(null)})}function aa(e,r){r===void 0&&(r=1/0);var t=window.requestIdleCallback;return t?new Promise(function(i){return t.call(window,function(){return i()},{timeout:r})}):qe(Math.min(e,r))}function Yt(e){return!!e&&typeof e.then=="function"}function Rt(e,r){try{var t=e();Yt(t)?t.then(function(i){return r(!0,i)},function(i){return r(!1,i)}):r(!0,t)}catch(i){r(!1,i)}}function Tt(e,r,t){return t===void 0&&(t=16),me(this,void 0,void 0,function(){var i,l,s,o;return de(this,function(c){switch(c.label){case 0:i=Array(e.length),l=Date.now(),s=0,c.label=1;case 1:return s<e.length?(i[s]=r(e[s],s),o=Date.now(),o>=l+t?(l=o,[4,na()]):[3,3]):[3,4];case 2:c.sent(),c.label=3;case 3:return++s,[3,1];case 4:return[2,i]}})})}function Oe(e){return e.then(void 0,function(){}),e}function ia(e,r){for(var t=0,i=e.length;t<i;++t)if(e[t]===r)return!0;return!1}function oa(e,r){return!ia(e,r)}function Cr(e){return parseInt(e)}function pe(e){return parseFloat(e)}function be(e,r){return typeof e=="number"&&isNaN(e)?r:e}function ie(e){return e.reduce(function(r,t){return r+(t?1:0)},0)}function Xt(e,r){if(r===void 0&&(r=1),Math.abs(r)>=1)return Math.round(e/r)*r;var t=1/r;return Math.round(e*t)/t}function sa(e){for(var r,t,i="Unexpected syntax '".concat(e,"'"),l=/^\s*([a-z-]*)(.*)$/i.exec(e),s=l[1]||void 0,o={},c=/([.:#][\w-]+|\[.+?\])/gi,f=function(b,y){o[b]=o[b]||[],o[b].push(y)};;){var m=c.exec(l[2]);if(!m)break;var p=m[0];switch(p[0]){case".":f("class",p.slice(1));break;case"#":f("id",p.slice(1));break;case"[":{var d=/^\[([\w-]+)([~|^$*]?=("(.*?)"|([\w-]+)))?(\s+[is])?\]$/.exec(p);if(d)f(d[1],(t=(r=d[4])!==null&&r!==void 0?r:d[5])!==null&&t!==void 0?t:"");else throw new Error(i);break}default:throw new Error(i)}}return[s,o]}function ua(e){for(var r=new Uint8Array(e.length),t=0;t<e.length;t++){var i=e.charCodeAt(t);if(i>127)return new TextEncoder().encode(e);r[t]=i}return r}function ke(e,r){var t=e[0]>>>16,i=e[0]&65535,l=e[1]>>>16,s=e[1]&65535,o=r[0]>>>16,c=r[0]&65535,f=r[1]>>>16,m=r[1]&65535,p=0,d=0,b=0,y=0;y+=s+m,b+=y>>>16,y&=65535,b+=l+f,d+=b>>>16,b&=65535,d+=i+c,p+=d>>>16,d&=65535,p+=t+o,p&=65535,e[0]=p<<16|d,e[1]=b<<16|y}function ce(e,r){var t=e[0]>>>16,i=e[0]&65535,l=e[1]>>>16,s=e[1]&65535,o=r[0]>>>16,c=r[0]&65535,f=r[1]>>>16,m=r[1]&65535,p=0,d=0,b=0,y=0;y+=s*m,b+=y>>>16,y&=65535,b+=l*m,d+=b>>>16,b&=65535,b+=s*f,d+=b>>>16,b&=65535,d+=i*m,p+=d>>>16,d&=65535,d+=l*f,p+=d>>>16,d&=65535,d+=s*c,p+=d>>>16,d&=65535,p+=t*m+i*f+l*c+s*o,p&=65535,e[0]=p<<16|d,e[1]=b<<16|y}function Ae(e,r){var t=e[0];r%=64,r===32?(e[0]=e[1],e[1]=t):r<32?(e[0]=t<<r|e[1]>>>32-r,e[1]=e[1]<<r|t>>>32-r):(r-=32,e[0]=e[1]<<r|t>>>32-r,e[1]=t<<r|e[1]>>>32-r)}function ue(e,r){r%=64,r!==0&&(r<32?(e[0]=e[1]>>>32-r,e[1]=e[1]<<r):(e[0]=e[1]<<r-32,e[1]=0))}function H(e,r){e[0]^=r[0],e[1]^=r[1]}var la=[4283543511,3981806797],ca=[3301882366,444984403];function Nt(e){var r=[0,e[0]>>>1];H(e,r),ce(e,la),r[1]=e[0]>>>1,H(e,r),ce(e,ca),r[1]=e[0]>>>1,H(e,r)}var Be=[2277735313,289559509],Ue=[1291169091,658871167],Mt=[0,5],fa=[0,1390208809],ma=[0,944331445];function da(e,r){var t=ua(e);r=r||0;var i=[0,t.length],l=i[1]%16,s=i[1]-l,o=[0,r],c=[0,r],f=[0,0],m=[0,0],p;for(p=0;p<s;p=p+16)f[0]=t[p+4]|t[p+5]<<8|t[p+6]<<16|t[p+7]<<24,f[1]=t[p]|t[p+1]<<8|t[p+2]<<16|t[p+3]<<24,m[0]=t[p+12]|t[p+13]<<8|t[p+14]<<16|t[p+15]<<24,m[1]=t[p+8]|t[p+9]<<8|t[p+10]<<16|t[p+11]<<24,ce(f,Be),Ae(f,31),ce(f,Ue),H(o,f),Ae(o,27),ke(o,c),ce(o,Mt),ke(o,fa),ce(m,Ue),Ae(m,33),ce(m,Be),H(c,m),Ae(c,31),ke(c,o),ce(c,Mt),ke(c,ma);f[0]=0,f[1]=0,m[0]=0,m[1]=0;var d=[0,0];switch(l){case 15:d[1]=t[p+14],ue(d,48),H(m,d);case 14:d[1]=t[p+13],ue(d,40),H(m,d);case 13:d[1]=t[p+12],ue(d,32),H(m,d);case 12:d[1]=t[p+11],ue(d,24),H(m,d);case 11:d[1]=t[p+10],ue(d,16),H(m,d);case 10:d[1]=t[p+9],ue(d,8),H(m,d);case 9:d[1]=t[p+8],H(m,d),ce(m,Ue),Ae(m,33),ce(m,Be),H(c,m);case 8:d[1]=t[p+7],ue(d,56),H(f,d);case 7:d[1]=t[p+6],ue(d,48),H(f,d);case 6:d[1]=t[p+5],ue(d,40),H(f,d);case 5:d[1]=t[p+4],ue(d,32),H(f,d);case 4:d[1]=t[p+3],ue(d,24),H(f,d);case 3:d[1]=t[p+2],ue(d,16),H(f,d);case 2:d[1]=t[p+1],ue(d,8),H(f,d);case 1:d[1]=t[p],H(f,d),ce(f,Be),Ae(f,31),ce(f,Ue),H(o,f)}return H(o,i),H(c,i),ke(o,c),ke(c,o),Nt(o),Nt(c),ke(o,c),ke(c,o),("00000000"+(o[0]>>>0).toString(16)).slice(-8)+("00000000"+(o[1]>>>0).toString(16)).slice(-8)+("00000000"+(c[0]>>>0).toString(16)).slice(-8)+("00000000"+(c[1]>>>0).toString(16)).slice(-8)}function pa(e){var r;return Xe({name:e.name,message:e.message,stack:(r=e.stack)===null||r===void 0?void 0:r.split(`
-`)},e)}function ga(e){return/^function\s.*?\{\s*\[native code]\s*}$/.test(String(e))}function ha(e){return typeof e!="function"}function va(e,r){var t=Oe(new Promise(function(i){var l=Date.now();Rt(e.bind(null,r),function(){for(var s=[],o=0;o<arguments.length;o++)s[o]=arguments[o];var c=Date.now()-l;if(!s[0])return i(function(){return{error:s[1],duration:c}});var f=s[1];if(ha(f))return i(function(){return{value:f,duration:c}});i(function(){return new Promise(function(m){var p=Date.now();Rt(f,function(){for(var d=[],b=0;b<arguments.length;b++)d[b]=arguments[b];var y=c+Date.now()-p;if(!d[0])return m({error:d[1],duration:y});m({value:d[1],duration:y})})})})})}));return function(){return t.then(function(l){return l()})}}function ya(e,r,t,i){var l=Object.keys(e).filter(function(o){return oa(t,o)}),s=Oe(Tt(l,function(o){return va(e[o],r)},i));return function(){return me(this,void 0,void 0,function(){var c,f,m,p,d;return de(this,function(b){switch(b.label){case 0:return[4,s];case 1:return c=b.sent(),[4,Tt(c,function(y){return Oe(y())},i)];case 2:return f=b.sent(),[4,Promise.all(f)];case 3:for(m=b.sent(),p={},d=0;d<l.length;++d)p[l[d]]=m[d];return[2,p]}})})}}function Bt(){var e=window,r=navigator;return ie(["MSCSSMatrix"in e,"msSetImmediate"in e,"msIndexedDB"in e,"msMaxTouchPoints"in r,"msPointerEnabled"in r])>=4}function wa(){var e=window,r=navigator;return ie(["msWriteProfilerMark"in e,"MSStream"in e,"msLaunchUri"in r,"msSaveBlob"in r])>=3&&!Bt()}function je(){var e=window,r=navigator;return ie(["webkitPersistentStorage"in r,"webkitTemporaryStorage"in r,(r.vendor||"").indexOf("Google")===0,"webkitResolveLocalFileSystemURL"in e,"BatteryManager"in e,"webkitMediaStream"in e,"webkitSpeechGrammar"in e])>=5}function ge(){var e=window,r=navigator;return ie(["ApplePayError"in e,"CSSPrimitiveValue"in e,"Counter"in e,r.vendor.indexOf("Apple")===0,"RGBColor"in e,"WebKitMediaKeys"in e])>=4}function Ar(){var e=window,r=e.HTMLElement,t=e.Document;return ie(["safari"in e,!("ongestureend"in e),!("TouchEvent"in e),!("orientation"in e),r&&!("autocapitalize"in r.prototype),t&&"pointerLockElement"in t.prototype])>=4}function Ve(){var e=window;return ga(e.print)&&String(e.browser)==="[object WebPageNamespace]"}function Ut(){var e,r,t=window;return ie(["buildID"in navigator,"MozAppearance"in((r=(e=document.documentElement)===null||e===void 0?void 0:e.style)!==null&&r!==void 0?r:{}),"onmozfullscreenchange"in t,"mozInnerScreenX"in t,"CSSMozDocumentRule"in t,"CanvasCaptureMediaStream"in t])>=4}function ba(){var e=window;return ie([!("MediaSettingsRange"in e),"RTCEncodedAudioFrame"in e,""+e.Intl=="[object Intl]",""+e.Reflect=="[object Reflect]"])>=3}function Sa(){var e=window,r=e.URLPattern;return ie(["union"in Set.prototype,"Iterator"in e,r&&"hasRegExpGroups"in r.prototype,"RGB8"in WebGLRenderingContext.prototype])>=3}function Pa(){var e=window;return ie(["DOMRectList"in e,"RTCPeerConnectionIceEvent"in e,"SVGGeometryElement"in e,"ontransitioncancel"in e])>=3}function We(){var e=window,r=navigator,t=e.CSS,i=e.HTMLButtonElement;return ie([!("getStorageUpdates"in r),i&&"popover"in i.prototype,"CSSCounterStyleRule"in e,t.supports("font-size-adjust: ex-height 0.5"),t.supports("text-transform: full-width")])>=4}function xa(){if(navigator.platform==="iPad")return!0;var e=screen,r=e.width/e.height;return ie(["MediaSource"in window,!!Element.prototype.webkitRequestFullscreen,r>.65&&r<1.53])>=2}function ka(){var e=document;return e.fullscreenElement||e.msFullscreenElement||e.mozFullScreenElement||e.webkitFullscreenElement||null}function La(){var e=document;return(e.exitFullscreen||e.msExitFullscreen||e.mozCancelFullScreen||e.webkitExitFullscreen).call(e)}function Fr(){var e=je(),r=Ut(),t=window,i=navigator,l="connection";return e?ie([!("SharedWorker"in t),i[l]&&"ontypechange"in i[l],!("sinkId"in new Audio)])>=2:r?ie(["onorientationchange"in t,"orientation"in t,/android/i.test(i.appVersion)])>=2:!1}function Ea(){var e=navigator,r=window,t=Audio.prototype,i=r.visualViewport;return ie(["srLatency"in t,"srChannelCount"in t,"devicePosture"in e,i&&"segments"in i,"getTextInformation"in Image.prototype])>=3}function Ca(){return Ia()?-4:Aa()}function Aa(){var e=window,r=e.OfflineAudioContext||e.webkitOfflineAudioContext;if(!r)return-2;if(Fa())return-1;var t=4500,i=5e3,l=new r(1,i,44100),s=l.createOscillator();s.type="triangle",s.frequency.value=1e4;var o=l.createDynamicsCompressor();o.threshold.value=-50,o.knee.value=40,o.ratio.value=12,o.attack.value=0,o.release.value=.25,s.connect(o),o.connect(l.destination),s.start(0);var c=Ra(l),f=c[0],m=c[1],p=Oe(f.then(function(d){return Ta(d.getChannelData(0).subarray(t))},function(d){if(d.name==="timeout"||d.name==="suspended")return-3;throw d}));return function(){return m(),p}}function Fa(){return ge()&&!Ar()&&!Pa()}function Ia(){return ge()&&We()&&Ve()||je()&&Ea()&&Sa()}function Ra(e){var r=3,t=500,i=500,l=5e3,s=function(){},o=new Promise(function(c,f){var m=!1,p=0,d=0;e.oncomplete=function(E){return c(E.renderedBuffer)};var b=function(){setTimeout(function(){return f(Ot("timeout"))},Math.min(i,d+l-Date.now()))},y=function(){try{var E=e.startRendering();switch(Yt(E)&&Oe(E),e.state){case"running":d=Date.now(),m&&b();break;case"suspended":document.hidden||p++,m&&p>=r?f(Ot("suspended")):setTimeout(y,t);break}}catch(D){f(D)}};y(),s=function(){m||(m=!0,d>0&&b())}});return[o,s]}function Ta(e){for(var r=0,t=0;t<e.length;++t)r+=Math.abs(e[t]);return r}function Ot(e){var r=new Error(e);return r.name=e,r}function Jt(e,r,t){var i,l,s;return t===void 0&&(t=50),me(this,void 0,void 0,function(){var o,c;return de(this,function(f){switch(f.label){case 0:o=document,f.label=1;case 1:return o.body?[3,3]:[4,qe(t)];case 2:return f.sent(),[3,1];case 3:c=o.createElement("iframe"),f.label=4;case 4:return f.trys.push([4,,10,11]),[4,new Promise(function(m,p){var d=!1,b=function(){d=!0,m()},y=function(Z){d=!0,p(Z)};c.onload=b,c.onerror=y;var E=c.style;E.setProperty("display","block","important"),E.position="absolute",E.top="0",E.left="0",E.visibility="hidden",r&&"srcdoc"in c?c.srcdoc=r:c.src="about:blank",o.body.appendChild(c);var D=function(){var Z,A;d||(((A=(Z=c.contentWindow)===null||Z===void 0?void 0:Z.document)===null||A===void 0?void 0:A.readyState)==="complete"?b():setTimeout(D,10))};D()})];case 5:f.sent(),f.label=6;case 6:return!((l=(i=c.contentWindow)===null||i===void 0?void 0:i.document)===null||l===void 0)&&l.body?[3,8]:[4,qe(t)];case 7:return f.sent(),[3,6];case 8:return[4,e(c,c.contentWindow)];case 9:return[2,f.sent()];case 10:return(s=c.parentNode)===null||s===void 0||s.removeChild(c),[7];case 11:return[2]}})})}function Na(e){for(var r=sa(e),t=r[0],i=r[1],l=document.createElement(t??"div"),s=0,o=Object.keys(i);s<o.length;s++){var c=o[s],f=i[c].join(" ");c==="style"?Ma(l.style,f):l.setAttribute(c,f)}return l}function Ma(e,r){for(var t=0,i=r.split(";");t<i.length;t++){var l=i[t],s=/^\s*([\w-]+)\s*:\s*(.+?)(\s*!([\w-]+))?\s*$/.exec(l);if(s){var o=s[1],c=s[2],f=s[4];e.setProperty(o,c,f||"")}}}function Oa(){for(var e=window;;){var r=e.parent;if(!r||r===e)return!1;try{if(r.location.origin!==e.location.origin)return!0}catch(t){if(t instanceof Error&&t.name==="SecurityError")return!0;throw t}e=r}}var ja="mmMwWLliI0O&1",Va="48px",Fe=["monospace","sans-serif","serif"],jt=["sans-serif-thin","ARNO PRO","Agency FB","Arabic Typesetting","Arial Unicode MS","AvantGarde Bk BT","BankGothic Md BT","Batang","Bitstream Vera Sans Mono","Calibri","Century","Century Gothic","Clarendon","EUROSTILE","Franklin Gothic","Futura Bk BT","Futura Md BT","GOTHAM","Gill Sans","HELV","Haettenschweiler","Helvetica Neue","Humanst521 BT","Leelawadee","Letter Gothic","Levenim MT","Lucida Bright","Lucida Sans","Menlo","MS Mincho","MS Outlook","MS Reference Specialty","MS UI Gothic","MT Extra","MYRIAD PRO","Marlett","Meiryo UI","Microsoft Uighur","Minion Pro","Monotype Corsiva","PMingLiU","Pristina","SCRIPTINA","Segoe UI Light","Serifa","SimHei","Small Fonts","Staccato222 BT","TRAJAN PRO","Univers CE 55 Medium","Vrinda","ZWAdobeF"];function Wa(){var e=this;return Jt(function(r,t){var i=t.document;return me(e,void 0,void 0,function(){var l,s,o,c,f,m,p,d,b,y,E,D;return de(this,function(Z){for(l=i.body,l.style.fontSize=Va,s=i.createElement("div"),s.style.setProperty("visibility","hidden","important"),o={},c={},f=function(A){var N=i.createElement("span"),I=N.style;return I.position="absolute",I.top="0",I.left="0",I.fontFamily=A,N.textContent=ja,s.appendChild(N),N},m=function(A,N){return f("'".concat(A,"',").concat(N))},p=function(){return Fe.map(f)},d=function(){for(var A={},N=function(L){A[L]=Fe.map(function(_){return m(L,_)})},I=0,P=jt;I<P.length;I++){var T=P[I];N(T)}return A},b=function(A){return Fe.some(function(N,I){return A[I].offsetWidth!==o[N]||A[I].offsetHeight!==c[N]})},y=p(),E=d(),l.appendChild(s),D=0;D<Fe.length;D++)o[Fe[D]]=y[D].offsetWidth,c[Fe[D]]=y[D].offsetHeight;return[2,jt.filter(function(A){return b(E[A])})]})})})}function Da(){var e=navigator.plugins;if(e){for(var r=[],t=0;t<e.length;++t){var i=e[t];if(i){for(var l=[],s=0;s<i.length;++s){var o=i[s];l.push({type:o.type,suffixes:o.suffixes})}r.push({name:i.name,description:i.description,mimeTypes:l})}}return r}}function Ga(){return Za(Ua())}function Za(e){var r,t=!1,i,l,s=_a(),o=s[0],c=s[1];return za(o,c)?(t=Ha(c),e?i=l="skipped":(r=Ya(o,c),i=r[0],l=r[1])):i=l="unsupported",{winding:t,geometry:i,text:l}}function _a(){var e=document.createElement("canvas");return e.width=1,e.height=1,[e,e.getContext("2d")]}function za(e,r){return!!(r&&e.toDataURL)}function Ha(e){return e.rect(0,0,10,10),e.rect(2,2,6,6),!e.isPointInPath(5,5,"evenodd")}function Ya(e,r){Xa(e,r);var t=Pr(e),i=Pr(e);if(t!==i)return["unstable","unstable"];Ba(e,r);var l=Pr(e);return[l,t]}function Xa(e,r){e.width=240,e.height=60,r.textBaseline="alphabetic",r.fillStyle="#f60",r.fillRect(100,1,62,20),r.fillStyle="#069",r.font='11pt "Times New Roman"';var t="Cwm fjordbank gly ".concat("\u{1F603}");r.fillText(t,2,15),r.fillStyle="rgba(102, 204, 0, 0.2)",r.font="18pt Arial",r.fillText(t,4,45)}function Ba(e,r){e.width=122,e.height=110,r.globalCompositeOperation="multiply";for(var t=0,i=[["#f2f",40,40],["#2ff",80,40],["#ff2",60,80]];t<i.length;t++){var l=i[t],s=l[0],o=l[1],c=l[2];r.fillStyle=s,r.beginPath(),r.arc(o,c,40,0,Math.PI*2,!0),r.closePath(),r.fill()}r.fillStyle="#f9c",r.arc(60,60,60,0,Math.PI*2,!0),r.arc(60,60,20,0,Math.PI*2,!0),r.fill("evenodd")}function Pr(e){return e.toDataURL()}function Ua(){return ge()&&We()&&Ve()}function Ja(){var e=navigator,r=0,t;e.maxTouchPoints!==void 0?r=Cr(e.maxTouchPoints):e.msMaxTouchPoints!==void 0&&(r=e.msMaxTouchPoints);try{document.createEvent("TouchEvent"),t=!0}catch{t=!1}var i="ontouchstart"in window;return{maxTouchPoints:r,touchEvent:t,touchStart:i}}function qa(){return navigator.oscpu}function Ka(){var e=navigator,r=[],t=e.language||e.userLanguage||e.browserLanguage||e.systemLanguage;if(t!==void 0&&r.push([t]),Array.isArray(e.languages))je()&&ba()||r.push(e.languages);else if(typeof e.languages=="string"){var i=e.languages;i&&r.push(i.split(","))}return r}function Qa(){return window.screen.colorDepth}function $a(){return be(pe(navigator.deviceMemory),void 0)}function ei(){if(!(ge()&&We()&&Ve()))return ri()}function ri(){var e=screen,r=function(i){return be(Cr(i),null)},t=[r(e.width),r(e.height)];return t.sort().reverse(),t}var ti=2500,ni=10,Je,xr;function ai(){if(xr===void 0){var e=function(){var r=Lr();Er(r)?xr=setTimeout(e,ti):(Je=r,xr=void 0)};e()}}function ii(){var e=this;return ai(),function(){return me(e,void 0,void 0,function(){var r;return de(this,function(t){switch(t.label){case 0:return r=Lr(),Er(r)?Je?[2,Sr([],Je,!0)]:ka()?[4,La()]:[3,2]:[3,2];case 1:t.sent(),r=Lr(),t.label=2;case 2:return Er(r)||(Je=r),[2,r]}})})}}function oi(){var e=this;if(ge()&&We()&&Ve())return function(){return Promise.resolve(void 0)};var r=ii();return function(){return me(e,void 0,void 0,function(){var t,i;return de(this,function(l){switch(l.label){case 0:return[4,r()];case 1:return t=l.sent(),i=function(s){return s===null?null:Xt(s,ni)},[2,[i(t[0]),i(t[1]),i(t[2]),i(t[3])]]}})})}}function Lr(){var e=screen;return[be(pe(e.availTop),null),be(pe(e.width)-pe(e.availWidth)-be(pe(e.availLeft),0),null),be(pe(e.height)-pe(e.availHeight)-be(pe(e.availTop),0),null),be(pe(e.availLeft),null)]}function Er(e){for(var r=0;r<4;++r)if(e[r])return!1;return!0}function si(){return be(Cr(navigator.hardwareConcurrency),void 0)}function ui(){var e,r=(e=window.Intl)===null||e===void 0?void 0:e.DateTimeFormat;if(r){var t=new r().resolvedOptions().timeZone;if(t)return t}var i=-li();return"UTC".concat(i>=0?"+":"").concat(i)}function li(){var e=new Date().getFullYear();return Math.max(pe(new Date(e,0,1).getTimezoneOffset()),pe(new Date(e,6,1).getTimezoneOffset()))}function ci(){try{return!!window.sessionStorage}catch{return!0}}function fi(){try{return!!window.localStorage}catch{return!0}}function mi(){if(!(Bt()||wa()))try{return!!window.indexedDB}catch{return!0}}function di(){return!!window.openDatabase}function pi(){return navigator.cpuClass}function gi(){var e=navigator.platform;return e==="MacIntel"&&ge()&&!Ar()?xa()?"iPad":"iPhone":e}function hi(){return navigator.vendor||""}function vi(){for(var e=[],r=0,t=["chrome","safari","__crWeb","__gCrWeb","yandex","__yb","__ybro","__firefox__","__edgeTrackingPreventionStatistics","webkit","oprt","samsungAr","ucweb","UCShellJava","puffinDevice"];r<t.length;r++){var i=t[r],l=window[i];l&&typeof l=="object"&&e.push(i)}return e.sort()}function yi(){var e=document;try{e.cookie="cookietest=1; SameSite=Strict;";var r=e.cookie.indexOf("cookietest=")!==-1;return e.cookie="cookietest=1; SameSite=Strict; expires=Thu, 01-Jan-1970 00:00:01 GMT",r}catch{return!1}}function wi(){var e=atob;return{abpIndo:["#Iklan-Melayang","#Kolom-Iklan-728","#SidebarIklan-wrapper",'[title="ALIENBOLA" i]',e("I0JveC1CYW5uZXItYWRz")],abpvn:[".quangcao","#mobileCatfish",e("LmNsb3NlLWFkcw=="),'[id^="bn_bottom_fixed_"]',"#pmadv"],adBlockFinland:[".mainostila",e("LnNwb25zb3JpdA=="),".ylamainos",e("YVtocmVmKj0iL2NsaWNrdGhyZ2guYXNwPyJd"),e("YVtocmVmXj0iaHR0cHM6Ly9hcHAucmVhZHBlYWsuY29tL2FkcyJd")],adBlockPersian:["#navbar_notice_50",".kadr",'TABLE[width="140px"]',"#divAgahi",e("YVtocmVmXj0iaHR0cDovL2cxLnYuZndtcm0ubmV0L2FkLyJd")],adBlockWarningRemoval:["#adblock-honeypot",".adblocker-root",".wp_adblock_detect",e("LmhlYWRlci1ibG9ja2VkLWFk"),e("I2FkX2Jsb2NrZXI=")],adGuardAnnoyances:[".hs-sosyal","#cookieconsentdiv",'div[class^="app_gdpr"]',".as-oil",'[data-cypress="soft-push-notification-modal"]'],adGuardBase:[".BetterJsPopOverlay",e("I2FkXzMwMFgyNTA="),e("I2Jhbm5lcmZsb2F0MjI="),e("I2NhbXBhaWduLWJhbm5lcg=="),e("I0FkLUNvbnRlbnQ=")],adGuardChinese:[e("LlppX2FkX2FfSA=="),e("YVtocmVmKj0iLmh0aGJldDM0LmNvbSJd"),"#widget-quan",e("YVtocmVmKj0iLzg0OTkyMDIwLnh5eiJd"),e("YVtocmVmKj0iLjE5NTZobC5jb20vIl0=")],adGuardFrench:["#pavePub",e("LmFkLWRlc2t0b3AtcmVjdGFuZ2xl"),".mobile_adhesion",".widgetadv",e("LmFkc19iYW4=")],adGuardGerman:['aside[data-portal-id="leaderboard"]'],adGuardJapanese:["#kauli_yad_1",e("YVtocmVmXj0iaHR0cDovL2FkMi50cmFmZmljZ2F0ZS5uZXQvIl0="),e("Ll9wb3BJbl9pbmZpbml0ZV9hZA=="),e("LmFkZ29vZ2xl"),e("Ll9faXNib29zdFJldHVybkFk")],adGuardMobile:[e("YW1wLWF1dG8tYWRz"),e("LmFtcF9hZA=="),'amp-embed[type="24smi"]',"#mgid_iframe1",e("I2FkX2ludmlld19hcmVh")],adGuardRussian:[e("YVtocmVmXj0iaHR0cHM6Ly9hZC5sZXRtZWFkcy5jb20vIl0="),e("LnJlY2xhbWE="),'div[id^="smi2adblock"]',e("ZGl2W2lkXj0iQWRGb3hfYmFubmVyXyJd"),"#psyduckpockeball"],adGuardSocial:[e("YVtocmVmXj0iLy93d3cuc3R1bWJsZXVwb24uY29tL3N1Ym1pdD91cmw9Il0="),e("YVtocmVmXj0iLy90ZWxlZ3JhbS5tZS9zaGFyZS91cmw/Il0="),".etsy-tweet","#inlineShare",".popup-social"],adGuardSpanishPortuguese:["#barraPublicidade","#Publicidade","#publiEspecial","#queTooltip",".cnt-publi"],adGuardTrackingProtection:["#qoo-counter",e("YVtocmVmXj0iaHR0cDovL2NsaWNrLmhvdGxvZy5ydS8iXQ=="),e("YVtocmVmXj0iaHR0cDovL2hpdGNvdW50ZXIucnUvdG9wL3N0YXQucGhwIl0="),e("YVtocmVmXj0iaHR0cDovL3RvcC5tYWlsLnJ1L2p1bXAiXQ=="),"#top100counter"],adGuardTurkish:["#backkapat",e("I3Jla2xhbWk="),e("YVtocmVmXj0iaHR0cDovL2Fkc2Vydi5vbnRlay5jb20udHIvIl0="),e("YVtocmVmXj0iaHR0cDovL2l6bGVuemkuY29tL2NhbXBhaWduLyJd"),e("YVtocmVmXj0iaHR0cDovL3d3dy5pbnN0YWxsYWRzLm5ldC8iXQ==")],bulgarian:[e("dGQjZnJlZW5ldF90YWJsZV9hZHM="),"#ea_intext_div",".lapni-pop-over","#xenium_hot_offers"],easyList:[".yb-floorad",e("LndpZGdldF9wb19hZHNfd2lkZ2V0"),e("LnRyYWZmaWNqdW5reS1hZA=="),".textad_headline",e("LnNwb25zb3JlZC10ZXh0LWxpbmtz")],easyListChina:[e("LmFwcGd1aWRlLXdyYXBbb25jbGljayo9ImJjZWJvcy5jb20iXQ=="),e("LmZyb250cGFnZUFkdk0="),"#taotaole","#aafoot.top_box",".cfa_popup"],easyListCookie:[".ezmob-footer",".cc-CookieWarning","[data-cookie-number]",e("LmF3LWNvb2tpZS1iYW5uZXI="),".sygnal24-gdpr-modal-wrap"],easyListCzechSlovak:["#onlajny-stickers",e("I3Jla2xhbW5pLWJveA=="),e("LnJla2xhbWEtbWVnYWJvYXJk"),".sklik",e("W2lkXj0ic2tsaWtSZWtsYW1hIl0=")],easyListDutch:[e("I2FkdmVydGVudGll"),e("I3ZpcEFkbWFya3RCYW5uZXJCbG9jaw=="),".adstekst",e("YVtocmVmXj0iaHR0cHM6Ly94bHR1YmUubmwvY2xpY2svIl0="),"#semilo-lrectangle"],easyListGermany:["#SSpotIMPopSlider",e("LnNwb25zb3JsaW5rZ3J1ZW4="),e("I3dlcmJ1bmdza3k="),e("I3Jla2xhbWUtcmVjaHRzLW1pdHRl"),e("YVtocmVmXj0iaHR0cHM6Ly9iZDc0Mi5jb20vIl0=")],easyListItaly:[e("LmJveF9hZHZfYW5udW5jaQ=="),".sb-box-pubbliredazionale",e("YVtocmVmXj0iaHR0cDovL2FmZmlsaWF6aW9uaWFkcy5zbmFpLml0LyJd"),e("YVtocmVmXj0iaHR0cHM6Ly9hZHNlcnZlci5odG1sLml0LyJd"),e("YVtocmVmXj0iaHR0cHM6Ly9hZmZpbGlhemlvbmlhZHMuc25haS5pdC8iXQ==")],easyListLithuania:[e("LnJla2xhbW9zX3RhcnBhcw=="),e("LnJla2xhbW9zX251b3JvZG9z"),e("aW1nW2FsdD0iUmVrbGFtaW5pcyBza3lkZWxpcyJd"),e("aW1nW2FsdD0iRGVkaWt1b3RpLmx0IHNlcnZlcmlhaSJd"),e("aW1nW2FsdD0iSG9zdGluZ2FzIFNlcnZlcmlhaS5sdCJd")],estonian:[e("QVtocmVmKj0iaHR0cDovL3BheTRyZXN1bHRzMjQuZXUiXQ==")],fanboyAnnoyances:["#ac-lre-player",".navigate-to-top","#subscribe_popup",".newsletter_holder","#back-top"],fanboyAntiFacebook:[".util-bar-module-firefly-visible"],fanboyEnhancedTrackers:[".open.pushModal","#issuem-leaky-paywall-articles-zero-remaining-nag","#sovrn_container",'div[class$="-hide"][zoompage-fontsize][style="display: block;"]',".BlockNag__Card"],fanboySocial:["#FollowUs","#meteored_share","#social_follow",".article-sharer",".community__social-desc"],frellwitSwedish:[e("YVtocmVmKj0iY2FzaW5vcHJvLnNlIl1bdGFyZ2V0PSJfYmxhbmsiXQ=="),e("YVtocmVmKj0iZG9rdG9yLXNlLm9uZWxpbmsubWUiXQ=="),"article.category-samarbete",e("ZGl2LmhvbGlkQWRz"),"ul.adsmodern"],greekAdBlock:[e("QVtocmVmKj0iYWRtYW4ub3RlbmV0LmdyL2NsaWNrPyJd"),e("QVtocmVmKj0iaHR0cDovL2F4aWFiYW5uZXJzLmV4b2R1cy5nci8iXQ=="),e("QVtocmVmKj0iaHR0cDovL2ludGVyYWN0aXZlLmZvcnRobmV0LmdyL2NsaWNrPyJd"),"DIV.agores300","TABLE.advright"],hungarian:["#cemp_doboz",".optimonk-iframe-container",e("LmFkX19tYWlu"),e("W2NsYXNzKj0iR29vZ2xlQWRzIl0="),"#hirdetesek_box"],iDontCareAboutCookies:['.alert-info[data-block-track*="CookieNotice"]',".ModuleTemplateCookieIndicator",".o--cookies--container","#cookies-policy-sticky","#stickyCookieBar"],icelandicAbp:[e("QVtocmVmXj0iL2ZyYW1ld29yay9yZXNvdXJjZXMvZm9ybXMvYWRzLmFzcHgiXQ==")],latvian:[e("YVtocmVmPSJodHRwOi8vd3d3LnNhbGlkemluaS5sdi8iXVtzdHlsZT0iZGlzcGxheTogYmxvY2s7IHdpZHRoOiAxMjBweDsgaGVpZ2h0OiA0MHB4OyBvdmVyZmxvdzogaGlkZGVuOyBwb3NpdGlvbjogcmVsYXRpdmU7Il0="),e("YVtocmVmPSJodHRwOi8vd3d3LnNhbGlkemluaS5sdi8iXVtzdHlsZT0iZGlzcGxheTogYmxvY2s7IHdpZHRoOiA4OHB4OyBoZWlnaHQ6IDMxcHg7IG92ZXJmbG93OiBoaWRkZW47IHBvc2l0aW9uOiByZWxhdGl2ZTsiXQ==")],listKr:[e("YVtocmVmKj0iLy9hZC5wbGFuYnBsdXMuY28ua3IvIl0="),e("I2xpdmVyZUFkV3JhcHBlcg=="),e("YVtocmVmKj0iLy9hZHYuaW1hZHJlcC5jby5rci8iXQ=="),e("aW5zLmZhc3R2aWV3LWFk"),".revenue_unit_item.dable"],listeAr:[e("LmdlbWluaUxCMUFk"),".right-and-left-sponsers",e("YVtocmVmKj0iLmFmbGFtLmluZm8iXQ=="),e("YVtocmVmKj0iYm9vcmFxLm9yZyJd"),e("YVtocmVmKj0iZHViaXp6bGUuY29tL2FyLz91dG1fc291cmNlPSJd")],listeFr:[e("YVtocmVmXj0iaHR0cDovL3Byb21vLnZhZG9yLmNvbS8iXQ=="),e("I2FkY29udGFpbmVyX3JlY2hlcmNoZQ=="),e("YVtocmVmKj0id2Vib3JhbWEuZnIvZmNnaS1iaW4vIl0="),".site-pub-interstitiel",'div[id^="crt-"][data-criteo-id]'],officialPolish:["#ceneo-placeholder-ceneo-12",e("W2hyZWZePSJodHRwczovL2FmZi5zZW5kaHViLnBsLyJd"),e("YVtocmVmXj0iaHR0cDovL2Fkdm1hbmFnZXIudGVjaGZ1bi5wbC9yZWRpcmVjdC8iXQ=="),e("YVtocmVmXj0iaHR0cDovL3d3dy50cml6ZXIucGwvP3V0bV9zb3VyY2UiXQ=="),e("ZGl2I3NrYXBpZWNfYWQ=")],ro:[e("YVtocmVmXj0iLy9hZmZ0cmsuYWx0ZXgucm8vQ291bnRlci9DbGljayJd"),e("YVtocmVmXj0iaHR0cHM6Ly9ibGFja2ZyaWRheXNhbGVzLnJvL3Ryay9zaG9wLyJd"),e("YVtocmVmXj0iaHR0cHM6Ly9ldmVudC4ycGVyZm9ybWFudC5jb20vZXZlbnRzL2NsaWNrIl0="),e("YVtocmVmXj0iaHR0cHM6Ly9sLnByb2ZpdHNoYXJlLnJvLyJd"),'a[href^="/url/"]'],ruAd:[e("YVtocmVmKj0iLy9mZWJyYXJlLnJ1LyJd"),e("YVtocmVmKj0iLy91dGltZy5ydS8iXQ=="),e("YVtocmVmKj0iOi8vY2hpa2lkaWtpLnJ1Il0="),"#pgeldiz",".yandex-rtb-block"],thaiAds:["a[href*=macau-uta-popup]",e("I2Fkcy1nb29nbGUtbWlkZGxlX3JlY3RhbmdsZS1ncm91cA=="),e("LmFkczMwMHM="),".bumq",".img-kosana"],webAnnoyancesUltralist:["#mod-social-share-2","#social-tools",e("LmN0cGwtZnVsbGJhbm5lcg=="),".zergnet-recommend",".yt.btn-link.btn-md.btn"]}}function bi(e){var r=e===void 0?{}:e,t=r.debug;return me(this,void 0,void 0,function(){var i,l,s,o,c,f;return de(this,function(m){switch(m.label){case 0:return Si()?(i=wi(),l=Object.keys(i),s=(f=[]).concat.apply(f,l.map(function(p){return i[p]})),[4,Pi(s)]):[2,void 0];case 1:return o=m.sent(),t&&xi(i,o),c=l.filter(function(p){var d=i[p],b=ie(d.map(function(y){return o[y]}));return b>d.length*.6}),c.sort(),[2,c]}})})}function Si(){return ge()||Fr()}function Pi(e){var r;return me(this,void 0,void 0,function(){var t,i,l,s,f,o,c,f;return de(this,function(m){switch(m.label){case 0:for(t=document,i=t.createElement("div"),l=new Array(e.length),s={},Vt(i),f=0;f<e.length;++f)o=Na(e[f]),o.tagName==="DIALOG"&&o.show(),c=t.createElement("div"),Vt(c),c.appendChild(o),i.appendChild(c),l[f]=o;m.label=1;case 1:return t.body?[3,3]:[4,qe(50)];case 2:return m.sent(),[3,1];case 3:t.body.appendChild(i);try{for(f=0;f<e.length;++f)l[f].offsetParent||(s[e[f]]=!0)}finally{(r=i.parentNode)===null||r===void 0||r.removeChild(i)}return[2,s]}})})}function Vt(e){e.style.setProperty("visibility","hidden","important"),e.style.setProperty("display","block","important")}function xi(e,r){for(var t="DOM blockers debug:\n```",i=0,l=Object.keys(e);i<l.length;i++){var s=l[i];t+=`
-`.concat(s,":");for(var o=0,c=e[s];o<c.length;o++){var f=c[o];t+=`
-  `.concat(r[f]?"\u{1F6AB}":"\u27A1\uFE0F"," ").concat(f)}}console.log("".concat(t,"\n```"))}function ki(){for(var e=0,r=["rec2020","p3","srgb"];e<r.length;e++){var t=r[e];if(matchMedia("(color-gamut: ".concat(t,")")).matches)return t}}function Li(){if(Wt("inverted"))return!0;if(Wt("none"))return!1}function Wt(e){return matchMedia("(inverted-colors: ".concat(e,")")).matches}function Ei(){if(Dt("active"))return!0;if(Dt("none"))return!1}function Dt(e){return matchMedia("(forced-colors: ".concat(e,")")).matches}var Ci=100;function Ai(){if(matchMedia("(min-monochrome: 0)").matches){for(var e=0;e<=Ci;++e)if(matchMedia("(max-monochrome: ".concat(e,")")).matches)return e;throw new Error("Too high value")}}function Fi(){if(Ie("no-preference"))return 0;if(Ie("high")||Ie("more"))return 1;if(Ie("low")||Ie("less"))return-1;if(Ie("forced"))return 10}function Ie(e){return matchMedia("(prefers-contrast: ".concat(e,")")).matches}function Ii(){if(Gt("reduce"))return!0;if(Gt("no-preference"))return!1}function Gt(e){return matchMedia("(prefers-reduced-motion: ".concat(e,")")).matches}function Ri(){if(Zt("reduce"))return!0;if(Zt("no-preference"))return!1}function Zt(e){return matchMedia("(prefers-reduced-transparency: ".concat(e,")")).matches}function Ti(){if(_t("high"))return!0;if(_t("standard"))return!1}function _t(e){return matchMedia("(dynamic-range: ".concat(e,")")).matches}var V=Math,ae=function(){return 0};function Ni(){var e=V.acos||ae,r=V.acosh||ae,t=V.asin||ae,i=V.asinh||ae,l=V.atanh||ae,s=V.atan||ae,o=V.sin||ae,c=V.sinh||ae,f=V.cos||ae,m=V.cosh||ae,p=V.tan||ae,d=V.tanh||ae,b=V.exp||ae,y=V.expm1||ae,E=V.log1p||ae,D=function(x){return V.pow(V.PI,x)},Z=function(x){return V.log(x+V.sqrt(x*x-1))},A=function(x){return V.log(x+V.sqrt(x*x+1))},N=function(x){return V.log((1+x)/(1-x))/2},I=function(x){return V.exp(x)-1/V.exp(x)/2},P=function(x){return(V.exp(x)+1/V.exp(x))/2},T=function(x){return V.exp(x)-1},L=function(x){return(V.exp(2*x)-1)/(V.exp(2*x)+1)},_=function(x){return V.log(1+x)};return{acos:e(.12312423423423424),acosh:r(1e308),acoshPf:Z(1e154),asin:t(.12312423423423424),asinh:i(1),asinhPf:A(1),atanh:l(.5),atanhPf:N(.5),atan:s(.5),sin:o(-1e300),sinh:c(1),sinhPf:I(1),cos:f(10.000000000123),cosh:m(1),coshPf:P(1),tan:p(-1e300),tanh:d(1),tanhPf:L(1),exp:b(1),expm1:y(1),expm1Pf:T(1),log1p:E(10),log1pPf:_(10),powPI:D(-100)}}var Mi="mmMwWLliI0fiflO&1",kr={default:[],apple:[{font:"-apple-system-body"}],serif:[{fontFamily:"serif"}],sans:[{fontFamily:"sans-serif"}],mono:[{fontFamily:"monospace"}],min:[{fontSize:"1px"}],system:[{fontFamily:"system-ui"}]};function Oi(){return ji(function(e,r){for(var t={},i={},l=0,s=Object.keys(kr);l<s.length;l++){var o=s[l],c=kr[o],f=c[0],m=f===void 0?{}:f,p=c[1],d=p===void 0?Mi:p,b=e.createElement("span");b.textContent=d,b.style.whiteSpace="nowrap";for(var y=0,E=Object.keys(m);y<E.length;y++){var D=E[y],Z=m[D];Z!==void 0&&(b.style[D]=Z)}t[o]=b,r.append(e.createElement("br"),b)}for(var A=0,N=Object.keys(kr);A<N.length;A++){var o=N[A];i[o]=t[o].getBoundingClientRect().width}return i})}function ji(e,r){return r===void 0&&(r=4e3),Jt(function(t,i){var l=i.document,s=l.body,o=s.style;o.width="".concat(r,"px"),o.webkitTextSizeAdjust=o.textSizeAdjust="none",je()?s.style.zoom="".concat(1/i.devicePixelRatio):ge()&&(s.style.zoom="reset");var c=l.createElement("div");return c.textContent=Sr([],Array(r/20<<0),!0).map(function(){return"word"}).join(" "),s.appendChild(c),e(l,s)},'<!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">')}function Vi(){return navigator.pdfViewerEnabled}function Wi(){var e=new Float32Array(1),r=new Uint8Array(e.buffer);return e[0]=1/0,e[0]=e[0]-e[0],r[3]}function Di(){var e=window.ApplePaySession;if(typeof e?.canMakePayments!="function")return-1;if(Gi())return-3;try{return e.canMakePayments()?1:0}catch(r){return Zi(r)}}var Gi=Oa;function Zi(e){if(e instanceof Error&&e.name==="InvalidAccessError"&&/\bfrom\b.*\binsecure\b/i.test(e.message))return-2;throw e}function _i(){var e,r=document.createElement("a"),t=(e=r.attributionSourceId)!==null&&e!==void 0?e:r.attributionsourceid;return t===void 0?void 0:String(t)}var qt=-1,Kt=-2,zi=new Set([10752,2849,2884,2885,2886,2928,2929,2930,2931,2932,2960,2961,2962,2963,2964,2965,2966,2967,2968,2978,3024,3042,3088,3089,3106,3107,32773,32777,32777,32823,32824,32936,32937,32938,32939,32968,32969,32970,32971,3317,33170,3333,3379,3386,33901,33902,34016,34024,34076,3408,3410,3411,3412,3413,3414,3415,34467,34816,34817,34818,34819,34877,34921,34930,35660,35661,35724,35738,35739,36003,36004,36005,36347,36348,36349,37440,37441,37443,7936,7937,7938]),Hi=new Set([34047,35723,36063,34852,34853,34854,34229,36392,36795,38449]),Yi=["FRAGMENT_SHADER","VERTEX_SHADER"],Xi=["LOW_FLOAT","MEDIUM_FLOAT","HIGH_FLOAT","LOW_INT","MEDIUM_INT","HIGH_INT"],Qt="WEBGL_debug_renderer_info",Bi="WEBGL_polygon_mode";function Ui(e){var r,t,i,l,s,o,c=e.cache,f=$t(c);if(!f)return qt;if(!rn(f))return Kt;var m=en()?null:f.getExtension(Qt);return{version:((r=f.getParameter(f.VERSION))===null||r===void 0?void 0:r.toString())||"",vendor:((t=f.getParameter(f.VENDOR))===null||t===void 0?void 0:t.toString())||"",vendorUnmasked:m?(i=f.getParameter(m.UNMASKED_VENDOR_WEBGL))===null||i===void 0?void 0:i.toString():"",renderer:((l=f.getParameter(f.RENDERER))===null||l===void 0?void 0:l.toString())||"",rendererUnmasked:m?(s=f.getParameter(m.UNMASKED_RENDERER_WEBGL))===null||s===void 0?void 0:s.toString():"",shadingLanguageVersion:((o=f.getParameter(f.SHADING_LANGUAGE_VERSION))===null||o===void 0?void 0:o.toString())||""}}function Ji(e){var r=e.cache,t=$t(r);if(!t)return qt;if(!rn(t))return Kt;var i=t.getSupportedExtensions(),l=t.getContextAttributes(),s=[],o=[],c=[],f=[],m=[];if(l)for(var p=0,d=Object.keys(l);p<d.length;p++){var b=d[p];o.push("".concat(b,"=").concat(l[b]))}for(var y=zt(t),E=0,D=y;E<D.length;E++){var Z=D[E],A=t[Z];c.push("".concat(Z,"=").concat(A).concat(zi.has(A)?"=".concat(t.getParameter(A)):""))}if(i)for(var N=0,I=i;N<I.length;N++){var P=I[N];if(!(P===Qt&&en()||P===Bi&&Qi())){var T=t.getExtension(P);if(!T){s.push(P);continue}for(var L=0,_=zt(T);L<_.length;L++){var Z=_[L],A=T[Z];f.push("".concat(Z,"=").concat(A).concat(Hi.has(A)?"=".concat(t.getParameter(A)):""))}}}for(var x=0,R=Yi;x<R.length;x++)for(var Y=R[x],fe=0,Pe=Xi;fe<Pe.length;fe++){var se=Pe[fe],he=qi(t,Y,se);m.push("".concat(Y,".").concat(se,"=").concat(he.join(",")))}return f.sort(),c.sort(),{contextAttributes:o,parameters:c,shaderPrecisions:m,extensions:i,extensionParameters:f,unsupportedExtensions:s}}function $t(e){if(e.webgl)return e.webgl.context;var r=document.createElement("canvas"),t;r.addEventListener("webglCreateContextError",function(){return t=void 0});for(var i=0,l=["webgl","experimental-webgl"];i<l.length;i++){var s=l[i];try{t=r.getContext(s)}catch{}if(t)break}return e.webgl={context:t},t}function qi(e,r,t){var i=e.getShaderPrecisionFormat(e[r],e[t]);return i?[i.rangeMin,i.rangeMax,i.precision]:[]}function zt(e){var r=Object.keys(e.__proto__);return r.filter(Ki)}function Ki(e){return typeof e=="string"&&!e.match(/[^A-Z0-9_x]/)}function en(){return Ut()}function Qi(){return je()||ge()}function rn(e){return typeof e.getParameter=="function"}function $i(){var e=Fr()||ge();if(!e)return-2;if(!window.AudioContext)return-1;var r=new AudioContext().baseLatency;return r==null?-1:isFinite(r)?r:-3}function eo(){if(!window.Intl)return-1;var e=window.Intl.DateTimeFormat;if(!e)return-2;var r=e().resolvedOptions().locale;return!r&&r!==""?-3:r}var ro={fonts:Wa,domBlockers:bi,fontPreferences:Oi,audio:Ca,screenFrame:oi,canvas:Ga,osCpu:qa,languages:Ka,colorDepth:Qa,deviceMemory:$a,screenResolution:ei,hardwareConcurrency:si,timezone:ui,sessionStorage:ci,localStorage:fi,indexedDB:mi,openDatabase:di,cpuClass:pi,platform:gi,plugins:Da,touchSupport:Ja,vendor:hi,vendorFlavors:vi,cookiesEnabled:yi,colorGamut:ki,invertedColors:Li,forcedColors:Ei,monochrome:Ai,contrast:Fi,reducedMotion:Ii,reducedTransparency:Ri,hdr:Ti,math:Ni,pdfViewerEnabled:Vi,architecture:Wi,applePay:Di,privateClickMeasurement:_i,audioBaseLatency:$i,dateTimeLocale:eo,webGlBasics:Ui,webGlExtensions:Ji};function to(e){return ya(ro,e,[])}var no="$ if upgrade to Pro: https://fpjs.dev/pro";function ao(e){var r=io(e),t=oo(r);return{score:r,comment:no.replace(/\$/g,"".concat(t))}}function io(e){if(Fr())return .4;if(ge())return Ar()&&!(We()&&Ve())?.5:.3;var r="value"in e.platform?e.platform.value:"";return/^Win/.test(r)?.6:/^Mac/.test(r)?.5:.7}function oo(e){return Xt(.99+.01*e,1e-4)}function so(e){for(var r="",t=0,i=Object.keys(e).sort();t<i.length;t++){var l=i[t],s=e[l],o="error"in s?"error":JSON.stringify(s.value);r+="".concat(r?"|":"").concat(l.replace(/([:|\\])/g,"\\$1"),":").concat(o)}return r}function tn(e){return JSON.stringify(e,function(r,t){return t instanceof Error?pa(t):t},2)}function nn(e){return da(so(e))}function uo(e){var r,t=ao(e);return{get visitorId(){return r===void 0&&(r=nn(this.components)),r},set visitorId(i){r=i},confidence:t,components:e,version:Ht}}function lo(e){return e===void 0&&(e=50),aa(e,e*2)}function co(e,r){var t=Date.now();return{get:function(i){return me(this,void 0,void 0,function(){var l,s,o;return de(this,function(c){switch(c.label){case 0:return l=Date.now(),[4,e()];case 1:return s=c.sent(),o=uo(s),(r||i?.debug)&&console.log("Copy the text below to get the debug data:\n\n```\nversion: ".concat(o.version,`
-userAgent: `).concat(navigator.userAgent,`
-timeBetweenLoadAndGet: `).concat(l-t,`
-visitorId: `).concat(o.visitorId,`
-components: `).concat(tn(s),"\n```")),[2,o]}})})}}}function fo(){if(!(window.__fpjs_d_m||Math.random()>=.001))try{var e=new XMLHttpRequest;e.open("get","https://m1.openfpcdn.io/fingerprintjs/v".concat(Ht,"/npm-monitoring"),!0),e.send()}catch(r){console.error(r)}}function mo(e){var r;return e===void 0&&(e={}),me(this,void 0,void 0,function(){var t,i,l;return de(this,function(s){switch(s.label){case 0:return(!((r=e.monitoring)!==null&&r!==void 0)||r)&&fo(),t=e.delayFallback,i=e.debug,[4,lo(t)];case 1:return s.sent(),l=to({cache:{},debug:i}),[2,co(l,i)]}})})}var an={load:mo,hashComponents:nn,componentsToDebugString:tn};var Ke=null,Re=async()=>Ke||(Ke=(await(await an.load()).get()).visitorId,Ke);console.log("login fire");var on={en:{heading:"Log In",subheading:"Welcome back! Please sign in.",email:"Email",password:"Password",login:"Log In",error:"Login failed. Please check your credentials.",forgotPassword:"Forgot your password?",reset:{heading:"Reset Your Password",subheading:"Enter your email and we'll send you reset instructions.",email:"Registered Email",button:"Send Reset Link",success:"Reset link sent! Please check your email.",error:"Could not send reset email. Try again.",serverError:"Server error. Please try again later."},passwordResetSuccess:"Password reset successfully! Please log in with your new password."},id:{heading:"Masuk",subheading:"Selamat datang! Silakan masuk.",email:"Surel",password:"Kata Sandi",login:"Masuk",error:"Login gagal. Silakan periksa kembali kredensial Anda.",forgotPassword:"Lupa kata sandi?",reset:{heading:"Atur Ulang Kata Sandi",subheading:"Masukkan email Anda dan kami akan mengirimkan instruksi.",email:"Email Terdaftar",button:"Kirim Tautan Atur Ulang",success:"Tautan atur ulang dikirim! Silakan periksa email Anda.",error:"Gagal mengirim email atur ulang. Coba lagi.",serverError:"Kesalahan server. Silakan coba lagi nanti."},passwordResetSuccess:"Kata sandi berhasil diatur ulang! Silakan masuk dengan kata sandi baru Anda."}},v={email:"",password:"",error:"",success:"",loading:!1,forgotEmail:"",resetSuccess:!1,resetError:"",showResetModal:!1,resetLoading:!1,resetStep:1,resetCode:"",oninit:()=>{if(v.email="",v.password="",v.error="",v.loading=!1,v.forgotEmail="",v.resetSuccess=!1,v.resetError="",v.showResetModal=!1,v.resetLoading=!1,v.resetStep=1,v.resetCode="",F.default.route.param().success==="password_reset"){let r=localStorage.getItem("lang")||"en";v.success=on[r].passwordResetSuccess}else v.success=""},view:()=>{document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||"auto");let e=localStorage.getItem("lang")||"en",r=on[e];return(0,F.default)("main.container",[(0,F.default)("article",[(0,F.default)("hgroup",[(0,F.default)("h1",r.heading),(0,F.default)("h2",r.subheading)]),v.error&&(0,F.default)("p",{style:"color: red;"},`\u274C ${v.error}`),v.success&&(0,F.default)("p",{style:"color: green;"},`\u2705 ${v.success}`),(0,F.default)("form",{onsubmit:async t=>{t.preventDefault(),v.error=v.success="",v.loading=!0;try{let i=await F.default.request({method:"POST",url:"/api/login",body:{email:v.email,password:v.password,fingerprint:await Re()}});v.success=i.msg||"Logged in",localStorage.setItem("token",i.token),F.default.route.set("/")}catch(i){v.error=i.message||"Login failed",i.status===401&&(v.error=r.error)}v.loading=!1}},[(0,F.default)("label",{for:"email"},r.email),(0,F.default)("input",{id:"email",type:"email",placeholder:"you@example.com",value:v.email,oninput:t=>v.email=t.target.value}),(0,F.default)("label",{for:"password"},r.password),(0,F.default)("input",{id:"password",type:"password",placeholder:"\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",value:v.password,oninput:t=>v.password=t.target.value}),(0,F.default)("button",{type:"submit","aria-busy":v.loading?"true":!1,disabled:!(v.email&&v.password)},r.login)]),(0,F.default)("a",{style:"margin-top: 0.5rem; text-decoration: underline; cursor: pointer; display: inline-block;",onclick:()=>{v.resetSuccess=v.resetError="",v.forgotEmail=v.email,v.showResetModal=!0}},e==="id"?"\u{1F511} Lupa kata sandi?":"\u{1F511} Forgot your password?")])],v.showResetModal&&(0,F.default)("dialog[open]",{style:"max-width: 400px; margin: auto; border-radius: 6px;"},[(0,F.default)("article",[(0,F.default)("header",[(0,F.default)("h3",e==="id"?"Lupa Kata Sandi":"Forgot Password")]),(0,F.default)("p",e==="id"?"Masukkan email yang terdaftar untuk menerima kode reset.":"Enter your registered email to receive a reset code."),v.resetStep===1&&[v.resetSuccess&&(0,F.default)("p",{style:"color: green"},e==="id"?"\u2705 Kode berhasil dikirim. Silakan cek email Anda.":"\u2705 Code sent successfully. Please check your email."),v.resetError&&(0,F.default)("p",{style:"color: red"},`\u274C ${v.resetError}`),(0,F.default)("form",{onsubmit:async t=>{t.preventDefault(),v.resetSuccess=v.resetError="",v.resetLoading=!0;try{let i=await F.default.request({method:"POST",url:"/api/request-password-reset",body:{email:v.forgotEmail},headers:{"x-lang":e}});v.resetSuccess=!0,v.resetStep=2}catch(i){v.resetError=i.message||r.reset.serverError}v.resetLoading=!1}},[(0,F.default)("label",{for:"forgotEmail"},e==="id"?"Email Terdaftar":"Registered Email"),(0,F.default)("input",{id:"forgotEmail",type:"email",value:v.forgotEmail,oninput:t=>v.forgotEmail=t.target.value}),(0,F.default)("div",{style:"display: flex; gap: 0.5rem; margin-top: 1rem;"},[(0,F.default)("button",{style:{"border-color":"#D93526","background-color":"#D93526"},type:"button",onclick:()=>{v.showResetModal=!1,v.resetStep=1,v.resetSuccess=v.resetError="",v.forgotEmail="",v.resetCode=""}},e==="id"?"Batal":"Cancel"),(0,F.default)("button",{type:"submit",disabled:!v.forgotEmail||v.resetLoading},v.resetLoading?e==="id"?"Mengirim...":"Sending...":e==="id"?"Kirim Kode":"Send Code")])])],v.resetStep===2&&[(0,F.default)("form",{onsubmit:async t=>{t.preventDefault(),v.resetError=!1,v.resetLoading=!0;try{await F.default.request({method:"POST",url:"/api/verify-reset-code",body:{email:v.forgotEmail,code:v.resetCode}}),F.default.route.set("/reset",{code:v.resetCode,email:v.forgotEmail})}catch{v.resetError=!0}v.resetLoading=!1}},[(0,F.default)("label",{for:"resetCode"},e==="id"?"Kode 6 Digit":"6 Digit Code"),(0,F.default)("input",{id:"resetCode",type:"text",maxlength:6,pattern:"\\d{6}",value:v.resetCode,oninput:t=>{v.resetCode=t.target.value.replace(/\D/g,"").slice(0,6),v.resetError=!1}}),v.resetError&&(0,F.default)("p",{style:"color: red"},e==="id"?"\u274C Kode salah":"\u274C Incorrect code"),(0,F.default)("div",{style:"display: flex; gap: 0.5rem; margin-top: 1rem;"},[(0,F.default)("button.secondary",{type:"button",onclick:()=>{v.resetStep=1,v.resetCode="",v.resetError=!1}},e==="id"?"Kembali":"Back"),(0,F.default)("button",{type:"submit",disabled:v.resetCode.length!==6||v.resetLoading,"aria-busy":v.resetLoading?"true":!1},v.resetLoading?e==="id"?"Mengonfirmasi...":"Confirming...":e==="id"?"Konfirmasi":"Confirm")])])]])]))}},sn=v;var Ee=xe(we(),1);var Se={user:null,error:"",loading:!0,oninit:async()=>{let e=await Re();try{let r=await Ee.default.request({method:"GET",url:"/api/profile",headers:{Authorization:`Bearer ${localStorage.getItem("token")}`,"X-Device-Fingerprint":e}});Se.user=r.user}catch(r){Se.error=r.message||"Unauthorized"}Se.loading=!1},view:()=>(document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||"auto"),(0,Ee.default)("main.container",[(0,Ee.default)("h1","\u{1F464} Profile"),Se.error?(0,Ee.default)("p",{style:"color:red"},`\u274C ${String(Se.error.message||Se.error)}`):Se.user?(0,Ee.default)("pre",JSON.stringify(Se.user,null,2)):(0,Ee.default)("p","\u23F3 Loading...")]))},un=Se;var ee=xe(we(),1);var po=localStorage.getItem("lang")||"en",C={language:po,oldPassword:"",newPassword:"",confirmPassword:"",newPasswordInput:"",fingerprint:"",message:"",error:"",isSubmitting:!1,t(e){return C.translations[C.language][e]||e},translations:{en:{title:"Change Password",old:"Current Password",new:"New Password",confirm:"Confirm New Password",mismatch:"New passwords do not match",changed:"Password changed successfully",invalid:"Invalid old password or fingerprint",button:"Update Password",strength:["Too Weak","Weak","Fair","Strong","Very Strong"]},id:{title:"Ubah Kata Sandi",old:"Kata Sandi Saat Ini",new:"Kata Sandi Baru",confirm:"Konfirmasi Kata Sandi Baru",mismatch:"Kata sandi baru tidak cocok",changed:"Kata sandi berhasil diubah",invalid:"Kata sandi atau sidik perangkat tidak valid",button:"Perbarui Kata Sandi",strength:["Terlalu Lemah","Lemah","Cukup","Kuat","Sangat Kuat"]}},getPasswordStrength(e){if(!e)return 0;let r=0;return e.length>=8&&r++,/[A-Z]/.test(e)&&r++,/[a-z]/.test(e)&&r++,/[0-9]/.test(e)&&r++,/[^A-Za-z0-9]/.test(e)&&r++,r},async submit(e){if(e.preventDefault(),C.error=C.message="",C.isSubmitting=!0,C.newPasswordInput!==C.confirmPassword){C.error="mismatch",C.isSubmitting=!1;return}try{let r=await Re(),t=localStorage.getItem("token");await ee.default.request({method:"POST",url:"/api/change-password",body:{oldPassword:C.oldPassword,newPassword:C.newPasswordInput},headers:{Authorization:`Bearer ${t}`,"x-device-fingerprint":r}}),C.message="changed",C.oldPassword="",C.newPasswordInput="",C.confirmPassword="",setTimeout(()=>{ee.default.route.set("/")},1e3)}catch{C.error="invalid"}finally{C.isSubmitting=!1}},view(){document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||"auto");let e=C.getPasswordStrength(C.newPasswordInput),r=C.t;return(0,ee.default)("main.container",[(0,ee.default)("form",{onsubmit:C.submit,style:"max-width: 400px; margin: auto"},[(0,ee.default)("h2",r("title")),(0,ee.default)("label",{for:"old"},r("old")),(0,ee.default)("input",{id:"old",type:"password",value:C.oldPassword,oninput:t=>C.oldPassword=t.target.value}),(0,ee.default)("label",{for:"new"},r("new")),(0,ee.default)("input",{id:"new",type:"password",value:C.newPasswordInput,oninput:t=>C.newPasswordInput=t.target.value}),C.newPasswordInput&&(0,ee.default)("small",r("strength")[e-1]||r("strength")[0]),C.newPasswordInput&&(0,ee.default)("progress",{value:e,max:5,style:"width: 100%; height: 6px;"}),(0,ee.default)("label",{for:"confirm"},r("confirm")),(0,ee.default)("input",{id:"confirm",type:"password",value:C.confirmPassword,oninput:t=>C.confirmPassword=t.target.value}),(0,ee.default)("button",{type:"submit",disabled:C.isSubmitting||!C.oldPassword||!C.newPasswordInput||!C.confirmPassword||C.newPasswordInput!==C.confirmPassword,"aria-busy":C.isSubmitting?"true":!1},C.t("button")),C.error&&(0,ee.default)("p",{style:"color:red; margin-top: 8px"},r(C.error)),C.message&&(0,ee.default)("p",{style:"color:green; margin-top: 8px"},r(C.message))])])}},ln=C;var le=xe(we(),1),go={en:{heading:"Reset Your Password",subheading:"Enter your email and we'll send you reset instructions.",email:"Registered Email",button:"Send Reset Link",success:"Reset link sent! Please check your email.",error:"Could not send reset email. Try again."},id:{heading:"Atur Ulang Kata Sandi",subheading:"Masukkan email Anda dan kami akan mengirimkan instruksi.",email:"Email Terdaftar",button:"Kirim Tautan Atur Ulang",success:"Tautan atur ulang dikirim! Silakan periksa email Anda.",error:"Gagal mengirim email atur ulang. Coba lagi."}},oe={email:"",success:"",error:"",loading:!1,view(){let e=localStorage.getItem("lang")||"en",r=go[e];return document.documentElement.setAttribute("data-theme",localStorage.getItem("theme")||"auto"),(0,le.default)("main.container",[(0,le.default)("article",[(0,le.default)("hgroup",[(0,le.default)("h1",r.heading),(0,le.default)("h2",r.subheading)]),oe.success&&(0,le.default)("p",{style:"color: green"},r.success),oe.error&&(0,le.default)("p",{style:"color: red"},r.error),(0,le.default)("form",{onsubmit:async t=>{t.preventDefault(),oe.success=oe.error="",oe.loading=!0;try{await le.default.request({method:"POST",url:"/api/request-password-reset",body:{email:oe.email}}),oe.success=!0}catch{oe.error=!0}oe.loading=!1}},[(0,le.default)("label",{for:"email"},r.email),(0,le.default)("input",{id:"email",type:"email",value:oe.email,oninput:t=>oe.email=t.target.value}),(0,le.default)("button",{type:"submit",disabled:!oe.email||oe.loading,"aria-busy":oe.loading?"true":null},r.button)])])])}},cn=oe;var Q=xe(we(),1),W={email:"",code:"",newPassword:"",confirmPassword:"",error:"",success:"",loading:!1,oninit:()=>{W.email=Q.default.route.param("email")||"",W.code=Q.default.route.param("code")||"",W.newPassword="",W.confirmPassword="",W.error="",W.success="",W.loading=!1},view:()=>{let e=localStorage.getItem("lang")||"en",r={en:{heading:"Reset Password",subheading:"Enter your new password below.",newPassword:"New Password",confirmPassword:"Confirm Password",submit:"Update Password",success:"\u2705 Password updated successfully!",error:"\u274C Error updating password. Try again.",mismatch:"\u274C Passwords do not match.",short:"\u274C Password too short (min 6 characters)."},id:{heading:"Atur Ulang Kata Sandi",subheading:"Masukkan kata sandi baru Anda.",newPassword:"Kata Sandi Baru",confirmPassword:"Konfirmasi Kata Sandi",submit:"Perbarui Kata Sandi",success:"\u2705 Kata sandi berhasil diperbarui!",error:"\u274C Gagal memperbarui kata sandi. Coba lagi.",mismatch:"\u274C Kata sandi tidak cocok.",short:"\u274C Kata sandi terlalu pendek (min 6 karakter)."}}[e];return(0,Q.default)("main.container",[(0,Q.default)("article",[(0,Q.default)("hgroup",[(0,Q.default)("h1",r.heading),(0,Q.default)("h2",r.subheading)]),W.success&&(0,Q.default)("p",{style:"color: green"},r.success),W.error&&(0,Q.default)("p",{style:"color: red"},W.error),(0,Q.default)("form",{onsubmit:async t=>{if(t.preventDefault(),W.error=W.success="",W.newPassword!==W.confirmPassword){W.error=r.mismatch;return}if(W.newPassword.length<6){W.error=r.short;return}W.loading=!0;try{let i=await Q.default.request({method:"POST",url:"/api/change-password",body:{email:W.email,resetCode:W.code,newPassword:W.newPassword}});Q.default.route.set("/login",{success:"password_reset"})}catch(i){W.error=i.message||r.error}W.loading=!1}},[(0,Q.default)("label",{for:"newPassword"},r.newPassword),(0,Q.default)("input",{id:"newPassword",type:"password",value:W.newPassword,oninput:t=>W.newPassword=t.target.value}),(0,Q.default)("label",{for:"confirmPassword"},r.confirmPassword),(0,Q.default)("input",{id:"confirmPassword",type:"password",value:W.confirmPassword,oninput:t=>W.confirmPassword=t.target.value}),(0,Q.default)("button",{type:"submit",disabled:W.loading,"aria-busy":W.loading?"true":!1},r.submit)])])])}},fn=W;Ir.default.route.prefix="";Ir.default.route(document.getElementById("app"),"/",{"/":Ft,"/signup":It,"/login":sn,"/profile":un,"/change-password":ln,"/forgot-password":cn,"/reset":fn});})();
-//# sourceMappingURL=bundle.js.map
+(() => {
+  var __create = Object.create;
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getProtoOf = Object.getPrototypeOf;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
+
+  // node_modules/mithril/render/vnode.js
+  var require_vnode = __commonJS({
+    "node_modules/mithril/render/vnode.js"(exports, module) {
+      "use strict";
+      function Vnode(tag, key, attrs, children, text, dom) {
+        return { tag, key, attrs, children, text, dom, is: void 0, domSize: void 0, state: void 0, events: void 0, instance: void 0 };
+      }
+      Vnode.normalize = function(node) {
+        if (Array.isArray(node)) return Vnode("[", void 0, void 0, Vnode.normalizeChildren(node), void 0, void 0);
+        if (node == null || typeof node === "boolean") return null;
+        if (typeof node === "object") return node;
+        return Vnode("#", void 0, void 0, String(node), void 0, void 0);
+      };
+      Vnode.normalizeChildren = function(input) {
+        var children = [];
+        if (input.length) {
+          var isKeyed = input[0] != null && input[0].key != null;
+          for (var i = 1; i < input.length; i++) {
+            if ((input[i] != null && input[i].key != null) !== isKeyed) {
+              throw new TypeError(
+                isKeyed && (input[i] != null || typeof input[i] === "boolean") ? "In fragments, vnodes must either all have keys or none have keys. You may wish to consider using an explicit keyed empty fragment, m.fragment({key: ...}), instead of a hole." : "In fragments, vnodes must either all have keys or none have keys."
+              );
+            }
+          }
+          for (var i = 0; i < input.length; i++) {
+            children[i] = Vnode.normalize(input[i]);
+          }
+        }
+        return children;
+      };
+      module.exports = Vnode;
+    }
+  });
+
+  // node_modules/mithril/render/hyperscriptVnode.js
+  var require_hyperscriptVnode = __commonJS({
+    "node_modules/mithril/render/hyperscriptVnode.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      module.exports = function() {
+        var attrs = arguments[this], start = this + 1, children;
+        if (attrs == null) {
+          attrs = {};
+        } else if (typeof attrs !== "object" || attrs.tag != null || Array.isArray(attrs)) {
+          attrs = {};
+          start = this;
+        }
+        if (arguments.length === start + 1) {
+          children = arguments[start];
+          if (!Array.isArray(children)) children = [children];
+        } else {
+          children = [];
+          while (start < arguments.length) children.push(arguments[start++]);
+        }
+        return Vnode("", attrs.key, attrs, children);
+      };
+    }
+  });
+
+  // node_modules/mithril/util/hasOwn.js
+  var require_hasOwn = __commonJS({
+    "node_modules/mithril/util/hasOwn.js"(exports, module) {
+      "use strict";
+      module.exports = {}.hasOwnProperty;
+    }
+  });
+
+  // node_modules/mithril/render/hyperscript.js
+  var require_hyperscript = __commonJS({
+    "node_modules/mithril/render/hyperscript.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      var hyperscriptVnode = require_hyperscriptVnode();
+      var hasOwn = require_hasOwn();
+      var selectorParser = /(?:(^|#|\.)([^#\.\[\]]+))|(\[(.+?)(?:\s*=\s*("|'|)((?:\\["'\]]|.)*?)\5)?\])/g;
+      var selectorCache = /* @__PURE__ */ Object.create(null);
+      function isEmpty(object) {
+        for (var key in object) if (hasOwn.call(object, key)) return false;
+        return true;
+      }
+      function compileSelector(selector) {
+        var match, tag = "div", classes = [], attrs = {};
+        while (match = selectorParser.exec(selector)) {
+          var type = match[1], value = match[2];
+          if (type === "" && value !== "") tag = value;
+          else if (type === "#") attrs.id = value;
+          else if (type === ".") classes.push(value);
+          else if (match[3][0] === "[") {
+            var attrValue = match[6];
+            if (attrValue) attrValue = attrValue.replace(/\\(["'])/g, "$1").replace(/\\\\/g, "\\");
+            if (match[4] === "class") classes.push(attrValue);
+            else attrs[match[4]] = attrValue === "" ? attrValue : attrValue || true;
+          }
+        }
+        if (classes.length > 0) attrs.className = classes.join(" ");
+        if (isEmpty(attrs)) attrs = null;
+        return selectorCache[selector] = { tag, attrs };
+      }
+      function execSelector(state, vnode) {
+        var attrs = vnode.attrs;
+        var hasClass = hasOwn.call(attrs, "class");
+        var className = hasClass ? attrs.class : attrs.className;
+        vnode.tag = state.tag;
+        if (state.attrs != null) {
+          attrs = Object.assign({}, state.attrs, attrs);
+          if (className != null || state.attrs.className != null) attrs.className = className != null ? state.attrs.className != null ? String(state.attrs.className) + " " + String(className) : className : state.attrs.className != null ? state.attrs.className : null;
+        } else {
+          if (className != null) attrs.className = className;
+        }
+        if (hasClass) attrs.class = null;
+        if (state.tag === "input" && hasOwn.call(attrs, "type")) {
+          attrs = Object.assign({ type: attrs.type }, attrs);
+        }
+        vnode.is = attrs.is;
+        vnode.attrs = attrs;
+        return vnode;
+      }
+      function hyperscript(selector) {
+        if (selector == null || typeof selector !== "string" && typeof selector !== "function" && typeof selector.view !== "function") {
+          throw Error("The selector must be either a string or a component.");
+        }
+        var vnode = hyperscriptVnode.apply(1, arguments);
+        if (typeof selector === "string") {
+          vnode.children = Vnode.normalizeChildren(vnode.children);
+          if (selector !== "[") return execSelector(selectorCache[selector] || compileSelector(selector), vnode);
+        }
+        vnode.tag = selector;
+        return vnode;
+      }
+      module.exports = hyperscript;
+    }
+  });
+
+  // node_modules/mithril/render/trust.js
+  var require_trust = __commonJS({
+    "node_modules/mithril/render/trust.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      module.exports = function(html) {
+        if (html == null) html = "";
+        return Vnode("<", void 0, void 0, html, void 0, void 0);
+      };
+    }
+  });
+
+  // node_modules/mithril/render/fragment.js
+  var require_fragment = __commonJS({
+    "node_modules/mithril/render/fragment.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      var hyperscriptVnode = require_hyperscriptVnode();
+      module.exports = function() {
+        var vnode = hyperscriptVnode.apply(0, arguments);
+        vnode.tag = "[";
+        vnode.children = Vnode.normalizeChildren(vnode.children);
+        return vnode;
+      };
+    }
+  });
+
+  // node_modules/mithril/hyperscript.js
+  var require_hyperscript2 = __commonJS({
+    "node_modules/mithril/hyperscript.js"(exports, module) {
+      "use strict";
+      var hyperscript = require_hyperscript();
+      hyperscript.trust = require_trust();
+      hyperscript.fragment = require_fragment();
+      module.exports = hyperscript;
+    }
+  });
+
+  // node_modules/mithril/render/domFor.js
+  var require_domFor = __commonJS({
+    "node_modules/mithril/render/domFor.js"(exports, module) {
+      "use strict";
+      var delayedRemoval = /* @__PURE__ */ new WeakMap();
+      function* domFor(vnode) {
+        var dom = vnode.dom;
+        var domSize = vnode.domSize;
+        var generation = delayedRemoval.get(dom);
+        if (dom != null) do {
+          var nextSibling = dom.nextSibling;
+          if (delayedRemoval.get(dom) === generation) {
+            yield dom;
+            domSize--;
+          }
+          dom = nextSibling;
+        } while (domSize);
+      }
+      module.exports = {
+        delayedRemoval,
+        domFor
+      };
+    }
+  });
+
+  // node_modules/mithril/render/render.js
+  var require_render = __commonJS({
+    "node_modules/mithril/render/render.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      var df = require_domFor();
+      var delayedRemoval = df.delayedRemoval;
+      var domFor = df.domFor;
+      module.exports = function() {
+        var nameSpace = {
+          svg: "http://www.w3.org/2000/svg",
+          math: "http://www.w3.org/1998/Math/MathML"
+        };
+        var currentRedraw;
+        var currentRender;
+        function getDocument(dom) {
+          return dom.ownerDocument;
+        }
+        function getNameSpace(vnode) {
+          return vnode.attrs && vnode.attrs.xmlns || nameSpace[vnode.tag];
+        }
+        function checkState(vnode, original) {
+          if (vnode.state !== original) throw new Error("'vnode.state' must not be modified.");
+        }
+        function callHook(vnode) {
+          var original = vnode.state;
+          try {
+            return this.apply(original, arguments);
+          } finally {
+            checkState(vnode, original);
+          }
+        }
+        function activeElement(dom) {
+          try {
+            return getDocument(dom).activeElement;
+          } catch (e) {
+            return null;
+          }
+        }
+        function createNodes(parent, vnodes, start, end, hooks, nextSibling, ns) {
+          for (var i = start; i < end; i++) {
+            var vnode = vnodes[i];
+            if (vnode != null) {
+              createNode(parent, vnode, hooks, ns, nextSibling);
+            }
+          }
+        }
+        function createNode(parent, vnode, hooks, ns, nextSibling) {
+          var tag = vnode.tag;
+          if (typeof tag === "string") {
+            vnode.state = {};
+            if (vnode.attrs != null) initLifecycle(vnode.attrs, vnode, hooks);
+            switch (tag) {
+              case "#":
+                createText(parent, vnode, nextSibling);
+                break;
+              case "<":
+                createHTML(parent, vnode, ns, nextSibling);
+                break;
+              case "[":
+                createFragment(parent, vnode, hooks, ns, nextSibling);
+                break;
+              default:
+                createElement(parent, vnode, hooks, ns, nextSibling);
+            }
+          } else createComponent(parent, vnode, hooks, ns, nextSibling);
+        }
+        function createText(parent, vnode, nextSibling) {
+          vnode.dom = getDocument(parent).createTextNode(vnode.children);
+          insertDOM(parent, vnode.dom, nextSibling);
+        }
+        var possibleParents = { caption: "table", thead: "table", tbody: "table", tfoot: "table", tr: "tbody", th: "tr", td: "tr", colgroup: "table", col: "colgroup" };
+        function createHTML(parent, vnode, ns, nextSibling) {
+          var match = vnode.children.match(/^\s*?<(\w+)/im) || [];
+          var temp = getDocument(parent).createElement(possibleParents[match[1]] || "div");
+          if (ns === "http://www.w3.org/2000/svg") {
+            temp.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg">' + vnode.children + "</svg>";
+            temp = temp.firstChild;
+          } else {
+            temp.innerHTML = vnode.children;
+          }
+          vnode.dom = temp.firstChild;
+          vnode.domSize = temp.childNodes.length;
+          var fragment = getDocument(parent).createDocumentFragment();
+          var child;
+          while (child = temp.firstChild) {
+            fragment.appendChild(child);
+          }
+          insertDOM(parent, fragment, nextSibling);
+        }
+        function createFragment(parent, vnode, hooks, ns, nextSibling) {
+          var fragment = getDocument(parent).createDocumentFragment();
+          if (vnode.children != null) {
+            var children = vnode.children;
+            createNodes(fragment, children, 0, children.length, hooks, null, ns);
+          }
+          vnode.dom = fragment.firstChild;
+          vnode.domSize = fragment.childNodes.length;
+          insertDOM(parent, fragment, nextSibling);
+        }
+        function createElement(parent, vnode, hooks, ns, nextSibling) {
+          var tag = vnode.tag;
+          var attrs = vnode.attrs;
+          var is = vnode.is;
+          ns = getNameSpace(vnode) || ns;
+          var element = ns ? is ? getDocument(parent).createElementNS(ns, tag, { is }) : getDocument(parent).createElementNS(ns, tag) : is ? getDocument(parent).createElement(tag, { is }) : getDocument(parent).createElement(tag);
+          vnode.dom = element;
+          if (attrs != null) {
+            setAttrs(vnode, attrs, ns);
+          }
+          insertDOM(parent, element, nextSibling);
+          if (!maybeSetContentEditable(vnode)) {
+            if (vnode.children != null) {
+              var children = vnode.children;
+              createNodes(element, children, 0, children.length, hooks, null, ns);
+              if (vnode.tag === "select" && attrs != null) setLateSelectAttrs(vnode, attrs);
+            }
+          }
+        }
+        function initComponent(vnode, hooks) {
+          var sentinel;
+          if (typeof vnode.tag.view === "function") {
+            vnode.state = Object.create(vnode.tag);
+            sentinel = vnode.state.view;
+            if (sentinel.$$reentrantLock$$ != null) return;
+            sentinel.$$reentrantLock$$ = true;
+          } else {
+            vnode.state = void 0;
+            sentinel = vnode.tag;
+            if (sentinel.$$reentrantLock$$ != null) return;
+            sentinel.$$reentrantLock$$ = true;
+            vnode.state = vnode.tag.prototype != null && typeof vnode.tag.prototype.view === "function" ? new vnode.tag(vnode) : vnode.tag(vnode);
+          }
+          initLifecycle(vnode.state, vnode, hooks);
+          if (vnode.attrs != null) initLifecycle(vnode.attrs, vnode, hooks);
+          vnode.instance = Vnode.normalize(callHook.call(vnode.state.view, vnode));
+          if (vnode.instance === vnode) throw Error("A view cannot return the vnode it received as argument");
+          sentinel.$$reentrantLock$$ = null;
+        }
+        function createComponent(parent, vnode, hooks, ns, nextSibling) {
+          initComponent(vnode, hooks);
+          if (vnode.instance != null) {
+            createNode(parent, vnode.instance, hooks, ns, nextSibling);
+            vnode.dom = vnode.instance.dom;
+            vnode.domSize = vnode.dom != null ? vnode.instance.domSize : 0;
+          } else {
+            vnode.domSize = 0;
+          }
+        }
+        function updateNodes(parent, old, vnodes, hooks, nextSibling, ns) {
+          if (old === vnodes || old == null && vnodes == null) return;
+          else if (old == null || old.length === 0) createNodes(parent, vnodes, 0, vnodes.length, hooks, nextSibling, ns);
+          else if (vnodes == null || vnodes.length === 0) removeNodes(parent, old, 0, old.length);
+          else {
+            var isOldKeyed = old[0] != null && old[0].key != null;
+            var isKeyed = vnodes[0] != null && vnodes[0].key != null;
+            var start = 0, oldStart = 0;
+            if (!isOldKeyed) while (oldStart < old.length && old[oldStart] == null) oldStart++;
+            if (!isKeyed) while (start < vnodes.length && vnodes[start] == null) start++;
+            if (isOldKeyed !== isKeyed) {
+              removeNodes(parent, old, oldStart, old.length);
+              createNodes(parent, vnodes, start, vnodes.length, hooks, nextSibling, ns);
+            } else if (!isKeyed) {
+              var commonLength = old.length < vnodes.length ? old.length : vnodes.length;
+              start = start < oldStart ? start : oldStart;
+              for (; start < commonLength; start++) {
+                o = old[start];
+                v = vnodes[start];
+                if (o === v || o == null && v == null) continue;
+                else if (o == null) createNode(parent, v, hooks, ns, getNextSibling(old, start + 1, nextSibling));
+                else if (v == null) removeNode(parent, o);
+                else updateNode(parent, o, v, hooks, getNextSibling(old, start + 1, nextSibling), ns);
+              }
+              if (old.length > commonLength) removeNodes(parent, old, start, old.length);
+              if (vnodes.length > commonLength) createNodes(parent, vnodes, start, vnodes.length, hooks, nextSibling, ns);
+            } else {
+              var oldEnd = old.length - 1, end = vnodes.length - 1, map, o, v, oe, ve, topSibling;
+              while (oldEnd >= oldStart && end >= start) {
+                oe = old[oldEnd];
+                ve = vnodes[end];
+                if (oe.key !== ve.key) break;
+                if (oe !== ve) updateNode(parent, oe, ve, hooks, nextSibling, ns);
+                if (ve.dom != null) nextSibling = ve.dom;
+                oldEnd--, end--;
+              }
+              while (oldEnd >= oldStart && end >= start) {
+                o = old[oldStart];
+                v = vnodes[start];
+                if (o.key !== v.key) break;
+                oldStart++, start++;
+                if (o !== v) updateNode(parent, o, v, hooks, getNextSibling(old, oldStart, nextSibling), ns);
+              }
+              while (oldEnd >= oldStart && end >= start) {
+                if (start === end) break;
+                if (o.key !== ve.key || oe.key !== v.key) break;
+                topSibling = getNextSibling(old, oldStart, nextSibling);
+                moveDOM(parent, oe, topSibling);
+                if (oe !== v) updateNode(parent, oe, v, hooks, topSibling, ns);
+                if (++start <= --end) moveDOM(parent, o, nextSibling);
+                if (o !== ve) updateNode(parent, o, ve, hooks, nextSibling, ns);
+                if (ve.dom != null) nextSibling = ve.dom;
+                oldStart++;
+                oldEnd--;
+                oe = old[oldEnd];
+                ve = vnodes[end];
+                o = old[oldStart];
+                v = vnodes[start];
+              }
+              while (oldEnd >= oldStart && end >= start) {
+                if (oe.key !== ve.key) break;
+                if (oe !== ve) updateNode(parent, oe, ve, hooks, nextSibling, ns);
+                if (ve.dom != null) nextSibling = ve.dom;
+                oldEnd--, end--;
+                oe = old[oldEnd];
+                ve = vnodes[end];
+              }
+              if (start > end) removeNodes(parent, old, oldStart, oldEnd + 1);
+              else if (oldStart > oldEnd) createNodes(parent, vnodes, start, end + 1, hooks, nextSibling, ns);
+              else {
+                var originalNextSibling = nextSibling, vnodesLength = end - start + 1, oldIndices = new Array(vnodesLength), li = 0, i = 0, pos = 2147483647, matched = 0, map, lisIndices;
+                for (i = 0; i < vnodesLength; i++) oldIndices[i] = -1;
+                for (i = end; i >= start; i--) {
+                  if (map == null) map = getKeyMap(old, oldStart, oldEnd + 1);
+                  ve = vnodes[i];
+                  var oldIndex = map[ve.key];
+                  if (oldIndex != null) {
+                    pos = oldIndex < pos ? oldIndex : -1;
+                    oldIndices[i - start] = oldIndex;
+                    oe = old[oldIndex];
+                    old[oldIndex] = null;
+                    if (oe !== ve) updateNode(parent, oe, ve, hooks, nextSibling, ns);
+                    if (ve.dom != null) nextSibling = ve.dom;
+                    matched++;
+                  }
+                }
+                nextSibling = originalNextSibling;
+                if (matched !== oldEnd - oldStart + 1) removeNodes(parent, old, oldStart, oldEnd + 1);
+                if (matched === 0) createNodes(parent, vnodes, start, end + 1, hooks, nextSibling, ns);
+                else {
+                  if (pos === -1) {
+                    lisIndices = makeLisIndices(oldIndices);
+                    li = lisIndices.length - 1;
+                    for (i = end; i >= start; i--) {
+                      v = vnodes[i];
+                      if (oldIndices[i - start] === -1) createNode(parent, v, hooks, ns, nextSibling);
+                      else {
+                        if (lisIndices[li] === i - start) li--;
+                        else moveDOM(parent, v, nextSibling);
+                      }
+                      if (v.dom != null) nextSibling = vnodes[i].dom;
+                    }
+                  } else {
+                    for (i = end; i >= start; i--) {
+                      v = vnodes[i];
+                      if (oldIndices[i - start] === -1) createNode(parent, v, hooks, ns, nextSibling);
+                      if (v.dom != null) nextSibling = vnodes[i].dom;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        function updateNode(parent, old, vnode, hooks, nextSibling, ns) {
+          var oldTag = old.tag, tag = vnode.tag;
+          if (oldTag === tag && old.is === vnode.is) {
+            vnode.state = old.state;
+            vnode.events = old.events;
+            if (shouldNotUpdate(vnode, old)) return;
+            if (typeof oldTag === "string") {
+              if (vnode.attrs != null) {
+                updateLifecycle(vnode.attrs, vnode, hooks);
+              }
+              switch (oldTag) {
+                case "#":
+                  updateText(old, vnode);
+                  break;
+                case "<":
+                  updateHTML(parent, old, vnode, ns, nextSibling);
+                  break;
+                case "[":
+                  updateFragment(parent, old, vnode, hooks, nextSibling, ns);
+                  break;
+                default:
+                  updateElement(old, vnode, hooks, ns);
+              }
+            } else updateComponent(parent, old, vnode, hooks, nextSibling, ns);
+          } else {
+            removeNode(parent, old);
+            createNode(parent, vnode, hooks, ns, nextSibling);
+          }
+        }
+        function updateText(old, vnode) {
+          if (old.children.toString() !== vnode.children.toString()) {
+            old.dom.nodeValue = vnode.children;
+          }
+          vnode.dom = old.dom;
+        }
+        function updateHTML(parent, old, vnode, ns, nextSibling) {
+          if (old.children !== vnode.children) {
+            removeDOM(parent, old);
+            createHTML(parent, vnode, ns, nextSibling);
+          } else {
+            vnode.dom = old.dom;
+            vnode.domSize = old.domSize;
+          }
+        }
+        function updateFragment(parent, old, vnode, hooks, nextSibling, ns) {
+          updateNodes(parent, old.children, vnode.children, hooks, nextSibling, ns);
+          var domSize = 0, children = vnode.children;
+          vnode.dom = null;
+          if (children != null) {
+            for (var i = 0; i < children.length; i++) {
+              var child = children[i];
+              if (child != null && child.dom != null) {
+                if (vnode.dom == null) vnode.dom = child.dom;
+                domSize += child.domSize || 1;
+              }
+            }
+            if (domSize !== 1) vnode.domSize = domSize;
+          }
+        }
+        function updateElement(old, vnode, hooks, ns) {
+          var element = vnode.dom = old.dom;
+          ns = getNameSpace(vnode) || ns;
+          updateAttrs(vnode, old.attrs, vnode.attrs, ns);
+          if (!maybeSetContentEditable(vnode)) {
+            updateNodes(element, old.children, vnode.children, hooks, null, ns);
+          }
+        }
+        function updateComponent(parent, old, vnode, hooks, nextSibling, ns) {
+          vnode.instance = Vnode.normalize(callHook.call(vnode.state.view, vnode));
+          if (vnode.instance === vnode) throw Error("A view cannot return the vnode it received as argument");
+          updateLifecycle(vnode.state, vnode, hooks);
+          if (vnode.attrs != null) updateLifecycle(vnode.attrs, vnode, hooks);
+          if (vnode.instance != null) {
+            if (old.instance == null) createNode(parent, vnode.instance, hooks, ns, nextSibling);
+            else updateNode(parent, old.instance, vnode.instance, hooks, nextSibling, ns);
+            vnode.dom = vnode.instance.dom;
+            vnode.domSize = vnode.instance.domSize;
+          } else if (old.instance != null) {
+            removeNode(parent, old.instance);
+            vnode.dom = void 0;
+            vnode.domSize = 0;
+          } else {
+            vnode.dom = old.dom;
+            vnode.domSize = old.domSize;
+          }
+        }
+        function getKeyMap(vnodes, start, end) {
+          var map = /* @__PURE__ */ Object.create(null);
+          for (; start < end; start++) {
+            var vnode = vnodes[start];
+            if (vnode != null) {
+              var key = vnode.key;
+              if (key != null) map[key] = start;
+            }
+          }
+          return map;
+        }
+        var lisTemp = [];
+        function makeLisIndices(a) {
+          var result = [0];
+          var u = 0, v = 0, i = 0;
+          var il = lisTemp.length = a.length;
+          for (var i = 0; i < il; i++) lisTemp[i] = a[i];
+          for (var i = 0; i < il; ++i) {
+            if (a[i] === -1) continue;
+            var j = result[result.length - 1];
+            if (a[j] < a[i]) {
+              lisTemp[i] = j;
+              result.push(i);
+              continue;
+            }
+            u = 0;
+            v = result.length - 1;
+            while (u < v) {
+              var c = (u >>> 1) + (v >>> 1) + (u & v & 1);
+              if (a[result[c]] < a[i]) {
+                u = c + 1;
+              } else {
+                v = c;
+              }
+            }
+            if (a[i] < a[result[u]]) {
+              if (u > 0) lisTemp[i] = result[u - 1];
+              result[u] = i;
+            }
+          }
+          u = result.length;
+          v = result[u - 1];
+          while (u-- > 0) {
+            result[u] = v;
+            v = lisTemp[v];
+          }
+          lisTemp.length = 0;
+          return result;
+        }
+        function getNextSibling(vnodes, i, nextSibling) {
+          for (; i < vnodes.length; i++) {
+            if (vnodes[i] != null && vnodes[i].dom != null) return vnodes[i].dom;
+          }
+          return nextSibling;
+        }
+        function moveDOM(parent, vnode, nextSibling) {
+          if (vnode.dom != null) {
+            var target;
+            if (vnode.domSize == null) {
+              target = vnode.dom;
+            } else {
+              target = getDocument(parent).createDocumentFragment();
+              for (var dom of domFor(vnode)) target.appendChild(dom);
+            }
+            insertDOM(parent, target, nextSibling);
+          }
+        }
+        function insertDOM(parent, dom, nextSibling) {
+          if (nextSibling != null) parent.insertBefore(dom, nextSibling);
+          else parent.appendChild(dom);
+        }
+        function maybeSetContentEditable(vnode) {
+          if (vnode.attrs == null || vnode.attrs.contenteditable == null && // attribute
+          vnode.attrs.contentEditable == null) return false;
+          var children = vnode.children;
+          if (children != null && children.length === 1 && children[0].tag === "<") {
+            var content = children[0].children;
+            if (vnode.dom.innerHTML !== content) vnode.dom.innerHTML = content;
+          } else if (children != null && children.length !== 0) throw new Error("Child node of a contenteditable must be trusted.");
+          return true;
+        }
+        function removeNodes(parent, vnodes, start, end) {
+          for (var i = start; i < end; i++) {
+            var vnode = vnodes[i];
+            if (vnode != null) removeNode(parent, vnode);
+          }
+        }
+        function tryBlockRemove(parent, vnode, source, counter) {
+          var original = vnode.state;
+          var result = callHook.call(source.onbeforeremove, vnode);
+          if (result == null) return;
+          var generation = currentRender;
+          for (var dom of domFor(vnode)) delayedRemoval.set(dom, generation);
+          counter.v++;
+          Promise.resolve(result).finally(function() {
+            checkState(vnode, original);
+            tryResumeRemove(parent, vnode, counter);
+          });
+        }
+        function tryResumeRemove(parent, vnode, counter) {
+          if (--counter.v === 0) {
+            onremove(vnode);
+            removeDOM(parent, vnode);
+          }
+        }
+        function removeNode(parent, vnode) {
+          var counter = { v: 1 };
+          if (typeof vnode.tag !== "string" && typeof vnode.state.onbeforeremove === "function") tryBlockRemove(parent, vnode, vnode.state, counter);
+          if (vnode.attrs && typeof vnode.attrs.onbeforeremove === "function") tryBlockRemove(parent, vnode, vnode.attrs, counter);
+          tryResumeRemove(parent, vnode, counter);
+        }
+        function removeDOM(parent, vnode) {
+          if (vnode.dom == null) return;
+          if (vnode.domSize == null) {
+            parent.removeChild(vnode.dom);
+          } else {
+            for (var dom of domFor(vnode)) parent.removeChild(dom);
+          }
+        }
+        function onremove(vnode) {
+          if (typeof vnode.tag !== "string" && typeof vnode.state.onremove === "function") callHook.call(vnode.state.onremove, vnode);
+          if (vnode.attrs && typeof vnode.attrs.onremove === "function") callHook.call(vnode.attrs.onremove, vnode);
+          if (typeof vnode.tag !== "string") {
+            if (vnode.instance != null) onremove(vnode.instance);
+          } else {
+            if (vnode.events != null) vnode.events._ = null;
+            var children = vnode.children;
+            if (Array.isArray(children)) {
+              for (var i = 0; i < children.length; i++) {
+                var child = children[i];
+                if (child != null) onremove(child);
+              }
+            }
+          }
+        }
+        function setAttrs(vnode, attrs, ns) {
+          for (var key in attrs) {
+            setAttr(vnode, key, null, attrs[key], ns);
+          }
+        }
+        function setAttr(vnode, key, old, value, ns) {
+          if (key === "key" || value == null || isLifecycleMethod(key) || old === value && !isFormAttribute(vnode, key) && typeof value !== "object") return;
+          if (key[0] === "o" && key[1] === "n") return updateEvent(vnode, key, value);
+          if (key.slice(0, 6) === "xlink:") vnode.dom.setAttributeNS("http://www.w3.org/1999/xlink", key.slice(6), value);
+          else if (key === "style") updateStyle(vnode.dom, old, value);
+          else if (hasPropertyKey(vnode, key, ns)) {
+            if (key === "value") {
+              if ((vnode.tag === "input" || vnode.tag === "textarea") && vnode.dom.value === "" + value) return;
+              if (vnode.tag === "select" && old !== null && vnode.dom.value === "" + value) return;
+              if (vnode.tag === "option" && old !== null && vnode.dom.value === "" + value) return;
+              if (vnode.tag === "input" && vnode.attrs.type === "file" && "" + value !== "") {
+                console.error("`value` is read-only on file inputs!");
+                return;
+              }
+            }
+            if (vnode.tag === "input" && key === "type") vnode.dom.setAttribute(key, value);
+            else vnode.dom[key] = value;
+          } else {
+            if (typeof value === "boolean") {
+              if (value) vnode.dom.setAttribute(key, "");
+              else vnode.dom.removeAttribute(key);
+            } else vnode.dom.setAttribute(key === "className" ? "class" : key, value);
+          }
+        }
+        function removeAttr(vnode, key, old, ns) {
+          if (key === "key" || old == null || isLifecycleMethod(key)) return;
+          if (key[0] === "o" && key[1] === "n") updateEvent(vnode, key, void 0);
+          else if (key === "style") updateStyle(vnode.dom, old, null);
+          else if (hasPropertyKey(vnode, key, ns) && key !== "className" && key !== "title" && !(key === "value" && (vnode.tag === "option" || vnode.tag === "select" && vnode.dom.selectedIndex === -1 && vnode.dom === activeElement(vnode.dom))) && !(vnode.tag === "input" && key === "type")) {
+            vnode.dom[key] = null;
+          } else {
+            var nsLastIndex = key.indexOf(":");
+            if (nsLastIndex !== -1) key = key.slice(nsLastIndex + 1);
+            if (old !== false) vnode.dom.removeAttribute(key === "className" ? "class" : key);
+          }
+        }
+        function setLateSelectAttrs(vnode, attrs) {
+          if ("value" in attrs) {
+            if (attrs.value === null) {
+              if (vnode.dom.selectedIndex !== -1) vnode.dom.value = null;
+            } else {
+              var normalized = "" + attrs.value;
+              if (vnode.dom.value !== normalized || vnode.dom.selectedIndex === -1) {
+                vnode.dom.value = normalized;
+              }
+            }
+          }
+          if ("selectedIndex" in attrs) setAttr(vnode, "selectedIndex", null, attrs.selectedIndex, void 0);
+        }
+        function updateAttrs(vnode, old, attrs, ns) {
+          var val;
+          if (old != null) {
+            if (old === attrs) {
+              console.warn("Don't reuse attrs object, use new object for every redraw, this will throw in next major");
+            }
+            for (var key in old) {
+              if ((val = old[key]) != null && (attrs == null || attrs[key] == null)) {
+                removeAttr(vnode, key, val, ns);
+              }
+            }
+          }
+          if (attrs != null) {
+            for (var key in attrs) {
+              setAttr(vnode, key, old && old[key], attrs[key], ns);
+            }
+          }
+        }
+        function isFormAttribute(vnode, attr) {
+          return attr === "value" || attr === "checked" || attr === "selectedIndex" || attr === "selected" && (vnode.dom === activeElement(vnode.dom) || vnode.tag === "option" && vnode.dom.parentNode === activeElement(vnode.dom));
+        }
+        function isLifecycleMethod(attr) {
+          return attr === "oninit" || attr === "oncreate" || attr === "onupdate" || attr === "onremove" || attr === "onbeforeremove" || attr === "onbeforeupdate";
+        }
+        function hasPropertyKey(vnode, key, ns) {
+          return ns === void 0 && // If it's a custom element, just keep it.
+          (vnode.tag.indexOf("-") > -1 || vnode.is || // If it's a normal element, let's try to avoid a few browser bugs.
+          key !== "href" && key !== "list" && key !== "form" && key !== "width" && key !== "height") && key in vnode.dom;
+        }
+        function updateStyle(element, old, style) {
+          if (old === style) {
+          } else if (style == null) {
+            element.style = "";
+          } else if (typeof style !== "object") {
+            element.style = style;
+          } else if (old == null || typeof old !== "object") {
+            element.style = "";
+            for (var key in style) {
+              var value = style[key];
+              if (value != null) {
+                if (key.includes("-")) element.style.setProperty(key, String(value));
+                else element.style[key] = String(value);
+              }
+            }
+          } else {
+            for (var key in old) {
+              if (old[key] != null && style[key] == null) {
+                if (key.includes("-")) element.style.removeProperty(key);
+                else element.style[key] = "";
+              }
+            }
+            for (var key in style) {
+              var value = style[key];
+              if (value != null && (value = String(value)) !== String(old[key])) {
+                if (key.includes("-")) element.style.setProperty(key, value);
+                else element.style[key] = value;
+              }
+            }
+          }
+        }
+        function EventDict() {
+          this._ = currentRedraw;
+        }
+        EventDict.prototype = /* @__PURE__ */ Object.create(null);
+        EventDict.prototype.handleEvent = function(ev) {
+          var handler = this["on" + ev.type];
+          var result;
+          if (typeof handler === "function") result = handler.call(ev.currentTarget, ev);
+          else if (typeof handler.handleEvent === "function") handler.handleEvent(ev);
+          var self = this;
+          if (self._ != null) {
+            if (ev.redraw !== false) (0, self._)();
+            if (result != null && typeof result.then === "function") {
+              Promise.resolve(result).then(function() {
+                if (self._ != null && ev.redraw !== false) (0, self._)();
+              });
+            }
+          }
+          if (result === false) {
+            ev.preventDefault();
+            ev.stopPropagation();
+          }
+        };
+        function updateEvent(vnode, key, value) {
+          if (vnode.events != null) {
+            vnode.events._ = currentRedraw;
+            if (vnode.events[key] === value) return;
+            if (value != null && (typeof value === "function" || typeof value === "object")) {
+              if (vnode.events[key] == null) vnode.dom.addEventListener(key.slice(2), vnode.events, false);
+              vnode.events[key] = value;
+            } else {
+              if (vnode.events[key] != null) vnode.dom.removeEventListener(key.slice(2), vnode.events, false);
+              vnode.events[key] = void 0;
+            }
+          } else if (value != null && (typeof value === "function" || typeof value === "object")) {
+            vnode.events = new EventDict();
+            vnode.dom.addEventListener(key.slice(2), vnode.events, false);
+            vnode.events[key] = value;
+          }
+        }
+        function initLifecycle(source, vnode, hooks) {
+          if (typeof source.oninit === "function") callHook.call(source.oninit, vnode);
+          if (typeof source.oncreate === "function") hooks.push(callHook.bind(source.oncreate, vnode));
+        }
+        function updateLifecycle(source, vnode, hooks) {
+          if (typeof source.onupdate === "function") hooks.push(callHook.bind(source.onupdate, vnode));
+        }
+        function shouldNotUpdate(vnode, old) {
+          do {
+            if (vnode.attrs != null && typeof vnode.attrs.onbeforeupdate === "function") {
+              var force = callHook.call(vnode.attrs.onbeforeupdate, vnode, old);
+              if (force !== void 0 && !force) break;
+            }
+            if (typeof vnode.tag !== "string" && typeof vnode.state.onbeforeupdate === "function") {
+              var force = callHook.call(vnode.state.onbeforeupdate, vnode, old);
+              if (force !== void 0 && !force) break;
+            }
+            return false;
+          } while (false);
+          vnode.dom = old.dom;
+          vnode.domSize = old.domSize;
+          vnode.instance = old.instance;
+          vnode.attrs = old.attrs;
+          vnode.children = old.children;
+          vnode.text = old.text;
+          return true;
+        }
+        var currentDOM;
+        return function(dom, vnodes, redraw) {
+          if (!dom) throw new TypeError("DOM element being rendered to does not exist.");
+          if (currentDOM != null && dom.contains(currentDOM)) {
+            throw new TypeError("Node is currently being rendered to and thus is locked.");
+          }
+          var prevRedraw = currentRedraw;
+          var prevDOM = currentDOM;
+          var hooks = [];
+          var active = activeElement(dom);
+          var namespace = dom.namespaceURI;
+          currentDOM = dom;
+          currentRedraw = typeof redraw === "function" ? redraw : void 0;
+          currentRender = {};
+          try {
+            if (dom.vnodes == null) dom.textContent = "";
+            vnodes = Vnode.normalizeChildren(Array.isArray(vnodes) ? vnodes : [vnodes]);
+            updateNodes(dom, dom.vnodes, vnodes, hooks, null, namespace === "http://www.w3.org/1999/xhtml" ? void 0 : namespace);
+            dom.vnodes = vnodes;
+            if (active != null && activeElement(dom) !== active && typeof active.focus === "function") active.focus();
+            for (var i = 0; i < hooks.length; i++) hooks[i]();
+          } finally {
+            currentRedraw = prevRedraw;
+            currentDOM = prevDOM;
+          }
+        };
+      };
+    }
+  });
+
+  // node_modules/mithril/render.js
+  var require_render2 = __commonJS({
+    "node_modules/mithril/render.js"(exports, module) {
+      "use strict";
+      module.exports = require_render()(typeof window !== "undefined" ? window : null);
+    }
+  });
+
+  // node_modules/mithril/api/mount-redraw.js
+  var require_mount_redraw = __commonJS({
+    "node_modules/mithril/api/mount-redraw.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      module.exports = function(render, schedule, console2) {
+        var subscriptions = [];
+        var pending = false;
+        var offset = -1;
+        function sync() {
+          for (offset = 0; offset < subscriptions.length; offset += 2) {
+            try {
+              render(subscriptions[offset], Vnode(subscriptions[offset + 1]), redraw);
+            } catch (e) {
+              console2.error(e);
+            }
+          }
+          offset = -1;
+        }
+        function redraw() {
+          if (!pending) {
+            pending = true;
+            schedule(function() {
+              pending = false;
+              sync();
+            });
+          }
+        }
+        redraw.sync = sync;
+        function mount(root, component) {
+          if (component != null && component.view == null && typeof component !== "function") {
+            throw new TypeError("m.mount expects a component, not a vnode.");
+          }
+          var index2 = subscriptions.indexOf(root);
+          if (index2 >= 0) {
+            subscriptions.splice(index2, 2);
+            if (index2 <= offset) offset -= 2;
+            render(root, []);
+          }
+          if (component != null) {
+            subscriptions.push(root, component);
+            render(root, Vnode(component), redraw);
+          }
+        }
+        return { mount, redraw };
+      };
+    }
+  });
+
+  // node_modules/mithril/mount-redraw.js
+  var require_mount_redraw2 = __commonJS({
+    "node_modules/mithril/mount-redraw.js"(exports, module) {
+      "use strict";
+      var render = require_render2();
+      module.exports = require_mount_redraw()(render, typeof requestAnimationFrame !== "undefined" ? requestAnimationFrame : null, typeof console !== "undefined" ? console : null);
+    }
+  });
+
+  // node_modules/mithril/querystring/build.js
+  var require_build = __commonJS({
+    "node_modules/mithril/querystring/build.js"(exports, module) {
+      "use strict";
+      module.exports = function(object) {
+        if (Object.prototype.toString.call(object) !== "[object Object]") return "";
+        var args = [];
+        for (var key in object) {
+          destructure(key, object[key]);
+        }
+        return args.join("&");
+        function destructure(key2, value) {
+          if (Array.isArray(value)) {
+            for (var i = 0; i < value.length; i++) {
+              destructure(key2 + "[" + i + "]", value[i]);
+            }
+          } else if (Object.prototype.toString.call(value) === "[object Object]") {
+            for (var i in value) {
+              destructure(key2 + "[" + i + "]", value[i]);
+            }
+          } else args.push(encodeURIComponent(key2) + (value != null && value !== "" ? "=" + encodeURIComponent(value) : ""));
+        }
+      };
+    }
+  });
+
+  // node_modules/mithril/pathname/build.js
+  var require_build2 = __commonJS({
+    "node_modules/mithril/pathname/build.js"(exports, module) {
+      "use strict";
+      var buildQueryString = require_build();
+      module.exports = function(template, params) {
+        if (/:([^\/\.-]+)(\.{3})?:/.test(template)) {
+          throw new SyntaxError("Template parameter names must be separated by either a '/', '-', or '.'.");
+        }
+        if (params == null) return template;
+        var queryIndex = template.indexOf("?");
+        var hashIndex = template.indexOf("#");
+        var queryEnd = hashIndex < 0 ? template.length : hashIndex;
+        var pathEnd = queryIndex < 0 ? queryEnd : queryIndex;
+        var path = template.slice(0, pathEnd);
+        var query = {};
+        Object.assign(query, params);
+        var resolved = path.replace(/:([^\/\.-]+)(\.{3})?/g, function(m9, key, variadic) {
+          delete query[key];
+          if (params[key] == null) return m9;
+          return variadic ? params[key] : encodeURIComponent(String(params[key]));
+        });
+        var newQueryIndex = resolved.indexOf("?");
+        var newHashIndex = resolved.indexOf("#");
+        var newQueryEnd = newHashIndex < 0 ? resolved.length : newHashIndex;
+        var newPathEnd = newQueryIndex < 0 ? newQueryEnd : newQueryIndex;
+        var result = resolved.slice(0, newPathEnd);
+        if (queryIndex >= 0) result += template.slice(queryIndex, queryEnd);
+        if (newQueryIndex >= 0) result += (queryIndex < 0 ? "?" : "&") + resolved.slice(newQueryIndex, newQueryEnd);
+        var querystring = buildQueryString(query);
+        if (querystring) result += (queryIndex < 0 && newQueryIndex < 0 ? "?" : "&") + querystring;
+        if (hashIndex >= 0) result += template.slice(hashIndex);
+        if (newHashIndex >= 0) result += (hashIndex < 0 ? "" : "&") + resolved.slice(newHashIndex);
+        return result;
+      };
+    }
+  });
+
+  // node_modules/mithril/request/request.js
+  var require_request = __commonJS({
+    "node_modules/mithril/request/request.js"(exports, module) {
+      "use strict";
+      var buildPathname = require_build2();
+      var hasOwn = require_hasOwn();
+      module.exports = function($window, oncompletion) {
+        function PromiseProxy(executor) {
+          return new Promise(executor);
+        }
+        function makeRequest(url, args) {
+          return new Promise(function(resolve, reject) {
+            url = buildPathname(url, args.params);
+            var method = args.method != null ? args.method.toUpperCase() : "GET";
+            var body = args.body;
+            var assumeJSON = (args.serialize == null || args.serialize === JSON.serialize) && !(body instanceof $window.FormData || body instanceof $window.URLSearchParams);
+            var responseType = args.responseType || (typeof args.extract === "function" ? "" : "json");
+            var xhr = new $window.XMLHttpRequest(), aborted = false, isTimeout = false;
+            var original = xhr, replacedAbort;
+            var abort = xhr.abort;
+            xhr.abort = function() {
+              aborted = true;
+              abort.call(this);
+            };
+            xhr.open(method, url, args.async !== false, typeof args.user === "string" ? args.user : void 0, typeof args.password === "string" ? args.password : void 0);
+            if (assumeJSON && body != null && !hasHeader(args, "content-type")) {
+              xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
+            }
+            if (typeof args.deserialize !== "function" && !hasHeader(args, "accept")) {
+              xhr.setRequestHeader("Accept", "application/json, text/*");
+            }
+            if (args.withCredentials) xhr.withCredentials = args.withCredentials;
+            if (args.timeout) xhr.timeout = args.timeout;
+            xhr.responseType = responseType;
+            for (var key in args.headers) {
+              if (hasOwn.call(args.headers, key)) {
+                xhr.setRequestHeader(key, args.headers[key]);
+              }
+            }
+            xhr.onreadystatechange = function(ev) {
+              if (aborted) return;
+              if (ev.target.readyState === 4) {
+                try {
+                  var success = ev.target.status >= 200 && ev.target.status < 300 || ev.target.status === 304 || /^file:\/\//i.test(url);
+                  var response = ev.target.response, message;
+                  if (responseType === "json") {
+                    if (!ev.target.responseType && typeof args.extract !== "function") {
+                      try {
+                        response = JSON.parse(ev.target.responseText);
+                      } catch (e) {
+                        response = null;
+                      }
+                    }
+                  } else if (!responseType || responseType === "text") {
+                    if (response == null) response = ev.target.responseText;
+                  }
+                  if (typeof args.extract === "function") {
+                    response = args.extract(ev.target, args);
+                    success = true;
+                  } else if (typeof args.deserialize === "function") {
+                    response = args.deserialize(response);
+                  }
+                  if (success) {
+                    if (typeof args.type === "function") {
+                      if (Array.isArray(response)) {
+                        for (var i = 0; i < response.length; i++) {
+                          response[i] = new args.type(response[i]);
+                        }
+                      } else response = new args.type(response);
+                    }
+                    resolve(response);
+                  } else {
+                    var completeErrorResponse = function() {
+                      try {
+                        message = ev.target.responseText;
+                      } catch (e) {
+                        message = response;
+                      }
+                      var error = new Error(message);
+                      error.code = ev.target.status;
+                      error.response = response;
+                      reject(error);
+                    };
+                    if (xhr.status === 0) {
+                      setTimeout(function() {
+                        if (isTimeout) return;
+                        completeErrorResponse();
+                      });
+                    } else completeErrorResponse();
+                  }
+                } catch (e) {
+                  reject(e);
+                }
+              }
+            };
+            xhr.ontimeout = function(ev) {
+              isTimeout = true;
+              var error = new Error("Request timed out");
+              error.code = ev.target.status;
+              reject(error);
+            };
+            if (typeof args.config === "function") {
+              xhr = args.config(xhr, args, url) || xhr;
+              if (xhr !== original) {
+                replacedAbort = xhr.abort;
+                xhr.abort = function() {
+                  aborted = true;
+                  replacedAbort.call(this);
+                };
+              }
+            }
+            if (body == null) xhr.send();
+            else if (typeof args.serialize === "function") xhr.send(args.serialize(body));
+            else if (body instanceof $window.FormData || body instanceof $window.URLSearchParams) xhr.send(body);
+            else xhr.send(JSON.stringify(body));
+          });
+        }
+        PromiseProxy.prototype = Promise.prototype;
+        PromiseProxy.__proto__ = Promise;
+        function hasHeader(args, name) {
+          for (var key in args.headers) {
+            if (hasOwn.call(args.headers, key) && key.toLowerCase() === name) return true;
+          }
+          return false;
+        }
+        return {
+          request: function(url, args) {
+            if (typeof url !== "string") {
+              args = url;
+              url = url.url;
+            } else if (args == null) args = {};
+            var promise = makeRequest(url, args);
+            if (args.background === true) return promise;
+            var count = 0;
+            function complete() {
+              if (--count === 0 && typeof oncompletion === "function") oncompletion();
+            }
+            return wrap(promise);
+            function wrap(promise2) {
+              var then = promise2.then;
+              promise2.constructor = PromiseProxy;
+              promise2.then = function() {
+                count++;
+                var next = then.apply(promise2, arguments);
+                next.then(complete, function(e) {
+                  complete();
+                  if (count === 0) throw e;
+                });
+                return wrap(next);
+              };
+              return promise2;
+            }
+          }
+        };
+      };
+    }
+  });
+
+  // node_modules/mithril/request.js
+  var require_request2 = __commonJS({
+    "node_modules/mithril/request.js"(exports, module) {
+      "use strict";
+      var mountRedraw = require_mount_redraw2();
+      module.exports = require_request()(typeof window !== "undefined" ? window : null, mountRedraw.redraw);
+    }
+  });
+
+  // node_modules/mithril/querystring/parse.js
+  var require_parse = __commonJS({
+    "node_modules/mithril/querystring/parse.js"(exports, module) {
+      "use strict";
+      function decodeURIComponentSave(str) {
+        try {
+          return decodeURIComponent(str);
+        } catch (err) {
+          return str;
+        }
+      }
+      module.exports = function(string) {
+        if (string === "" || string == null) return {};
+        if (string.charAt(0) === "?") string = string.slice(1);
+        var entries = string.split("&"), counters = {}, data = {};
+        for (var i = 0; i < entries.length; i++) {
+          var entry = entries[i].split("=");
+          var key = decodeURIComponentSave(entry[0]);
+          var value = entry.length === 2 ? decodeURIComponentSave(entry[1]) : "";
+          if (value === "true") value = true;
+          else if (value === "false") value = false;
+          var levels = key.split(/\]\[?|\[/);
+          var cursor = data;
+          if (key.indexOf("[") > -1) levels.pop();
+          for (var j = 0; j < levels.length; j++) {
+            var level = levels[j], nextLevel = levels[j + 1];
+            var isNumber = nextLevel == "" || !isNaN(parseInt(nextLevel, 10));
+            if (level === "") {
+              var key = levels.slice(0, j).join();
+              if (counters[key] == null) {
+                counters[key] = Array.isArray(cursor) ? cursor.length : 0;
+              }
+              level = counters[key]++;
+            } else if (level === "__proto__") break;
+            if (j === levels.length - 1) cursor[level] = value;
+            else {
+              var desc = Object.getOwnPropertyDescriptor(cursor, level);
+              if (desc != null) desc = desc.value;
+              if (desc == null) cursor[level] = desc = isNumber ? [] : {};
+              cursor = desc;
+            }
+          }
+        }
+        return data;
+      };
+    }
+  });
+
+  // node_modules/mithril/pathname/parse.js
+  var require_parse2 = __commonJS({
+    "node_modules/mithril/pathname/parse.js"(exports, module) {
+      "use strict";
+      var parseQueryString = require_parse();
+      module.exports = function(url) {
+        var queryIndex = url.indexOf("?");
+        var hashIndex = url.indexOf("#");
+        var queryEnd = hashIndex < 0 ? url.length : hashIndex;
+        var pathEnd = queryIndex < 0 ? queryEnd : queryIndex;
+        var path = url.slice(0, pathEnd).replace(/\/{2,}/g, "/");
+        if (!path) path = "/";
+        else {
+          if (path[0] !== "/") path = "/" + path;
+        }
+        return {
+          path,
+          params: queryIndex < 0 ? {} : parseQueryString(url.slice(queryIndex + 1, queryEnd))
+        };
+      };
+    }
+  });
+
+  // node_modules/mithril/pathname/compileTemplate.js
+  var require_compileTemplate = __commonJS({
+    "node_modules/mithril/pathname/compileTemplate.js"(exports, module) {
+      "use strict";
+      var parsePathname = require_parse2();
+      module.exports = function(template) {
+        var templateData = parsePathname(template);
+        var templateKeys = Object.keys(templateData.params);
+        var keys = [];
+        var regexp = new RegExp("^" + templateData.path.replace(
+          // I escape literal text so people can use things like `:file.:ext` or
+          // `:lang-:locale` in routes. This is all merged into one pass so I
+          // don't also accidentally escape `-` and make it harder to detect it to
+          // ban it from template parameters.
+          /:([^\/.-]+)(\.{3}|\.(?!\.)|-)?|[\\^$*+.()|\[\]{}]/g,
+          function(m9, key, extra) {
+            if (key == null) return "\\" + m9;
+            keys.push({ k: key, r: extra === "..." });
+            if (extra === "...") return "(.*)";
+            if (extra === ".") return "([^/]+)\\.";
+            return "([^/]+)" + (extra || "");
+          }
+        ) + "\\/?$");
+        return function(data) {
+          for (var i = 0; i < templateKeys.length; i++) {
+            if (templateData.params[templateKeys[i]] !== data.params[templateKeys[i]]) return false;
+          }
+          if (!keys.length) return regexp.test(data.path);
+          var values = regexp.exec(data.path);
+          if (values == null) return false;
+          for (var i = 0; i < keys.length; i++) {
+            data.params[keys[i].k] = keys[i].r ? values[i + 1] : decodeURIComponent(values[i + 1]);
+          }
+          return true;
+        };
+      };
+    }
+  });
+
+  // node_modules/mithril/util/censor.js
+  var require_censor = __commonJS({
+    "node_modules/mithril/util/censor.js"(exports, module) {
+      "use strict";
+      var hasOwn = require_hasOwn();
+      var magic = new RegExp("^(?:key|oninit|oncreate|onbeforeupdate|onupdate|onbeforeremove|onremove)$");
+      module.exports = function(attrs, extras) {
+        var result = {};
+        if (extras != null) {
+          for (var key in attrs) {
+            if (hasOwn.call(attrs, key) && !magic.test(key) && extras.indexOf(key) < 0) {
+              result[key] = attrs[key];
+            }
+          }
+        } else {
+          for (var key in attrs) {
+            if (hasOwn.call(attrs, key) && !magic.test(key)) {
+              result[key] = attrs[key];
+            }
+          }
+        }
+        return result;
+      };
+    }
+  });
+
+  // node_modules/mithril/api/router.js
+  var require_router = __commonJS({
+    "node_modules/mithril/api/router.js"(exports, module) {
+      "use strict";
+      var Vnode = require_vnode();
+      var m9 = require_hyperscript();
+      var buildPathname = require_build2();
+      var parsePathname = require_parse2();
+      var compileTemplate = require_compileTemplate();
+      var censor = require_censor();
+      function decodeURIComponentSave(component) {
+        try {
+          return decodeURIComponent(component);
+        } catch (e) {
+          return component;
+        }
+      }
+      module.exports = function($window, mountRedraw) {
+        var callAsync = $window == null ? null : typeof $window.setImmediate === "function" ? $window.setImmediate : $window.setTimeout;
+        var p = Promise.resolve();
+        var scheduled = false;
+        var ready = false;
+        var hasBeenResolved = false;
+        var dom, compiled, fallbackRoute;
+        var currentResolver, component, attrs, currentPath, lastUpdate;
+        var RouterRoot = {
+          onremove: function() {
+            ready = hasBeenResolved = false;
+            $window.removeEventListener("popstate", fireAsync, false);
+          },
+          view: function() {
+            var vnode = Vnode(component, attrs.key, attrs);
+            if (currentResolver) return currentResolver.render(vnode);
+            return [vnode];
+          }
+        };
+        var SKIP = route.SKIP = {};
+        function resolveRoute() {
+          scheduled = false;
+          var prefix = $window.location.hash;
+          if (route.prefix[0] !== "#") {
+            prefix = $window.location.search + prefix;
+            if (route.prefix[0] !== "?") {
+              prefix = $window.location.pathname + prefix;
+              if (prefix[0] !== "/") prefix = "/" + prefix;
+            }
+          }
+          var path = prefix.concat().replace(/(?:%[a-f89][a-f0-9])+/gim, decodeURIComponentSave).slice(route.prefix.length);
+          var data = parsePathname(path);
+          Object.assign(data.params, $window.history.state);
+          function reject(e) {
+            console.error(e);
+            route.set(fallbackRoute, null, { replace: true });
+          }
+          loop(0);
+          function loop(i) {
+            for (; i < compiled.length; i++) {
+              if (compiled[i].check(data)) {
+                var payload = compiled[i].component;
+                var matchedRoute = compiled[i].route;
+                var localComp = payload;
+                var update = lastUpdate = function(comp) {
+                  if (update !== lastUpdate) return;
+                  if (comp === SKIP) return loop(i + 1);
+                  component = comp != null && (typeof comp.view === "function" || typeof comp === "function") ? comp : "div";
+                  attrs = data.params, currentPath = path, lastUpdate = null;
+                  currentResolver = payload.render ? payload : null;
+                  if (hasBeenResolved) mountRedraw.redraw();
+                  else {
+                    hasBeenResolved = true;
+                    mountRedraw.mount(dom, RouterRoot);
+                  }
+                };
+                if (payload.view || typeof payload === "function") {
+                  payload = {};
+                  update(localComp);
+                } else if (payload.onmatch) {
+                  p.then(function() {
+                    return payload.onmatch(data.params, path, matchedRoute);
+                  }).then(update, path === fallbackRoute ? null : reject);
+                } else update(
+                  /* "div" */
+                );
+                return;
+              }
+            }
+            if (path === fallbackRoute) {
+              throw new Error("Could not resolve default route " + fallbackRoute + ".");
+            }
+            route.set(fallbackRoute, null, { replace: true });
+          }
+        }
+        function fireAsync() {
+          if (!scheduled) {
+            scheduled = true;
+            callAsync(resolveRoute);
+          }
+        }
+        function route(root, defaultRoute, routes) {
+          if (!root) throw new TypeError("DOM element being rendered to does not exist.");
+          compiled = Object.keys(routes).map(function(route2) {
+            if (route2[0] !== "/") throw new SyntaxError("Routes must start with a '/'.");
+            if (/:([^\/\.-]+)(\.{3})?:/.test(route2)) {
+              throw new SyntaxError("Route parameter names must be separated with either '/', '.', or '-'.");
+            }
+            return {
+              route: route2,
+              component: routes[route2],
+              check: compileTemplate(route2)
+            };
+          });
+          fallbackRoute = defaultRoute;
+          if (defaultRoute != null) {
+            var defaultData = parsePathname(defaultRoute);
+            if (!compiled.some(function(i) {
+              return i.check(defaultData);
+            })) {
+              throw new ReferenceError("Default route doesn't match any known routes.");
+            }
+          }
+          dom = root;
+          $window.addEventListener("popstate", fireAsync, false);
+          ready = true;
+          resolveRoute();
+        }
+        route.set = function(path, data, options) {
+          if (lastUpdate != null) {
+            options = options || {};
+            options.replace = true;
+          }
+          lastUpdate = null;
+          path = buildPathname(path, data);
+          if (ready) {
+            fireAsync();
+            var state = options ? options.state : null;
+            var title = options ? options.title : null;
+            if (options && options.replace) $window.history.replaceState(state, title, route.prefix + path);
+            else $window.history.pushState(state, title, route.prefix + path);
+          } else {
+            $window.location.href = route.prefix + path;
+          }
+        };
+        route.get = function() {
+          return currentPath;
+        };
+        route.prefix = "#!";
+        route.Link = {
+          view: function(vnode) {
+            var child = m9(
+              vnode.attrs.selector || "a",
+              censor(vnode.attrs, ["options", "params", "selector", "onclick"]),
+              vnode.children
+            );
+            var options, onclick, href;
+            if (child.attrs.disabled = Boolean(child.attrs.disabled)) {
+              child.attrs.href = null;
+              child.attrs["aria-disabled"] = "true";
+            } else {
+              options = vnode.attrs.options;
+              onclick = vnode.attrs.onclick;
+              href = buildPathname(child.attrs.href, vnode.attrs.params);
+              child.attrs.href = route.prefix + href;
+              child.attrs.onclick = function(e) {
+                var result;
+                if (typeof onclick === "function") {
+                  result = onclick.call(e.currentTarget, e);
+                } else if (onclick == null || typeof onclick !== "object") {
+                } else if (typeof onclick.handleEvent === "function") {
+                  onclick.handleEvent(e);
+                }
+                if (
+                  // Skip if `onclick` prevented default
+                  result !== false && !e.defaultPrevented && // Ignore everything but left clicks
+                  (e.button === 0 || e.which === 0 || e.which === 1) && // Let the browser handle `target=_blank`, etc.
+                  (!e.currentTarget.target || e.currentTarget.target === "_self") && // No modifier keys
+                  !e.ctrlKey && !e.metaKey && !e.shiftKey && !e.altKey
+                ) {
+                  e.preventDefault();
+                  e.redraw = false;
+                  route.set(href, null, options);
+                }
+              };
+            }
+            return child;
+          }
+        };
+        route.param = function(key) {
+          return attrs && key != null ? attrs[key] : attrs;
+        };
+        return route;
+      };
+    }
+  });
+
+  // node_modules/mithril/route.js
+  var require_route = __commonJS({
+    "node_modules/mithril/route.js"(exports, module) {
+      "use strict";
+      var mountRedraw = require_mount_redraw2();
+      module.exports = require_router()(typeof window !== "undefined" ? window : null, mountRedraw);
+    }
+  });
+
+  // node_modules/mithril/index.js
+  var require_mithril = __commonJS({
+    "node_modules/mithril/index.js"(exports, module) {
+      "use strict";
+      var hyperscript = require_hyperscript2();
+      var request = require_request2();
+      var mountRedraw = require_mount_redraw2();
+      var domFor = require_domFor();
+      var m9 = function m10() {
+        return hyperscript.apply(this, arguments);
+      };
+      m9.m = hyperscript;
+      m9.trust = hyperscript.trust;
+      m9.fragment = hyperscript.fragment;
+      m9.Fragment = "[";
+      m9.mount = mountRedraw.mount;
+      m9.route = require_route();
+      m9.render = require_render2();
+      m9.redraw = mountRedraw.redraw;
+      m9.request = request.request;
+      m9.parseQueryString = require_parse();
+      m9.buildQueryString = require_build();
+      m9.parsePathname = require_parse2();
+      m9.buildPathname = require_build2();
+      m9.vnode = require_vnode();
+      m9.censor = require_censor();
+      m9.domFor = domFor.domFor;
+      module.exports = m9;
+    }
+  });
+
+  // src/index.js
+  var import_mithril8 = __toESM(require_mithril(), 1);
+
+  // src/views/LandingPage.js
+  var import_mithril = __toESM(require_mithril(), 1);
+  var i18n = {
+    en: {
+      welcome: "Welcome",
+      subtitle: "Select your language and theme below",
+      login: "Log In",
+      signup: "Sign Up",
+      loggedIn: "You are already signed in",
+      theme: "Theme",
+      language: "Language",
+      changePassword: "Change Password"
+    },
+    id: {
+      welcome: "Selamat Datang",
+      subtitle: "Pilih bahasa dan tema di bawah ini",
+      login: "Masuk",
+      signup: "Daftar",
+      loggedIn: "Anda sudah masuk",
+      theme: "Tema",
+      language: "Bahasa",
+      changePassword: "Ubah Kata Sandi"
+    }
+  };
+  var LandingPage = {
+    lang: localStorage.getItem("lang") || "en",
+    selectedTheme: localStorage.getItem("theme") || "auto",
+    themes: ["auto", "light", "dark"],
+    oninit: () => {
+      document.documentElement.setAttribute("data-theme", LandingPage.selectedTheme);
+      document.documentElement.setAttribute("lang", LandingPage.lang);
+    },
+    view: () => {
+      const t = i18n[LandingPage.lang];
+      const isLoggedIn = localStorage.getItem("token") !== null;
+      document.documentElement.setAttribute("data-theme", LandingPage.selectedTheme);
+      return (0, import_mithril.default)("main.container", [
+        (0, import_mithril.default)("hgroup", [
+          (0, import_mithril.default)("h1", t.welcome),
+          (0, import_mithril.default)("h2", t.subtitle)
+        ]),
+        isLoggedIn ? (0, import_mithril.default)("div", [
+          (0, import_mithril.default)("p", { style: "color: green" }, `\u2705 ${t.loggedIn}`),
+          (0, import_mithril.default)("nav", { style: "display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem;" }, [
+            (0, import_mithril.default)("a", {
+              href: "/change-password",
+              oncreate: import_mithril.default.route.link,
+              style: "text-decoration: underline; color: var(--primary);"
+              // pretty, Pico-style
+            }, `\u{1F511} ${t.changePassword}`),
+            (0, import_mithril.default)("button", {
+              onclick: () => {
+                const lang2 = localStorage.getItem("lang");
+                const theme = localStorage.getItem("theme");
+                localStorage.clear();
+                localStorage.setItem("lang", lang2);
+                localStorage.setItem("theme", theme);
+                location.reload();
+              }
+            }, "\u{1F6AA} Log Out")
+          ])
+        ]) : (0, import_mithril.default)("nav", { style: "display: flex; gap: 1rem;" }, [
+          (0, import_mithril.default)("a", {
+            href: "/login",
+            oncreate: import_mithril.default.route.link
+          }, `\u{1F510} ${t.login}`),
+          (0, import_mithril.default)("a", {
+            href: "/signup",
+            oncreate: import_mithril.default.route.link
+          }, `\u{1F4DD} ${t.signup}`)
+        ]),
+        (0, import_mithril.default)("section", [
+          (0, import_mithril.default)("label", `${t.theme}:`),
+          (0, import_mithril.default)("select", {
+            onchange: (e) => {
+              const value = e.target.value;
+              LandingPage.selectedTheme = value;
+              localStorage.setItem("theme", value);
+              document.documentElement.setAttribute("data-theme", value);
+            }
+          }, LandingPage.themes.map(
+            (theme) => (0, import_mithril.default)("option", {
+              value: theme,
+              selected: LandingPage.selectedTheme === theme
+            }, theme.charAt(0).toUpperCase() + theme.slice(1))
+          )),
+          (0, import_mithril.default)("label", `${t.language}:`),
+          (0, import_mithril.default)("select", {
+            onchange: (e) => {
+              const value = e.target.value;
+              LandingPage.lang = value;
+              localStorage.setItem("lang", value);
+            }
+          }, ["en", "id"].map(
+            (lang2) => (0, import_mithril.default)("option", {
+              value: lang2,
+              selected: LandingPage.lang === lang2
+            }, lang2 === "en" ? "\u{1F1FA}\u{1F1F8} English" : "\u{1F1EE}\u{1F1E9} Bahasa Indonesia")
+          ))
+        ])
+      ]);
+    }
+  };
+  var LandingPage_default = LandingPage;
+
+  // src/views/SignupForm.js
+  var import_mithril2 = __toESM(require_mithril(), 1);
+  function debounce(fn, delay) {
+    let timer;
+    return function(...args) {
+      clearTimeout(timer);
+      timer = setTimeout(() => fn.apply(this, args), delay);
+    };
+  }
+  var i18n2 = {
+    en: {
+      createAccount: "Create Account",
+      subtitle: "Join us and start your journey",
+      fullName: "Full Name",
+      username: "Username",
+      email: "Email",
+      password: "Password",
+      confirmPassword: "Confirm Password",
+      usernameAvailable: "\u2705 Username is available",
+      usernameTaken: "\u274C Username is taken",
+      checking: "\u23F3 Checking availability...",
+      signUp: "Sign Up",
+      signingUp: "Signing Up...",
+      passwordMismatch: "Passwords do not match",
+      usernameOrEmailExists: "Username or email already exists",
+      signupFailed: "Signup failed",
+      completeFields: "Please complete all fields correctly.",
+      tooWeak: "Too Weak",
+      weak: "Weak",
+      fair: "Fair",
+      strong: "Strong",
+      veryStrong: "Very Strong"
+    },
+    id: {
+      createAccount: "Buat Akun",
+      subtitle: "Bergabunglah dan mulai perjalanan Anda",
+      fullName: "Nama Lengkap",
+      username: "Nama Pengguna",
+      email: "Surel",
+      password: "Kata Sandi",
+      confirmPassword: "Konfirmasi Kata Sandi",
+      usernameAvailable: "\u2705 Nama pengguna tersedia",
+      usernameTaken: "\u274C Nama pengguna sudah dipakai",
+      checking: "\u23F3 Memeriksa ketersediaan...",
+      signUp: "Daftar",
+      signingUp: "Mendaftar...",
+      passwordMismatch: "Kata sandi tidak cocok",
+      usernameOrEmailExists: "Nama pengguna atau email sudah ada",
+      signupFailed: "Pendaftaran gagal",
+      completeFields: "Silakan lengkapi semua kolom dengan benar.",
+      tooWeak: "Terlalu Lemah",
+      weak: "Lemah",
+      fair: "Cukup",
+      strong: "Kuat",
+      veryStrong: "Sangat Kuat"
+    }
+  };
+  var SignupForm = {
+    fullName: "",
+    userName: "",
+    userNameAvailable: null,
+    email: "",
+    password: "",
+    confirmPassword: "",
+    error: "",
+    success: "",
+    isFormValid: false,
+    isLoading: false,
+    validateForm() {
+      SignupForm.isFormValid = SignupForm.fullName.trim() && SignupForm.userName.trim() && SignupForm.email.trim() && SignupForm.password && SignupForm.confirmPassword && SignupForm.password === SignupForm.confirmPassword && SignupForm.userNameAvailable === true;
+    },
+    getPasswordStrength(password) {
+      if (!password) return 0;
+      let score = 0;
+      if (password.length >= 8) score++;
+      if (/[A-Z]/.test(password)) score++;
+      if (/[a-z]/.test(password)) score++;
+      if (/[0-9]/.test(password)) score++;
+      if (/[^A-Za-z0-9]/.test(password)) score++;
+      return score;
+    },
+    checkUsernameAvailability: debounce(async function() {
+      if (!SignupForm.userName) return;
+      try {
+        const res = await import_mithril2.default.request({
+          method: "GET",
+          url: `/api/check-username?userName=${SignupForm.userName}`
+        });
+        SignupForm.userNameAvailable = res.available;
+      } catch (err) {
+        SignupForm.userNameAvailable = false;
+      }
+      SignupForm.validateForm();
+      import_mithril2.default.redraw();
+    }, 750),
+    view: () => {
+      let lang2 = localStorage.getItem("lang");
+      if (!i18n2.hasOwnProperty(lang2)) {
+        lang2 = "en";
+      }
+      const t = i18n2[lang2];
+      const strengthLabels = [
+        t.tooWeak,
+        t.weak,
+        t.fair,
+        t.strong,
+        t.veryStrong
+      ];
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto");
+      const strength = SignupForm.getPasswordStrength(SignupForm.password);
+      SignupForm.validateForm();
+      return (0, import_mithril2.default)("main.container", [
+        (0, import_mithril2.default)("article", [
+          (0, import_mithril2.default)("hgroup", [
+            (0, import_mithril2.default)("h1", t.createAccount),
+            (0, import_mithril2.default)("h2", t.subtitle)
+          ]),
+          SignupForm.error && (0, import_mithril2.default)("p", { class: "text-red-600" }, SignupForm.error),
+          SignupForm.success && (0, import_mithril2.default)("p", { class: "text-green-600" }, SignupForm.success),
+          (0, import_mithril2.default)("form", {
+            onsubmit: async (e) => {
+              e.preventDefault();
+              SignupForm.error = SignupForm.success = "";
+              SignupForm.isLoading = true;
+              import_mithril2.default.redraw();
+              if (SignupForm.password !== SignupForm.confirmPassword) {
+                SignupForm.error = t.passwordMismatch;
+                SignupForm.isLoading = false;
+                import_mithril2.default.redraw();
+                return;
+              }
+              try {
+                const res = await import_mithril2.default.request({
+                  method: "POST",
+                  url: "/api/signup",
+                  body: {
+                    fullName: SignupForm.fullName,
+                    userName: SignupForm.userName,
+                    email: SignupForm.email,
+                    password: SignupForm.password
+                  }
+                });
+                SignupForm.success = res.msg;
+                localStorage.setItem("token", res.token);
+              } catch (err) {
+                SignupForm.error = err.message || t.signupFailed;
+                if (err.status === 409) {
+                  SignupForm.error = t.usernameOrEmailExists;
+                }
+              }
+              SignupForm.isLoading = false;
+              import_mithril2.default.redraw();
+            }
+          }, [
+            (0, import_mithril2.default)("label", { for: "fullName" }, t.fullName),
+            (0, import_mithril2.default)("input", {
+              id: "fullName",
+              type: "text",
+              placeholder: "Guntur D",
+              value: SignupForm.fullName,
+              oninput: (e) => {
+                SignupForm.fullName = e.target.value;
+                SignupForm.validateForm();
+              }
+            }),
+            (0, import_mithril2.default)("label", { for: "userName" }, t.username),
+            (0, import_mithril2.default)("input", {
+              id: "userName",
+              type: "text",
+              placeholder: "username123",
+              value: SignupForm.userName,
+              oninput: (e) => {
+                SignupForm.userName = e.target.value;
+                SignupForm.userNameAvailable = null;
+                SignupForm.validateForm();
+                SignupForm.checkUsernameAvailability();
+              }
+            }),
+            SignupForm.userName && SignupForm.userNameAvailable === null && (0, import_mithril2.default)("small", t.checking),
+            SignupForm.userName && SignupForm.userNameAvailable === true && (0, import_mithril2.default)("small", { style: "color:green" }, t.usernameAvailable),
+            SignupForm.userName && SignupForm.userNameAvailable === false && (0, import_mithril2.default)("small", { style: "color:red" }, t.usernameTaken),
+            (0, import_mithril2.default)("label", { for: "email" }, t.email),
+            (0, import_mithril2.default)("input", {
+              id: "email",
+              type: "email",
+              placeholder: "you@example.com",
+              value: SignupForm.email,
+              oninput: (e) => {
+                SignupForm.email = e.target.value;
+                SignupForm.validateForm();
+              }
+            }),
+            (0, import_mithril2.default)("label", { for: "password" }, t.password),
+            (0, import_mithril2.default)("input", {
+              id: "password",
+              type: "password",
+              placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
+              value: SignupForm.password,
+              oninput: (e) => {
+                SignupForm.password = e.target.value;
+                SignupForm.validateForm();
+              }
+            }),
+            SignupForm.password && (0, import_mithril2.default)("small", strengthLabels[strength - 1] || t.tooWeak),
+            SignupForm.password && (0, import_mithril2.default)("progress", {
+              value: strength,
+              max: 5,
+              style: "width:100%; height: 8px;"
+            }),
+            (0, import_mithril2.default)("label", { for: "confirmPassword" }, t.confirmPassword),
+            (0, import_mithril2.default)("input", {
+              id: "confirmPassword",
+              type: "password",
+              placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
+              value: SignupForm.confirmPassword,
+              oninput: (e) => {
+                SignupForm.confirmPassword = e.target.value;
+                SignupForm.validateForm();
+              }
+            }),
+            (0, import_mithril2.default)("button", {
+              type: "submit",
+              value: t.signUp,
+              disabled: SignupForm.isLoading || !SignupForm.isFormValid || SignupForm.userNameAvailable === null,
+              "aria-busy": SignupForm.isLoading ? "true" : null
+            }, SignupForm.isLoading ? (0, import_mithril2.default)("span", [
+              (0, import_mithril2.default)("span", { "aria-hidden": "true", style: "margin-right: 0.5em;" }, "\u23F3"),
+              t.signingUp
+            ]) : t.signUp),
+            !SignupForm.isFormValid && (0, import_mithril2.default)("p", { style: "color:#e1a500" }, t.completeFields)
+          ])
+        ])
+      ]);
+    }
+  };
+  var SignupForm_default = SignupForm;
+
+  // src/views/LoginForm.js
+  var import_mithril3 = __toESM(require_mithril(), 1);
+
+  // node_modules/tslib/tslib.es6.mjs
+  var __assign = function() {
+    __assign = Object.assign || function __assign2(t) {
+      for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+      return t;
+    };
+    return __assign.apply(this, arguments);
+  };
+  function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) {
+      return value instanceof P ? value : new P(function(resolve) {
+        resolve(value);
+      });
+    }
+    return new (P || (P = Promise))(function(resolve, reject) {
+      function fulfilled(value) {
+        try {
+          step(generator.next(value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function rejected(value) {
+        try {
+          step(generator["throw"](value));
+        } catch (e) {
+          reject(e);
+        }
+      }
+      function step(result) {
+        result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
+      }
+      step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+  }
+  function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() {
+      if (t[0] & 1) throw t[1];
+      return t[1];
+    }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() {
+      return this;
+    }), g;
+    function verb(n) {
+      return function(v) {
+        return step([n, v]);
+      };
+    }
+    function step(op) {
+      if (f) throw new TypeError("Generator is already executing.");
+      while (g && (g = 0, op[0] && (_ = 0)), _) try {
+        if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+        if (y = 0, t) op = [op[0] & 2, t.value];
+        switch (op[0]) {
+          case 0:
+          case 1:
+            t = op;
+            break;
+          case 4:
+            _.label++;
+            return { value: op[1], done: false };
+          case 5:
+            _.label++;
+            y = op[1];
+            op = [0];
+            continue;
+          case 7:
+            op = _.ops.pop();
+            _.trys.pop();
+            continue;
+          default:
+            if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) {
+              _ = 0;
+              continue;
+            }
+            if (op[0] === 3 && (!t || op[1] > t[0] && op[1] < t[3])) {
+              _.label = op[1];
+              break;
+            }
+            if (op[0] === 6 && _.label < t[1]) {
+              _.label = t[1];
+              t = op;
+              break;
+            }
+            if (t && _.label < t[2]) {
+              _.label = t[2];
+              _.ops.push(op);
+              break;
+            }
+            if (t[2]) _.ops.pop();
+            _.trys.pop();
+            continue;
+        }
+        op = body.call(thisArg, _);
+      } catch (e) {
+        op = [6, e];
+        y = 0;
+      } finally {
+        f = t = 0;
+      }
+      if (op[0] & 5) throw op[1];
+      return { value: op[0] ? op[1] : void 0, done: true };
+    }
+  }
+  function __spreadArray(to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+      if (ar || !(i in from)) {
+        if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+        ar[i] = from[i];
+      }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+  }
+
+  // node_modules/@fingerprintjs/fingerprintjs/dist/fp.esm.js
+  var version = "4.6.2";
+  function wait(durationMs, resolveWith) {
+    return new Promise(function(resolve) {
+      return setTimeout(resolve, durationMs, resolveWith);
+    });
+  }
+  function releaseEventLoop() {
+    return new Promise(function(resolve) {
+      var channel = new MessageChannel();
+      channel.port1.onmessage = function() {
+        return resolve();
+      };
+      channel.port2.postMessage(null);
+    });
+  }
+  function requestIdleCallbackIfAvailable(fallbackTimeout, deadlineTimeout) {
+    if (deadlineTimeout === void 0) {
+      deadlineTimeout = Infinity;
+    }
+    var requestIdleCallback = window.requestIdleCallback;
+    if (requestIdleCallback) {
+      return new Promise(function(resolve) {
+        return requestIdleCallback.call(window, function() {
+          return resolve();
+        }, { timeout: deadlineTimeout });
+      });
+    } else {
+      return wait(Math.min(fallbackTimeout, deadlineTimeout));
+    }
+  }
+  function isPromise(value) {
+    return !!value && typeof value.then === "function";
+  }
+  function awaitIfAsync(action, callback) {
+    try {
+      var returnedValue = action();
+      if (isPromise(returnedValue)) {
+        returnedValue.then(function(result) {
+          return callback(true, result);
+        }, function(error) {
+          return callback(false, error);
+        });
+      } else {
+        callback(true, returnedValue);
+      }
+    } catch (error) {
+      callback(false, error);
+    }
+  }
+  function mapWithBreaks(items, callback, loopReleaseInterval) {
+    if (loopReleaseInterval === void 0) {
+      loopReleaseInterval = 16;
+    }
+    return __awaiter(this, void 0, void 0, function() {
+      var results, lastLoopReleaseTime, i, now;
+      return __generator(this, function(_a) {
+        switch (_a.label) {
+          case 0:
+            results = Array(items.length);
+            lastLoopReleaseTime = Date.now();
+            i = 0;
+            _a.label = 1;
+          case 1:
+            if (!(i < items.length)) return [3, 4];
+            results[i] = callback(items[i], i);
+            now = Date.now();
+            if (!(now >= lastLoopReleaseTime + loopReleaseInterval)) return [3, 3];
+            lastLoopReleaseTime = now;
+            return [4, releaseEventLoop()];
+          case 2:
+            _a.sent();
+            _a.label = 3;
+          case 3:
+            ++i;
+            return [3, 1];
+          case 4:
+            return [2, results];
+        }
+      });
+    });
+  }
+  function suppressUnhandledRejectionWarning(promise) {
+    promise.then(void 0, function() {
+      return void 0;
+    });
+    return promise;
+  }
+  function includes(haystack, needle) {
+    for (var i = 0, l = haystack.length; i < l; ++i) {
+      if (haystack[i] === needle) {
+        return true;
+      }
+    }
+    return false;
+  }
+  function excludes(haystack, needle) {
+    return !includes(haystack, needle);
+  }
+  function toInt(value) {
+    return parseInt(value);
+  }
+  function toFloat(value) {
+    return parseFloat(value);
+  }
+  function replaceNaN(value, replacement) {
+    return typeof value === "number" && isNaN(value) ? replacement : value;
+  }
+  function countTruthy(values) {
+    return values.reduce(function(sum, value) {
+      return sum + (value ? 1 : 0);
+    }, 0);
+  }
+  function round(value, base) {
+    if (base === void 0) {
+      base = 1;
+    }
+    if (Math.abs(base) >= 1) {
+      return Math.round(value / base) * base;
+    } else {
+      var counterBase = 1 / base;
+      return Math.round(value * counterBase) / counterBase;
+    }
+  }
+  function parseSimpleCssSelector(selector) {
+    var _a, _b;
+    var errorMessage = "Unexpected syntax '".concat(selector, "'");
+    var tagMatch = /^\s*([a-z-]*)(.*)$/i.exec(selector);
+    var tag = tagMatch[1] || void 0;
+    var attributes = {};
+    var partsRegex = /([.:#][\w-]+|\[.+?\])/gi;
+    var addAttribute = function(name, value) {
+      attributes[name] = attributes[name] || [];
+      attributes[name].push(value);
+    };
+    for (; ; ) {
+      var match = partsRegex.exec(tagMatch[2]);
+      if (!match) {
+        break;
+      }
+      var part = match[0];
+      switch (part[0]) {
+        case ".":
+          addAttribute("class", part.slice(1));
+          break;
+        case "#":
+          addAttribute("id", part.slice(1));
+          break;
+        case "[": {
+          var attributeMatch = /^\[([\w-]+)([~|^$*]?=("(.*?)"|([\w-]+)))?(\s+[is])?\]$/.exec(part);
+          if (attributeMatch) {
+            addAttribute(attributeMatch[1], (_b = (_a = attributeMatch[4]) !== null && _a !== void 0 ? _a : attributeMatch[5]) !== null && _b !== void 0 ? _b : "");
+          } else {
+            throw new Error(errorMessage);
+          }
+          break;
+        }
+        default:
+          throw new Error(errorMessage);
+      }
+    }
+    return [tag, attributes];
+  }
+  function getUTF8Bytes(input) {
+    var result = new Uint8Array(input.length);
+    for (var i = 0; i < input.length; i++) {
+      var charCode = input.charCodeAt(i);
+      if (charCode > 127) {
+        return new TextEncoder().encode(input);
+      }
+      result[i] = charCode;
+    }
+    return result;
+  }
+  function x64Add(m9, n) {
+    var m0 = m9[0] >>> 16, m1 = m9[0] & 65535, m22 = m9[1] >>> 16, m32 = m9[1] & 65535;
+    var n0 = n[0] >>> 16, n1 = n[0] & 65535, n2 = n[1] >>> 16, n3 = n[1] & 65535;
+    var o0 = 0, o1 = 0, o2 = 0, o3 = 0;
+    o3 += m32 + n3;
+    o2 += o3 >>> 16;
+    o3 &= 65535;
+    o2 += m22 + n2;
+    o1 += o2 >>> 16;
+    o2 &= 65535;
+    o1 += m1 + n1;
+    o0 += o1 >>> 16;
+    o1 &= 65535;
+    o0 += m0 + n0;
+    o0 &= 65535;
+    m9[0] = o0 << 16 | o1;
+    m9[1] = o2 << 16 | o3;
+  }
+  function x64Multiply(m9, n) {
+    var m0 = m9[0] >>> 16, m1 = m9[0] & 65535, m22 = m9[1] >>> 16, m32 = m9[1] & 65535;
+    var n0 = n[0] >>> 16, n1 = n[0] & 65535, n2 = n[1] >>> 16, n3 = n[1] & 65535;
+    var o0 = 0, o1 = 0, o2 = 0, o3 = 0;
+    o3 += m32 * n3;
+    o2 += o3 >>> 16;
+    o3 &= 65535;
+    o2 += m22 * n3;
+    o1 += o2 >>> 16;
+    o2 &= 65535;
+    o2 += m32 * n2;
+    o1 += o2 >>> 16;
+    o2 &= 65535;
+    o1 += m1 * n3;
+    o0 += o1 >>> 16;
+    o1 &= 65535;
+    o1 += m22 * n2;
+    o0 += o1 >>> 16;
+    o1 &= 65535;
+    o1 += m32 * n1;
+    o0 += o1 >>> 16;
+    o1 &= 65535;
+    o0 += m0 * n3 + m1 * n2 + m22 * n1 + m32 * n0;
+    o0 &= 65535;
+    m9[0] = o0 << 16 | o1;
+    m9[1] = o2 << 16 | o3;
+  }
+  function x64Rotl(m9, bits) {
+    var m0 = m9[0];
+    bits %= 64;
+    if (bits === 32) {
+      m9[0] = m9[1];
+      m9[1] = m0;
+    } else if (bits < 32) {
+      m9[0] = m0 << bits | m9[1] >>> 32 - bits;
+      m9[1] = m9[1] << bits | m0 >>> 32 - bits;
+    } else {
+      bits -= 32;
+      m9[0] = m9[1] << bits | m0 >>> 32 - bits;
+      m9[1] = m0 << bits | m9[1] >>> 32 - bits;
+    }
+  }
+  function x64LeftShift(m9, bits) {
+    bits %= 64;
+    if (bits === 0) {
+      return;
+    } else if (bits < 32) {
+      m9[0] = m9[1] >>> 32 - bits;
+      m9[1] = m9[1] << bits;
+    } else {
+      m9[0] = m9[1] << bits - 32;
+      m9[1] = 0;
+    }
+  }
+  function x64Xor(m9, n) {
+    m9[0] ^= n[0];
+    m9[1] ^= n[1];
+  }
+  var F1 = [4283543511, 3981806797];
+  var F2 = [3301882366, 444984403];
+  function x64Fmix(h) {
+    var shifted = [0, h[0] >>> 1];
+    x64Xor(h, shifted);
+    x64Multiply(h, F1);
+    shifted[1] = h[0] >>> 1;
+    x64Xor(h, shifted);
+    x64Multiply(h, F2);
+    shifted[1] = h[0] >>> 1;
+    x64Xor(h, shifted);
+  }
+  var C1 = [2277735313, 289559509];
+  var C2 = [1291169091, 658871167];
+  var M$1 = [0, 5];
+  var N1 = [0, 1390208809];
+  var N2 = [0, 944331445];
+  function x64hash128(input, seed) {
+    var key = getUTF8Bytes(input);
+    seed = seed || 0;
+    var length = [0, key.length];
+    var remainder = length[1] % 16;
+    var bytes = length[1] - remainder;
+    var h1 = [0, seed];
+    var h2 = [0, seed];
+    var k1 = [0, 0];
+    var k2 = [0, 0];
+    var i;
+    for (i = 0; i < bytes; i = i + 16) {
+      k1[0] = key[i + 4] | key[i + 5] << 8 | key[i + 6] << 16 | key[i + 7] << 24;
+      k1[1] = key[i] | key[i + 1] << 8 | key[i + 2] << 16 | key[i + 3] << 24;
+      k2[0] = key[i + 12] | key[i + 13] << 8 | key[i + 14] << 16 | key[i + 15] << 24;
+      k2[1] = key[i + 8] | key[i + 9] << 8 | key[i + 10] << 16 | key[i + 11] << 24;
+      x64Multiply(k1, C1);
+      x64Rotl(k1, 31);
+      x64Multiply(k1, C2);
+      x64Xor(h1, k1);
+      x64Rotl(h1, 27);
+      x64Add(h1, h2);
+      x64Multiply(h1, M$1);
+      x64Add(h1, N1);
+      x64Multiply(k2, C2);
+      x64Rotl(k2, 33);
+      x64Multiply(k2, C1);
+      x64Xor(h2, k2);
+      x64Rotl(h2, 31);
+      x64Add(h2, h1);
+      x64Multiply(h2, M$1);
+      x64Add(h2, N2);
+    }
+    k1[0] = 0;
+    k1[1] = 0;
+    k2[0] = 0;
+    k2[1] = 0;
+    var val = [0, 0];
+    switch (remainder) {
+      case 15:
+        val[1] = key[i + 14];
+        x64LeftShift(val, 48);
+        x64Xor(k2, val);
+      // fallthrough
+      case 14:
+        val[1] = key[i + 13];
+        x64LeftShift(val, 40);
+        x64Xor(k2, val);
+      // fallthrough
+      case 13:
+        val[1] = key[i + 12];
+        x64LeftShift(val, 32);
+        x64Xor(k2, val);
+      // fallthrough
+      case 12:
+        val[1] = key[i + 11];
+        x64LeftShift(val, 24);
+        x64Xor(k2, val);
+      // fallthrough
+      case 11:
+        val[1] = key[i + 10];
+        x64LeftShift(val, 16);
+        x64Xor(k2, val);
+      // fallthrough
+      case 10:
+        val[1] = key[i + 9];
+        x64LeftShift(val, 8);
+        x64Xor(k2, val);
+      // fallthrough
+      case 9:
+        val[1] = key[i + 8];
+        x64Xor(k2, val);
+        x64Multiply(k2, C2);
+        x64Rotl(k2, 33);
+        x64Multiply(k2, C1);
+        x64Xor(h2, k2);
+      // fallthrough
+      case 8:
+        val[1] = key[i + 7];
+        x64LeftShift(val, 56);
+        x64Xor(k1, val);
+      // fallthrough
+      case 7:
+        val[1] = key[i + 6];
+        x64LeftShift(val, 48);
+        x64Xor(k1, val);
+      // fallthrough
+      case 6:
+        val[1] = key[i + 5];
+        x64LeftShift(val, 40);
+        x64Xor(k1, val);
+      // fallthrough
+      case 5:
+        val[1] = key[i + 4];
+        x64LeftShift(val, 32);
+        x64Xor(k1, val);
+      // fallthrough
+      case 4:
+        val[1] = key[i + 3];
+        x64LeftShift(val, 24);
+        x64Xor(k1, val);
+      // fallthrough
+      case 3:
+        val[1] = key[i + 2];
+        x64LeftShift(val, 16);
+        x64Xor(k1, val);
+      // fallthrough
+      case 2:
+        val[1] = key[i + 1];
+        x64LeftShift(val, 8);
+        x64Xor(k1, val);
+      // fallthrough
+      case 1:
+        val[1] = key[i];
+        x64Xor(k1, val);
+        x64Multiply(k1, C1);
+        x64Rotl(k1, 31);
+        x64Multiply(k1, C2);
+        x64Xor(h1, k1);
+    }
+    x64Xor(h1, length);
+    x64Xor(h2, length);
+    x64Add(h1, h2);
+    x64Add(h2, h1);
+    x64Fmix(h1);
+    x64Fmix(h2);
+    x64Add(h1, h2);
+    x64Add(h2, h1);
+    return ("00000000" + (h1[0] >>> 0).toString(16)).slice(-8) + ("00000000" + (h1[1] >>> 0).toString(16)).slice(-8) + ("00000000" + (h2[0] >>> 0).toString(16)).slice(-8) + ("00000000" + (h2[1] >>> 0).toString(16)).slice(-8);
+  }
+  function errorToObject(error) {
+    var _a;
+    return __assign({ name: error.name, message: error.message, stack: (_a = error.stack) === null || _a === void 0 ? void 0 : _a.split("\n") }, error);
+  }
+  function isFunctionNative(func) {
+    return /^function\s.*?\{\s*\[native code]\s*}$/.test(String(func));
+  }
+  function isFinalResultLoaded(loadResult) {
+    return typeof loadResult !== "function";
+  }
+  function loadSource(source, sourceOptions) {
+    var sourceLoadPromise = suppressUnhandledRejectionWarning(new Promise(function(resolveLoad) {
+      var loadStartTime = Date.now();
+      awaitIfAsync(source.bind(null, sourceOptions), function() {
+        var loadArgs = [];
+        for (var _i = 0; _i < arguments.length; _i++) {
+          loadArgs[_i] = arguments[_i];
+        }
+        var loadDuration = Date.now() - loadStartTime;
+        if (!loadArgs[0]) {
+          return resolveLoad(function() {
+            return { error: loadArgs[1], duration: loadDuration };
+          });
+        }
+        var loadResult = loadArgs[1];
+        if (isFinalResultLoaded(loadResult)) {
+          return resolveLoad(function() {
+            return { value: loadResult, duration: loadDuration };
+          });
+        }
+        resolveLoad(function() {
+          return new Promise(function(resolveGet) {
+            var getStartTime = Date.now();
+            awaitIfAsync(loadResult, function() {
+              var getArgs = [];
+              for (var _i2 = 0; _i2 < arguments.length; _i2++) {
+                getArgs[_i2] = arguments[_i2];
+              }
+              var duration = loadDuration + Date.now() - getStartTime;
+              if (!getArgs[0]) {
+                return resolveGet({ error: getArgs[1], duration });
+              }
+              resolveGet({ value: getArgs[1], duration });
+            });
+          });
+        });
+      });
+    }));
+    return function getComponent() {
+      return sourceLoadPromise.then(function(finalizeSource) {
+        return finalizeSource();
+      });
+    };
+  }
+  function loadSources(sources2, sourceOptions, excludeSources, loopReleaseInterval) {
+    var includedSources = Object.keys(sources2).filter(function(sourceKey) {
+      return excludes(excludeSources, sourceKey);
+    });
+    var sourceGettersPromise = suppressUnhandledRejectionWarning(mapWithBreaks(includedSources, function(sourceKey) {
+      return loadSource(sources2[sourceKey], sourceOptions);
+    }, loopReleaseInterval));
+    return function getComponents() {
+      return __awaiter(this, void 0, void 0, function() {
+        var sourceGetters, componentPromises, componentArray, components, index2;
+        return __generator(this, function(_a) {
+          switch (_a.label) {
+            case 0:
+              return [4, sourceGettersPromise];
+            case 1:
+              sourceGetters = _a.sent();
+              return [4, mapWithBreaks(sourceGetters, function(sourceGetter) {
+                return suppressUnhandledRejectionWarning(sourceGetter());
+              }, loopReleaseInterval)];
+            case 2:
+              componentPromises = _a.sent();
+              return [
+                4,
+                Promise.all(componentPromises)
+                // Keeping the component keys order the same as the source keys order
+              ];
+            case 3:
+              componentArray = _a.sent();
+              components = {};
+              for (index2 = 0; index2 < includedSources.length; ++index2) {
+                components[includedSources[index2]] = componentArray[index2];
+              }
+              return [2, components];
+          }
+        });
+      });
+    };
+  }
+  function isTrident() {
+    var w = window;
+    var n = navigator;
+    return countTruthy([
+      "MSCSSMatrix" in w,
+      "msSetImmediate" in w,
+      "msIndexedDB" in w,
+      "msMaxTouchPoints" in n,
+      "msPointerEnabled" in n
+    ]) >= 4;
+  }
+  function isEdgeHTML() {
+    var w = window;
+    var n = navigator;
+    return countTruthy(["msWriteProfilerMark" in w, "MSStream" in w, "msLaunchUri" in n, "msSaveBlob" in n]) >= 3 && !isTrident();
+  }
+  function isChromium() {
+    var w = window;
+    var n = navigator;
+    return countTruthy([
+      "webkitPersistentStorage" in n,
+      "webkitTemporaryStorage" in n,
+      (n.vendor || "").indexOf("Google") === 0,
+      "webkitResolveLocalFileSystemURL" in w,
+      "BatteryManager" in w,
+      "webkitMediaStream" in w,
+      "webkitSpeechGrammar" in w
+    ]) >= 5;
+  }
+  function isWebKit() {
+    var w = window;
+    var n = navigator;
+    return countTruthy([
+      "ApplePayError" in w,
+      "CSSPrimitiveValue" in w,
+      "Counter" in w,
+      n.vendor.indexOf("Apple") === 0,
+      "RGBColor" in w,
+      "WebKitMediaKeys" in w
+    ]) >= 4;
+  }
+  function isDesktopWebKit() {
+    var w = window;
+    var HTMLElement = w.HTMLElement, Document = w.Document;
+    return countTruthy([
+      "safari" in w,
+      !("ongestureend" in w),
+      !("TouchEvent" in w),
+      !("orientation" in w),
+      HTMLElement && !("autocapitalize" in HTMLElement.prototype),
+      Document && "pointerLockElement" in Document.prototype
+    ]) >= 4;
+  }
+  function isSafariWebKit() {
+    var w = window;
+    return (
+      // Filters-out Chrome, Yandex, DuckDuckGo (macOS and iOS), Edge
+      isFunctionNative(w.print) && // Doesn't work in Safari < 15.4
+      String(w.browser) === "[object WebPageNamespace]"
+    );
+  }
+  function isGecko() {
+    var _a, _b;
+    var w = window;
+    return countTruthy([
+      "buildID" in navigator,
+      "MozAppearance" in ((_b = (_a = document.documentElement) === null || _a === void 0 ? void 0 : _a.style) !== null && _b !== void 0 ? _b : {}),
+      "onmozfullscreenchange" in w,
+      "mozInnerScreenX" in w,
+      "CSSMozDocumentRule" in w,
+      "CanvasCaptureMediaStream" in w
+    ]) >= 4;
+  }
+  function isChromium86OrNewer() {
+    var w = window;
+    return countTruthy([
+      !("MediaSettingsRange" in w),
+      "RTCEncodedAudioFrame" in w,
+      "" + w.Intl === "[object Intl]",
+      "" + w.Reflect === "[object Reflect]"
+    ]) >= 3;
+  }
+  function isChromium122OrNewer() {
+    var w = window;
+    var URLPattern = w.URLPattern;
+    return countTruthy([
+      "union" in Set.prototype,
+      "Iterator" in w,
+      URLPattern && "hasRegExpGroups" in URLPattern.prototype,
+      "RGB8" in WebGLRenderingContext.prototype
+    ]) >= 3;
+  }
+  function isWebKit606OrNewer() {
+    var w = window;
+    return countTruthy([
+      "DOMRectList" in w,
+      "RTCPeerConnectionIceEvent" in w,
+      "SVGGeometryElement" in w,
+      "ontransitioncancel" in w
+    ]) >= 3;
+  }
+  function isWebKit616OrNewer() {
+    var w = window;
+    var n = navigator;
+    var CSS = w.CSS, HTMLButtonElement = w.HTMLButtonElement;
+    return countTruthy([
+      !("getStorageUpdates" in n),
+      HTMLButtonElement && "popover" in HTMLButtonElement.prototype,
+      "CSSCounterStyleRule" in w,
+      CSS.supports("font-size-adjust: ex-height 0.5"),
+      CSS.supports("text-transform: full-width")
+    ]) >= 4;
+  }
+  function isIPad() {
+    if (navigator.platform === "iPad") {
+      return true;
+    }
+    var s = screen;
+    var screenRatio = s.width / s.height;
+    return countTruthy([
+      // Since iOS 13. Doesn't work in Chrome on iPadOS <15, but works in desktop mode.
+      "MediaSource" in window,
+      // Since iOS 12. Doesn't work in Chrome on iPadOS.
+      !!Element.prototype.webkitRequestFullscreen,
+      // iPhone 4S that runs iOS 9 matches this, but it is not supported
+      // Doesn't work in incognito mode of Safari ≥17 with split screen because of tracking prevention
+      screenRatio > 0.65 && screenRatio < 1.53
+    ]) >= 2;
+  }
+  function getFullscreenElement() {
+    var d = document;
+    return d.fullscreenElement || d.msFullscreenElement || d.mozFullScreenElement || d.webkitFullscreenElement || null;
+  }
+  function exitFullscreen() {
+    var d = document;
+    return (d.exitFullscreen || d.msExitFullscreen || d.mozCancelFullScreen || d.webkitExitFullscreen).call(d);
+  }
+  function isAndroid() {
+    var isItChromium = isChromium();
+    var isItGecko = isGecko();
+    var w = window;
+    var n = navigator;
+    var c = "connection";
+    if (isItChromium) {
+      return countTruthy([
+        !("SharedWorker" in w),
+        // `typechange` is deprecated, but it's still present on Android (tested on Chrome Mobile 117)
+        // Removal proposal https://bugs.chromium.org/p/chromium/issues/detail?id=699892
+        // Note: this expression returns true on ChromeOS, so additional detectors are required to avoid false-positives
+        n[c] && "ontypechange" in n[c],
+        !("sinkId" in new Audio())
+      ]) >= 2;
+    } else if (isItGecko) {
+      return countTruthy(["onorientationchange" in w, "orientation" in w, /android/i.test(n.appVersion)]) >= 2;
+    } else {
+      return false;
+    }
+  }
+  function isSamsungInternet() {
+    var n = navigator;
+    var w = window;
+    var audioPrototype = Audio.prototype;
+    var visualViewport = w.visualViewport;
+    return countTruthy([
+      "srLatency" in audioPrototype,
+      "srChannelCount" in audioPrototype,
+      "devicePosture" in n,
+      visualViewport && "segments" in visualViewport,
+      "getTextInformation" in Image.prototype
+      // Not available in Samsung Internet 21
+    ]) >= 3;
+  }
+  function getAudioFingerprint() {
+    if (doesBrowserPerformAntifingerprinting$1()) {
+      return -4;
+    }
+    return getUnstableAudioFingerprint();
+  }
+  function getUnstableAudioFingerprint() {
+    var w = window;
+    var AudioContext2 = w.OfflineAudioContext || w.webkitOfflineAudioContext;
+    if (!AudioContext2) {
+      return -2;
+    }
+    if (doesBrowserSuspendAudioContext()) {
+      return -1;
+    }
+    var hashFromIndex = 4500;
+    var hashToIndex = 5e3;
+    var context = new AudioContext2(1, hashToIndex, 44100);
+    var oscillator = context.createOscillator();
+    oscillator.type = "triangle";
+    oscillator.frequency.value = 1e4;
+    var compressor = context.createDynamicsCompressor();
+    compressor.threshold.value = -50;
+    compressor.knee.value = 40;
+    compressor.ratio.value = 12;
+    compressor.attack.value = 0;
+    compressor.release.value = 0.25;
+    oscillator.connect(compressor);
+    compressor.connect(context.destination);
+    oscillator.start(0);
+    var _a = startRenderingAudio(context), renderPromise = _a[0], finishRendering = _a[1];
+    var fingerprintPromise = suppressUnhandledRejectionWarning(renderPromise.then(function(buffer) {
+      return getHash(buffer.getChannelData(0).subarray(hashFromIndex));
+    }, function(error) {
+      if (error.name === "timeout" || error.name === "suspended") {
+        return -3;
+      }
+      throw error;
+    }));
+    return function() {
+      finishRendering();
+      return fingerprintPromise;
+    };
+  }
+  function doesBrowserSuspendAudioContext() {
+    return isWebKit() && !isDesktopWebKit() && !isWebKit606OrNewer();
+  }
+  function doesBrowserPerformAntifingerprinting$1() {
+    return (
+      // Safari ≥17
+      isWebKit() && isWebKit616OrNewer() && isSafariWebKit() || // Samsung Internet ≥26
+      isChromium() && isSamsungInternet() && isChromium122OrNewer()
+    );
+  }
+  function startRenderingAudio(context) {
+    var renderTryMaxCount = 3;
+    var renderRetryDelay = 500;
+    var runningMaxAwaitTime = 500;
+    var runningSufficientTime = 5e3;
+    var finalize = function() {
+      return void 0;
+    };
+    var resultPromise = new Promise(function(resolve, reject) {
+      var isFinalized = false;
+      var renderTryCount = 0;
+      var startedRunningAt = 0;
+      context.oncomplete = function(event) {
+        return resolve(event.renderedBuffer);
+      };
+      var startRunningTimeout = function() {
+        setTimeout(function() {
+          return reject(makeInnerError(
+            "timeout"
+            /* InnerErrorName.Timeout */
+          ));
+        }, Math.min(runningMaxAwaitTime, startedRunningAt + runningSufficientTime - Date.now()));
+      };
+      var tryRender = function() {
+        try {
+          var renderingPromise = context.startRendering();
+          if (isPromise(renderingPromise)) {
+            suppressUnhandledRejectionWarning(renderingPromise);
+          }
+          switch (context.state) {
+            case "running":
+              startedRunningAt = Date.now();
+              if (isFinalized) {
+                startRunningTimeout();
+              }
+              break;
+            // Sometimes the audio context doesn't start after calling `startRendering` (in addition to the cases where
+            // audio context doesn't start at all). A known case is starting an audio context when the browser tab is in
+            // background on iPhone. Retries usually help in this case.
+            case "suspended":
+              if (!document.hidden) {
+                renderTryCount++;
+              }
+              if (isFinalized && renderTryCount >= renderTryMaxCount) {
+                reject(makeInnerError(
+                  "suspended"
+                  /* InnerErrorName.Suspended */
+                ));
+              } else {
+                setTimeout(tryRender, renderRetryDelay);
+              }
+              break;
+          }
+        } catch (error) {
+          reject(error);
+        }
+      };
+      tryRender();
+      finalize = function() {
+        if (!isFinalized) {
+          isFinalized = true;
+          if (startedRunningAt > 0) {
+            startRunningTimeout();
+          }
+        }
+      };
+    });
+    return [resultPromise, finalize];
+  }
+  function getHash(signal) {
+    var hash = 0;
+    for (var i = 0; i < signal.length; ++i) {
+      hash += Math.abs(signal[i]);
+    }
+    return hash;
+  }
+  function makeInnerError(name) {
+    var error = new Error(name);
+    error.name = name;
+    return error;
+  }
+  function withIframe(action, initialHtml, domPollInterval) {
+    var _a, _b, _c;
+    if (domPollInterval === void 0) {
+      domPollInterval = 50;
+    }
+    return __awaiter(this, void 0, void 0, function() {
+      var d, iframe;
+      return __generator(this, function(_d) {
+        switch (_d.label) {
+          case 0:
+            d = document;
+            _d.label = 1;
+          case 1:
+            if (!!d.body) return [3, 3];
+            return [4, wait(domPollInterval)];
+          case 2:
+            _d.sent();
+            return [3, 1];
+          case 3:
+            iframe = d.createElement("iframe");
+            _d.label = 4;
+          case 4:
+            _d.trys.push([4, , 10, 11]);
+            return [4, new Promise(function(_resolve, _reject) {
+              var isComplete = false;
+              var resolve = function() {
+                isComplete = true;
+                _resolve();
+              };
+              var reject = function(error) {
+                isComplete = true;
+                _reject(error);
+              };
+              iframe.onload = resolve;
+              iframe.onerror = reject;
+              var style = iframe.style;
+              style.setProperty("display", "block", "important");
+              style.position = "absolute";
+              style.top = "0";
+              style.left = "0";
+              style.visibility = "hidden";
+              if (initialHtml && "srcdoc" in iframe) {
+                iframe.srcdoc = initialHtml;
+              } else {
+                iframe.src = "about:blank";
+              }
+              d.body.appendChild(iframe);
+              var checkReadyState = function() {
+                var _a2, _b2;
+                if (isComplete) {
+                  return;
+                }
+                if (((_b2 = (_a2 = iframe.contentWindow) === null || _a2 === void 0 ? void 0 : _a2.document) === null || _b2 === void 0 ? void 0 : _b2.readyState) === "complete") {
+                  resolve();
+                } else {
+                  setTimeout(checkReadyState, 10);
+                }
+              };
+              checkReadyState();
+            })];
+          case 5:
+            _d.sent();
+            _d.label = 6;
+          case 6:
+            if (!!((_b = (_a = iframe.contentWindow) === null || _a === void 0 ? void 0 : _a.document) === null || _b === void 0 ? void 0 : _b.body)) return [3, 8];
+            return [4, wait(domPollInterval)];
+          case 7:
+            _d.sent();
+            return [3, 6];
+          case 8:
+            return [4, action(iframe, iframe.contentWindow)];
+          case 9:
+            return [2, _d.sent()];
+          case 10:
+            (_c = iframe.parentNode) === null || _c === void 0 ? void 0 : _c.removeChild(iframe);
+            return [
+              7
+              /*endfinally*/
+            ];
+          case 11:
+            return [
+              2
+              /*return*/
+            ];
+        }
+      });
+    });
+  }
+  function selectorToElement(selector) {
+    var _a = parseSimpleCssSelector(selector), tag = _a[0], attributes = _a[1];
+    var element = document.createElement(tag !== null && tag !== void 0 ? tag : "div");
+    for (var _i = 0, _b = Object.keys(attributes); _i < _b.length; _i++) {
+      var name_1 = _b[_i];
+      var value = attributes[name_1].join(" ");
+      if (name_1 === "style") {
+        addStyleString(element.style, value);
+      } else {
+        element.setAttribute(name_1, value);
+      }
+    }
+    return element;
+  }
+  function addStyleString(style, source) {
+    for (var _i = 0, _a = source.split(";"); _i < _a.length; _i++) {
+      var property = _a[_i];
+      var match = /^\s*([\w-]+)\s*:\s*(.+?)(\s*!([\w-]+))?\s*$/.exec(property);
+      if (match) {
+        var name_2 = match[1], value = match[2], priority = match[4];
+        style.setProperty(name_2, value, priority || "");
+      }
+    }
+  }
+  function isAnyParentCrossOrigin() {
+    var currentWindow = window;
+    for (; ; ) {
+      var parentWindow = currentWindow.parent;
+      if (!parentWindow || parentWindow === currentWindow) {
+        return false;
+      }
+      try {
+        if (parentWindow.location.origin !== currentWindow.location.origin) {
+          return true;
+        }
+      } catch (error) {
+        if (error instanceof Error && error.name === "SecurityError") {
+          return true;
+        }
+        throw error;
+      }
+      currentWindow = parentWindow;
+    }
+  }
+  var testString = "mmMwWLliI0O&1";
+  var textSize = "48px";
+  var baseFonts = ["monospace", "sans-serif", "serif"];
+  var fontList = [
+    // This is android-specific font from "Roboto" family
+    "sans-serif-thin",
+    "ARNO PRO",
+    "Agency FB",
+    "Arabic Typesetting",
+    "Arial Unicode MS",
+    "AvantGarde Bk BT",
+    "BankGothic Md BT",
+    "Batang",
+    "Bitstream Vera Sans Mono",
+    "Calibri",
+    "Century",
+    "Century Gothic",
+    "Clarendon",
+    "EUROSTILE",
+    "Franklin Gothic",
+    "Futura Bk BT",
+    "Futura Md BT",
+    "GOTHAM",
+    "Gill Sans",
+    "HELV",
+    "Haettenschweiler",
+    "Helvetica Neue",
+    "Humanst521 BT",
+    "Leelawadee",
+    "Letter Gothic",
+    "Levenim MT",
+    "Lucida Bright",
+    "Lucida Sans",
+    "Menlo",
+    "MS Mincho",
+    "MS Outlook",
+    "MS Reference Specialty",
+    "MS UI Gothic",
+    "MT Extra",
+    "MYRIAD PRO",
+    "Marlett",
+    "Meiryo UI",
+    "Microsoft Uighur",
+    "Minion Pro",
+    "Monotype Corsiva",
+    "PMingLiU",
+    "Pristina",
+    "SCRIPTINA",
+    "Segoe UI Light",
+    "Serifa",
+    "SimHei",
+    "Small Fonts",
+    "Staccato222 BT",
+    "TRAJAN PRO",
+    "Univers CE 55 Medium",
+    "Vrinda",
+    "ZWAdobeF"
+  ];
+  function getFonts() {
+    var _this = this;
+    return withIframe(function(_, _a) {
+      var document2 = _a.document;
+      return __awaiter(_this, void 0, void 0, function() {
+        var holder, spansContainer, defaultWidth, defaultHeight, createSpan, createSpanWithFonts, initializeBaseFontsSpans, initializeFontsSpans, isFontAvailable, baseFontsSpans, fontsSpans, index2;
+        return __generator(this, function(_b) {
+          holder = document2.body;
+          holder.style.fontSize = textSize;
+          spansContainer = document2.createElement("div");
+          spansContainer.style.setProperty("visibility", "hidden", "important");
+          defaultWidth = {};
+          defaultHeight = {};
+          createSpan = function(fontFamily) {
+            var span = document2.createElement("span");
+            var style = span.style;
+            style.position = "absolute";
+            style.top = "0";
+            style.left = "0";
+            style.fontFamily = fontFamily;
+            span.textContent = testString;
+            spansContainer.appendChild(span);
+            return span;
+          };
+          createSpanWithFonts = function(fontToDetect, baseFont) {
+            return createSpan("'".concat(fontToDetect, "',").concat(baseFont));
+          };
+          initializeBaseFontsSpans = function() {
+            return baseFonts.map(createSpan);
+          };
+          initializeFontsSpans = function() {
+            var spans = {};
+            var _loop_1 = function(font2) {
+              spans[font2] = baseFonts.map(function(baseFont) {
+                return createSpanWithFonts(font2, baseFont);
+              });
+            };
+            for (var _i = 0, fontList_1 = fontList; _i < fontList_1.length; _i++) {
+              var font = fontList_1[_i];
+              _loop_1(font);
+            }
+            return spans;
+          };
+          isFontAvailable = function(fontSpans) {
+            return baseFonts.some(function(baseFont, baseFontIndex) {
+              return fontSpans[baseFontIndex].offsetWidth !== defaultWidth[baseFont] || fontSpans[baseFontIndex].offsetHeight !== defaultHeight[baseFont];
+            });
+          };
+          baseFontsSpans = initializeBaseFontsSpans();
+          fontsSpans = initializeFontsSpans();
+          holder.appendChild(spansContainer);
+          for (index2 = 0; index2 < baseFonts.length; index2++) {
+            defaultWidth[baseFonts[index2]] = baseFontsSpans[index2].offsetWidth;
+            defaultHeight[baseFonts[index2]] = baseFontsSpans[index2].offsetHeight;
+          }
+          return [2, fontList.filter(function(font) {
+            return isFontAvailable(fontsSpans[font]);
+          })];
+        });
+      });
+    });
+  }
+  function getPlugins() {
+    var rawPlugins = navigator.plugins;
+    if (!rawPlugins) {
+      return void 0;
+    }
+    var plugins = [];
+    for (var i = 0; i < rawPlugins.length; ++i) {
+      var plugin = rawPlugins[i];
+      if (!plugin) {
+        continue;
+      }
+      var mimeTypes = [];
+      for (var j = 0; j < plugin.length; ++j) {
+        var mimeType = plugin[j];
+        mimeTypes.push({
+          type: mimeType.type,
+          suffixes: mimeType.suffixes
+        });
+      }
+      plugins.push({
+        name: plugin.name,
+        description: plugin.description,
+        mimeTypes
+      });
+    }
+    return plugins;
+  }
+  function getCanvasFingerprint() {
+    return getUnstableCanvasFingerprint(doesBrowserPerformAntifingerprinting());
+  }
+  function getUnstableCanvasFingerprint(skipImages) {
+    var _a;
+    var winding = false;
+    var geometry;
+    var text;
+    var _b = makeCanvasContext(), canvas = _b[0], context = _b[1];
+    if (!isSupported(canvas, context)) {
+      geometry = text = "unsupported";
+    } else {
+      winding = doesSupportWinding(context);
+      if (skipImages) {
+        geometry = text = "skipped";
+      } else {
+        _a = renderImages(canvas, context), geometry = _a[0], text = _a[1];
+      }
+    }
+    return { winding, geometry, text };
+  }
+  function makeCanvasContext() {
+    var canvas = document.createElement("canvas");
+    canvas.width = 1;
+    canvas.height = 1;
+    return [canvas, canvas.getContext("2d")];
+  }
+  function isSupported(canvas, context) {
+    return !!(context && canvas.toDataURL);
+  }
+  function doesSupportWinding(context) {
+    context.rect(0, 0, 10, 10);
+    context.rect(2, 2, 6, 6);
+    return !context.isPointInPath(5, 5, "evenodd");
+  }
+  function renderImages(canvas, context) {
+    renderTextImage(canvas, context);
+    var textImage1 = canvasToString(canvas);
+    var textImage2 = canvasToString(canvas);
+    if (textImage1 !== textImage2) {
+      return [
+        "unstable",
+        "unstable"
+        /* ImageStatus.Unstable */
+      ];
+    }
+    renderGeometryImage(canvas, context);
+    var geometryImage = canvasToString(canvas);
+    return [geometryImage, textImage1];
+  }
+  function renderTextImage(canvas, context) {
+    canvas.width = 240;
+    canvas.height = 60;
+    context.textBaseline = "alphabetic";
+    context.fillStyle = "#f60";
+    context.fillRect(100, 1, 62, 20);
+    context.fillStyle = "#069";
+    context.font = '11pt "Times New Roman"';
+    var printedText = "Cwm fjordbank gly ".concat(
+      String.fromCharCode(55357, 56835)
+      /* 😃 */
+    );
+    context.fillText(printedText, 2, 15);
+    context.fillStyle = "rgba(102, 204, 0, 0.2)";
+    context.font = "18pt Arial";
+    context.fillText(printedText, 4, 45);
+  }
+  function renderGeometryImage(canvas, context) {
+    canvas.width = 122;
+    canvas.height = 110;
+    context.globalCompositeOperation = "multiply";
+    for (var _i = 0, _a = [
+      ["#f2f", 40, 40],
+      ["#2ff", 80, 40],
+      ["#ff2", 60, 80]
+    ]; _i < _a.length; _i++) {
+      var _b = _a[_i], color = _b[0], x = _b[1], y = _b[2];
+      context.fillStyle = color;
+      context.beginPath();
+      context.arc(x, y, 40, 0, Math.PI * 2, true);
+      context.closePath();
+      context.fill();
+    }
+    context.fillStyle = "#f9c";
+    context.arc(60, 60, 60, 0, Math.PI * 2, true);
+    context.arc(60, 60, 20, 0, Math.PI * 2, true);
+    context.fill("evenodd");
+  }
+  function canvasToString(canvas) {
+    return canvas.toDataURL();
+  }
+  function doesBrowserPerformAntifingerprinting() {
+    return isWebKit() && isWebKit616OrNewer() && isSafariWebKit();
+  }
+  function getTouchSupport() {
+    var n = navigator;
+    var maxTouchPoints = 0;
+    var touchEvent;
+    if (n.maxTouchPoints !== void 0) {
+      maxTouchPoints = toInt(n.maxTouchPoints);
+    } else if (n.msMaxTouchPoints !== void 0) {
+      maxTouchPoints = n.msMaxTouchPoints;
+    }
+    try {
+      document.createEvent("TouchEvent");
+      touchEvent = true;
+    } catch (_a) {
+      touchEvent = false;
+    }
+    var touchStart = "ontouchstart" in window;
+    return {
+      maxTouchPoints,
+      touchEvent,
+      touchStart
+    };
+  }
+  function getOsCpu() {
+    return navigator.oscpu;
+  }
+  function getLanguages() {
+    var n = navigator;
+    var result = [];
+    var language = n.language || n.userLanguage || n.browserLanguage || n.systemLanguage;
+    if (language !== void 0) {
+      result.push([language]);
+    }
+    if (Array.isArray(n.languages)) {
+      if (!(isChromium() && isChromium86OrNewer())) {
+        result.push(n.languages);
+      }
+    } else if (typeof n.languages === "string") {
+      var languages = n.languages;
+      if (languages) {
+        result.push(languages.split(","));
+      }
+    }
+    return result;
+  }
+  function getColorDepth() {
+    return window.screen.colorDepth;
+  }
+  function getDeviceMemory() {
+    return replaceNaN(toFloat(navigator.deviceMemory), void 0);
+  }
+  function getScreenResolution() {
+    if (isWebKit() && isWebKit616OrNewer() && isSafariWebKit()) {
+      return void 0;
+    }
+    return getUnstableScreenResolution();
+  }
+  function getUnstableScreenResolution() {
+    var s = screen;
+    var parseDimension = function(value) {
+      return replaceNaN(toInt(value), null);
+    };
+    var dimensions = [parseDimension(s.width), parseDimension(s.height)];
+    dimensions.sort().reverse();
+    return dimensions;
+  }
+  var screenFrameCheckInterval = 2500;
+  var roundingPrecision = 10;
+  var screenFrameBackup;
+  var screenFrameSizeTimeoutId;
+  function watchScreenFrame() {
+    if (screenFrameSizeTimeoutId !== void 0) {
+      return;
+    }
+    var checkScreenFrame = function() {
+      var frameSize = getCurrentScreenFrame();
+      if (isFrameSizeNull(frameSize)) {
+        screenFrameSizeTimeoutId = setTimeout(checkScreenFrame, screenFrameCheckInterval);
+      } else {
+        screenFrameBackup = frameSize;
+        screenFrameSizeTimeoutId = void 0;
+      }
+    };
+    checkScreenFrame();
+  }
+  function getUnstableScreenFrame() {
+    var _this = this;
+    watchScreenFrame();
+    return function() {
+      return __awaiter(_this, void 0, void 0, function() {
+        var frameSize;
+        return __generator(this, function(_a) {
+          switch (_a.label) {
+            case 0:
+              frameSize = getCurrentScreenFrame();
+              if (!isFrameSizeNull(frameSize)) return [3, 2];
+              if (screenFrameBackup) {
+                return [2, __spreadArray([], screenFrameBackup, true)];
+              }
+              if (!getFullscreenElement()) return [3, 2];
+              return [4, exitFullscreen()];
+            case 1:
+              _a.sent();
+              frameSize = getCurrentScreenFrame();
+              _a.label = 2;
+            case 2:
+              if (!isFrameSizeNull(frameSize)) {
+                screenFrameBackup = frameSize;
+              }
+              return [2, frameSize];
+          }
+        });
+      });
+    };
+  }
+  function getScreenFrame() {
+    var _this = this;
+    if (isWebKit() && isWebKit616OrNewer() && isSafariWebKit()) {
+      return function() {
+        return Promise.resolve(void 0);
+      };
+    }
+    var screenFrameGetter = getUnstableScreenFrame();
+    return function() {
+      return __awaiter(_this, void 0, void 0, function() {
+        var frameSize, processSize;
+        return __generator(this, function(_a) {
+          switch (_a.label) {
+            case 0:
+              return [4, screenFrameGetter()];
+            case 1:
+              frameSize = _a.sent();
+              processSize = function(sideSize) {
+                return sideSize === null ? null : round(sideSize, roundingPrecision);
+              };
+              return [2, [processSize(frameSize[0]), processSize(frameSize[1]), processSize(frameSize[2]), processSize(frameSize[3])]];
+          }
+        });
+      });
+    };
+  }
+  function getCurrentScreenFrame() {
+    var s = screen;
+    return [
+      replaceNaN(toFloat(s.availTop), null),
+      replaceNaN(toFloat(s.width) - toFloat(s.availWidth) - replaceNaN(toFloat(s.availLeft), 0), null),
+      replaceNaN(toFloat(s.height) - toFloat(s.availHeight) - replaceNaN(toFloat(s.availTop), 0), null),
+      replaceNaN(toFloat(s.availLeft), null)
+    ];
+  }
+  function isFrameSizeNull(frameSize) {
+    for (var i = 0; i < 4; ++i) {
+      if (frameSize[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+  function getHardwareConcurrency() {
+    return replaceNaN(toInt(navigator.hardwareConcurrency), void 0);
+  }
+  function getTimezone() {
+    var _a;
+    var DateTimeFormat = (_a = window.Intl) === null || _a === void 0 ? void 0 : _a.DateTimeFormat;
+    if (DateTimeFormat) {
+      var timezone = new DateTimeFormat().resolvedOptions().timeZone;
+      if (timezone) {
+        return timezone;
+      }
+    }
+    var offset = -getTimezoneOffset();
+    return "UTC".concat(offset >= 0 ? "+" : "").concat(offset);
+  }
+  function getTimezoneOffset() {
+    var currentYear = (/* @__PURE__ */ new Date()).getFullYear();
+    return Math.max(
+      // `getTimezoneOffset` returns a number as a string in some unidentified cases
+      toFloat(new Date(currentYear, 0, 1).getTimezoneOffset()),
+      toFloat(new Date(currentYear, 6, 1).getTimezoneOffset())
+    );
+  }
+  function getSessionStorage() {
+    try {
+      return !!window.sessionStorage;
+    } catch (error) {
+      return true;
+    }
+  }
+  function getLocalStorage() {
+    try {
+      return !!window.localStorage;
+    } catch (e) {
+      return true;
+    }
+  }
+  function getIndexedDB() {
+    if (isTrident() || isEdgeHTML()) {
+      return void 0;
+    }
+    try {
+      return !!window.indexedDB;
+    } catch (e) {
+      return true;
+    }
+  }
+  function getOpenDatabase() {
+    return !!window.openDatabase;
+  }
+  function getCpuClass() {
+    return navigator.cpuClass;
+  }
+  function getPlatform() {
+    var platform = navigator.platform;
+    if (platform === "MacIntel") {
+      if (isWebKit() && !isDesktopWebKit()) {
+        return isIPad() ? "iPad" : "iPhone";
+      }
+    }
+    return platform;
+  }
+  function getVendor() {
+    return navigator.vendor || "";
+  }
+  function getVendorFlavors() {
+    var flavors = [];
+    for (var _i = 0, _a = [
+      // Blink and some browsers on iOS
+      "chrome",
+      // Safari on macOS
+      "safari",
+      // Chrome on iOS (checked in 85 on 13 and 87 on 14)
+      "__crWeb",
+      "__gCrWeb",
+      // Yandex Browser on iOS, macOS and Android (checked in 21.2 on iOS 14, macOS and Android)
+      "yandex",
+      // Yandex Browser on iOS (checked in 21.2 on 14)
+      "__yb",
+      "__ybro",
+      // Firefox on iOS (checked in 32 on 14)
+      "__firefox__",
+      // Edge on iOS (checked in 46 on 14)
+      "__edgeTrackingPreventionStatistics",
+      "webkit",
+      // Opera Touch on iOS (checked in 2.6 on 14)
+      "oprt",
+      // Samsung Internet on Android (checked in 11.1)
+      "samsungAr",
+      // UC Browser on Android (checked in 12.10 and 13.0)
+      "ucweb",
+      "UCShellJava",
+      // Puffin on Android (checked in 9.0)
+      "puffinDevice"
+      // UC on iOS and Opera on Android have no specific global variables
+      // Edge for Android isn't checked
+    ]; _i < _a.length; _i++) {
+      var key = _a[_i];
+      var value = window[key];
+      if (value && typeof value === "object") {
+        flavors.push(key);
+      }
+    }
+    return flavors.sort();
+  }
+  function areCookiesEnabled() {
+    var d = document;
+    try {
+      d.cookie = "cookietest=1; SameSite=Strict;";
+      var result = d.cookie.indexOf("cookietest=") !== -1;
+      d.cookie = "cookietest=1; SameSite=Strict; expires=Thu, 01-Jan-1970 00:00:01 GMT";
+      return result;
+    } catch (e) {
+      return false;
+    }
+  }
+  function getFilters() {
+    var fromB64 = atob;
+    return {
+      abpIndo: [
+        "#Iklan-Melayang",
+        "#Kolom-Iklan-728",
+        "#SidebarIklan-wrapper",
+        '[title="ALIENBOLA" i]',
+        fromB64("I0JveC1CYW5uZXItYWRz")
+      ],
+      abpvn: [".quangcao", "#mobileCatfish", fromB64("LmNsb3NlLWFkcw=="), '[id^="bn_bottom_fixed_"]', "#pmadv"],
+      adBlockFinland: [
+        ".mainostila",
+        fromB64("LnNwb25zb3JpdA=="),
+        ".ylamainos",
+        fromB64("YVtocmVmKj0iL2NsaWNrdGhyZ2guYXNwPyJd"),
+        fromB64("YVtocmVmXj0iaHR0cHM6Ly9hcHAucmVhZHBlYWsuY29tL2FkcyJd")
+      ],
+      adBlockPersian: [
+        "#navbar_notice_50",
+        ".kadr",
+        'TABLE[width="140px"]',
+        "#divAgahi",
+        fromB64("YVtocmVmXj0iaHR0cDovL2cxLnYuZndtcm0ubmV0L2FkLyJd")
+      ],
+      adBlockWarningRemoval: [
+        "#adblock-honeypot",
+        ".adblocker-root",
+        ".wp_adblock_detect",
+        fromB64("LmhlYWRlci1ibG9ja2VkLWFk"),
+        fromB64("I2FkX2Jsb2NrZXI=")
+      ],
+      adGuardAnnoyances: [
+        ".hs-sosyal",
+        "#cookieconsentdiv",
+        'div[class^="app_gdpr"]',
+        ".as-oil",
+        '[data-cypress="soft-push-notification-modal"]'
+      ],
+      adGuardBase: [
+        ".BetterJsPopOverlay",
+        fromB64("I2FkXzMwMFgyNTA="),
+        fromB64("I2Jhbm5lcmZsb2F0MjI="),
+        fromB64("I2NhbXBhaWduLWJhbm5lcg=="),
+        fromB64("I0FkLUNvbnRlbnQ=")
+      ],
+      adGuardChinese: [
+        fromB64("LlppX2FkX2FfSA=="),
+        fromB64("YVtocmVmKj0iLmh0aGJldDM0LmNvbSJd"),
+        "#widget-quan",
+        fromB64("YVtocmVmKj0iLzg0OTkyMDIwLnh5eiJd"),
+        fromB64("YVtocmVmKj0iLjE5NTZobC5jb20vIl0=")
+      ],
+      adGuardFrench: [
+        "#pavePub",
+        fromB64("LmFkLWRlc2t0b3AtcmVjdGFuZ2xl"),
+        ".mobile_adhesion",
+        ".widgetadv",
+        fromB64("LmFkc19iYW4=")
+      ],
+      adGuardGerman: ['aside[data-portal-id="leaderboard"]'],
+      adGuardJapanese: [
+        "#kauli_yad_1",
+        fromB64("YVtocmVmXj0iaHR0cDovL2FkMi50cmFmZmljZ2F0ZS5uZXQvIl0="),
+        fromB64("Ll9wb3BJbl9pbmZpbml0ZV9hZA=="),
+        fromB64("LmFkZ29vZ2xl"),
+        fromB64("Ll9faXNib29zdFJldHVybkFk")
+      ],
+      adGuardMobile: [
+        fromB64("YW1wLWF1dG8tYWRz"),
+        fromB64("LmFtcF9hZA=="),
+        'amp-embed[type="24smi"]',
+        "#mgid_iframe1",
+        fromB64("I2FkX2ludmlld19hcmVh")
+      ],
+      adGuardRussian: [
+        fromB64("YVtocmVmXj0iaHR0cHM6Ly9hZC5sZXRtZWFkcy5jb20vIl0="),
+        fromB64("LnJlY2xhbWE="),
+        'div[id^="smi2adblock"]',
+        fromB64("ZGl2W2lkXj0iQWRGb3hfYmFubmVyXyJd"),
+        "#psyduckpockeball"
+      ],
+      adGuardSocial: [
+        fromB64("YVtocmVmXj0iLy93d3cuc3R1bWJsZXVwb24uY29tL3N1Ym1pdD91cmw9Il0="),
+        fromB64("YVtocmVmXj0iLy90ZWxlZ3JhbS5tZS9zaGFyZS91cmw/Il0="),
+        ".etsy-tweet",
+        "#inlineShare",
+        ".popup-social"
+      ],
+      adGuardSpanishPortuguese: ["#barraPublicidade", "#Publicidade", "#publiEspecial", "#queTooltip", ".cnt-publi"],
+      adGuardTrackingProtection: [
+        "#qoo-counter",
+        fromB64("YVtocmVmXj0iaHR0cDovL2NsaWNrLmhvdGxvZy5ydS8iXQ=="),
+        fromB64("YVtocmVmXj0iaHR0cDovL2hpdGNvdW50ZXIucnUvdG9wL3N0YXQucGhwIl0="),
+        fromB64("YVtocmVmXj0iaHR0cDovL3RvcC5tYWlsLnJ1L2p1bXAiXQ=="),
+        "#top100counter"
+      ],
+      adGuardTurkish: [
+        "#backkapat",
+        fromB64("I3Jla2xhbWk="),
+        fromB64("YVtocmVmXj0iaHR0cDovL2Fkc2Vydi5vbnRlay5jb20udHIvIl0="),
+        fromB64("YVtocmVmXj0iaHR0cDovL2l6bGVuemkuY29tL2NhbXBhaWduLyJd"),
+        fromB64("YVtocmVmXj0iaHR0cDovL3d3dy5pbnN0YWxsYWRzLm5ldC8iXQ==")
+      ],
+      bulgarian: [fromB64("dGQjZnJlZW5ldF90YWJsZV9hZHM="), "#ea_intext_div", ".lapni-pop-over", "#xenium_hot_offers"],
+      easyList: [
+        ".yb-floorad",
+        fromB64("LndpZGdldF9wb19hZHNfd2lkZ2V0"),
+        fromB64("LnRyYWZmaWNqdW5reS1hZA=="),
+        ".textad_headline",
+        fromB64("LnNwb25zb3JlZC10ZXh0LWxpbmtz")
+      ],
+      easyListChina: [
+        fromB64("LmFwcGd1aWRlLXdyYXBbb25jbGljayo9ImJjZWJvcy5jb20iXQ=="),
+        fromB64("LmZyb250cGFnZUFkdk0="),
+        "#taotaole",
+        "#aafoot.top_box",
+        ".cfa_popup"
+      ],
+      easyListCookie: [
+        ".ezmob-footer",
+        ".cc-CookieWarning",
+        "[data-cookie-number]",
+        fromB64("LmF3LWNvb2tpZS1iYW5uZXI="),
+        ".sygnal24-gdpr-modal-wrap"
+      ],
+      easyListCzechSlovak: [
+        "#onlajny-stickers",
+        fromB64("I3Jla2xhbW5pLWJveA=="),
+        fromB64("LnJla2xhbWEtbWVnYWJvYXJk"),
+        ".sklik",
+        fromB64("W2lkXj0ic2tsaWtSZWtsYW1hIl0=")
+      ],
+      easyListDutch: [
+        fromB64("I2FkdmVydGVudGll"),
+        fromB64("I3ZpcEFkbWFya3RCYW5uZXJCbG9jaw=="),
+        ".adstekst",
+        fromB64("YVtocmVmXj0iaHR0cHM6Ly94bHR1YmUubmwvY2xpY2svIl0="),
+        "#semilo-lrectangle"
+      ],
+      easyListGermany: [
+        "#SSpotIMPopSlider",
+        fromB64("LnNwb25zb3JsaW5rZ3J1ZW4="),
+        fromB64("I3dlcmJ1bmdza3k="),
+        fromB64("I3Jla2xhbWUtcmVjaHRzLW1pdHRl"),
+        fromB64("YVtocmVmXj0iaHR0cHM6Ly9iZDc0Mi5jb20vIl0=")
+      ],
+      easyListItaly: [
+        fromB64("LmJveF9hZHZfYW5udW5jaQ=="),
+        ".sb-box-pubbliredazionale",
+        fromB64("YVtocmVmXj0iaHR0cDovL2FmZmlsaWF6aW9uaWFkcy5zbmFpLml0LyJd"),
+        fromB64("YVtocmVmXj0iaHR0cHM6Ly9hZHNlcnZlci5odG1sLml0LyJd"),
+        fromB64("YVtocmVmXj0iaHR0cHM6Ly9hZmZpbGlhemlvbmlhZHMuc25haS5pdC8iXQ==")
+      ],
+      easyListLithuania: [
+        fromB64("LnJla2xhbW9zX3RhcnBhcw=="),
+        fromB64("LnJla2xhbW9zX251b3JvZG9z"),
+        fromB64("aW1nW2FsdD0iUmVrbGFtaW5pcyBza3lkZWxpcyJd"),
+        fromB64("aW1nW2FsdD0iRGVkaWt1b3RpLmx0IHNlcnZlcmlhaSJd"),
+        fromB64("aW1nW2FsdD0iSG9zdGluZ2FzIFNlcnZlcmlhaS5sdCJd")
+      ],
+      estonian: [fromB64("QVtocmVmKj0iaHR0cDovL3BheTRyZXN1bHRzMjQuZXUiXQ==")],
+      fanboyAnnoyances: ["#ac-lre-player", ".navigate-to-top", "#subscribe_popup", ".newsletter_holder", "#back-top"],
+      fanboyAntiFacebook: [".util-bar-module-firefly-visible"],
+      fanboyEnhancedTrackers: [
+        ".open.pushModal",
+        "#issuem-leaky-paywall-articles-zero-remaining-nag",
+        "#sovrn_container",
+        'div[class$="-hide"][zoompage-fontsize][style="display: block;"]',
+        ".BlockNag__Card"
+      ],
+      fanboySocial: ["#FollowUs", "#meteored_share", "#social_follow", ".article-sharer", ".community__social-desc"],
+      frellwitSwedish: [
+        fromB64("YVtocmVmKj0iY2FzaW5vcHJvLnNlIl1bdGFyZ2V0PSJfYmxhbmsiXQ=="),
+        fromB64("YVtocmVmKj0iZG9rdG9yLXNlLm9uZWxpbmsubWUiXQ=="),
+        "article.category-samarbete",
+        fromB64("ZGl2LmhvbGlkQWRz"),
+        "ul.adsmodern"
+      ],
+      greekAdBlock: [
+        fromB64("QVtocmVmKj0iYWRtYW4ub3RlbmV0LmdyL2NsaWNrPyJd"),
+        fromB64("QVtocmVmKj0iaHR0cDovL2F4aWFiYW5uZXJzLmV4b2R1cy5nci8iXQ=="),
+        fromB64("QVtocmVmKj0iaHR0cDovL2ludGVyYWN0aXZlLmZvcnRobmV0LmdyL2NsaWNrPyJd"),
+        "DIV.agores300",
+        "TABLE.advright"
+      ],
+      hungarian: [
+        "#cemp_doboz",
+        ".optimonk-iframe-container",
+        fromB64("LmFkX19tYWlu"),
+        fromB64("W2NsYXNzKj0iR29vZ2xlQWRzIl0="),
+        "#hirdetesek_box"
+      ],
+      iDontCareAboutCookies: [
+        '.alert-info[data-block-track*="CookieNotice"]',
+        ".ModuleTemplateCookieIndicator",
+        ".o--cookies--container",
+        "#cookies-policy-sticky",
+        "#stickyCookieBar"
+      ],
+      icelandicAbp: [fromB64("QVtocmVmXj0iL2ZyYW1ld29yay9yZXNvdXJjZXMvZm9ybXMvYWRzLmFzcHgiXQ==")],
+      latvian: [
+        fromB64("YVtocmVmPSJodHRwOi8vd3d3LnNhbGlkemluaS5sdi8iXVtzdHlsZT0iZGlzcGxheTogYmxvY2s7IHdpZHRoOiAxMjBweDsgaGVpZ2h0OiA0MHB4OyBvdmVyZmxvdzogaGlkZGVuOyBwb3NpdGlvbjogcmVsYXRpdmU7Il0="),
+        fromB64("YVtocmVmPSJodHRwOi8vd3d3LnNhbGlkemluaS5sdi8iXVtzdHlsZT0iZGlzcGxheTogYmxvY2s7IHdpZHRoOiA4OHB4OyBoZWlnaHQ6IDMxcHg7IG92ZXJmbG93OiBoaWRkZW47IHBvc2l0aW9uOiByZWxhdGl2ZTsiXQ==")
+      ],
+      listKr: [
+        fromB64("YVtocmVmKj0iLy9hZC5wbGFuYnBsdXMuY28ua3IvIl0="),
+        fromB64("I2xpdmVyZUFkV3JhcHBlcg=="),
+        fromB64("YVtocmVmKj0iLy9hZHYuaW1hZHJlcC5jby5rci8iXQ=="),
+        fromB64("aW5zLmZhc3R2aWV3LWFk"),
+        ".revenue_unit_item.dable"
+      ],
+      listeAr: [
+        fromB64("LmdlbWluaUxCMUFk"),
+        ".right-and-left-sponsers",
+        fromB64("YVtocmVmKj0iLmFmbGFtLmluZm8iXQ=="),
+        fromB64("YVtocmVmKj0iYm9vcmFxLm9yZyJd"),
+        fromB64("YVtocmVmKj0iZHViaXp6bGUuY29tL2FyLz91dG1fc291cmNlPSJd")
+      ],
+      listeFr: [
+        fromB64("YVtocmVmXj0iaHR0cDovL3Byb21vLnZhZG9yLmNvbS8iXQ=="),
+        fromB64("I2FkY29udGFpbmVyX3JlY2hlcmNoZQ=="),
+        fromB64("YVtocmVmKj0id2Vib3JhbWEuZnIvZmNnaS1iaW4vIl0="),
+        ".site-pub-interstitiel",
+        'div[id^="crt-"][data-criteo-id]'
+      ],
+      officialPolish: [
+        "#ceneo-placeholder-ceneo-12",
+        fromB64("W2hyZWZePSJodHRwczovL2FmZi5zZW5kaHViLnBsLyJd"),
+        fromB64("YVtocmVmXj0iaHR0cDovL2Fkdm1hbmFnZXIudGVjaGZ1bi5wbC9yZWRpcmVjdC8iXQ=="),
+        fromB64("YVtocmVmXj0iaHR0cDovL3d3dy50cml6ZXIucGwvP3V0bV9zb3VyY2UiXQ=="),
+        fromB64("ZGl2I3NrYXBpZWNfYWQ=")
+      ],
+      ro: [
+        fromB64("YVtocmVmXj0iLy9hZmZ0cmsuYWx0ZXgucm8vQ291bnRlci9DbGljayJd"),
+        fromB64("YVtocmVmXj0iaHR0cHM6Ly9ibGFja2ZyaWRheXNhbGVzLnJvL3Ryay9zaG9wLyJd"),
+        fromB64("YVtocmVmXj0iaHR0cHM6Ly9ldmVudC4ycGVyZm9ybWFudC5jb20vZXZlbnRzL2NsaWNrIl0="),
+        fromB64("YVtocmVmXj0iaHR0cHM6Ly9sLnByb2ZpdHNoYXJlLnJvLyJd"),
+        'a[href^="/url/"]'
+      ],
+      ruAd: [
+        fromB64("YVtocmVmKj0iLy9mZWJyYXJlLnJ1LyJd"),
+        fromB64("YVtocmVmKj0iLy91dGltZy5ydS8iXQ=="),
+        fromB64("YVtocmVmKj0iOi8vY2hpa2lkaWtpLnJ1Il0="),
+        "#pgeldiz",
+        ".yandex-rtb-block"
+      ],
+      thaiAds: [
+        "a[href*=macau-uta-popup]",
+        fromB64("I2Fkcy1nb29nbGUtbWlkZGxlX3JlY3RhbmdsZS1ncm91cA=="),
+        fromB64("LmFkczMwMHM="),
+        ".bumq",
+        ".img-kosana"
+      ],
+      webAnnoyancesUltralist: [
+        "#mod-social-share-2",
+        "#social-tools",
+        fromB64("LmN0cGwtZnVsbGJhbm5lcg=="),
+        ".zergnet-recommend",
+        ".yt.btn-link.btn-md.btn"
+      ]
+    };
+  }
+  function getDomBlockers(_a) {
+    var _b = _a === void 0 ? {} : _a, debug = _b.debug;
+    return __awaiter(this, void 0, void 0, function() {
+      var filters, filterNames, allSelectors, blockedSelectors, activeBlockers;
+      var _c;
+      return __generator(this, function(_d) {
+        switch (_d.label) {
+          case 0:
+            if (!isApplicable()) {
+              return [2, void 0];
+            }
+            filters = getFilters();
+            filterNames = Object.keys(filters);
+            allSelectors = (_c = []).concat.apply(_c, filterNames.map(function(filterName) {
+              return filters[filterName];
+            }));
+            return [4, getBlockedSelectors(allSelectors)];
+          case 1:
+            blockedSelectors = _d.sent();
+            if (debug) {
+              printDebug(filters, blockedSelectors);
+            }
+            activeBlockers = filterNames.filter(function(filterName) {
+              var selectors = filters[filterName];
+              var blockedCount = countTruthy(selectors.map(function(selector) {
+                return blockedSelectors[selector];
+              }));
+              return blockedCount > selectors.length * 0.6;
+            });
+            activeBlockers.sort();
+            return [2, activeBlockers];
+        }
+      });
+    });
+  }
+  function isApplicable() {
+    return isWebKit() || isAndroid();
+  }
+  function getBlockedSelectors(selectors) {
+    var _a;
+    return __awaiter(this, void 0, void 0, function() {
+      var d, root, elements, blockedSelectors, i, element, holder, i;
+      return __generator(this, function(_b) {
+        switch (_b.label) {
+          case 0:
+            d = document;
+            root = d.createElement("div");
+            elements = new Array(selectors.length);
+            blockedSelectors = {};
+            forceShow(root);
+            for (i = 0; i < selectors.length; ++i) {
+              element = selectorToElement(selectors[i]);
+              if (element.tagName === "DIALOG") {
+                element.show();
+              }
+              holder = d.createElement("div");
+              forceShow(holder);
+              holder.appendChild(element);
+              root.appendChild(holder);
+              elements[i] = element;
+            }
+            _b.label = 1;
+          case 1:
+            if (!!d.body) return [3, 3];
+            return [4, wait(50)];
+          case 2:
+            _b.sent();
+            return [3, 1];
+          case 3:
+            d.body.appendChild(root);
+            try {
+              for (i = 0; i < selectors.length; ++i) {
+                if (!elements[i].offsetParent) {
+                  blockedSelectors[selectors[i]] = true;
+                }
+              }
+            } finally {
+              (_a = root.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(root);
+            }
+            return [2, blockedSelectors];
+        }
+      });
+    });
+  }
+  function forceShow(element) {
+    element.style.setProperty("visibility", "hidden", "important");
+    element.style.setProperty("display", "block", "important");
+  }
+  function printDebug(filters, blockedSelectors) {
+    var message = "DOM blockers debug:\n```";
+    for (var _i = 0, _a = Object.keys(filters); _i < _a.length; _i++) {
+      var filterName = _a[_i];
+      message += "\n".concat(filterName, ":");
+      for (var _b = 0, _c = filters[filterName]; _b < _c.length; _b++) {
+        var selector = _c[_b];
+        message += "\n  ".concat(blockedSelectors[selector] ? "\u{1F6AB}" : "\u27A1\uFE0F", " ").concat(selector);
+      }
+    }
+    console.log("".concat(message, "\n```"));
+  }
+  function getColorGamut() {
+    for (var _i = 0, _a = ["rec2020", "p3", "srgb"]; _i < _a.length; _i++) {
+      var gamut = _a[_i];
+      if (matchMedia("(color-gamut: ".concat(gamut, ")")).matches) {
+        return gamut;
+      }
+    }
+    return void 0;
+  }
+  function areColorsInverted() {
+    if (doesMatch$5("inverted")) {
+      return true;
+    }
+    if (doesMatch$5("none")) {
+      return false;
+    }
+    return void 0;
+  }
+  function doesMatch$5(value) {
+    return matchMedia("(inverted-colors: ".concat(value, ")")).matches;
+  }
+  function areColorsForced() {
+    if (doesMatch$4("active")) {
+      return true;
+    }
+    if (doesMatch$4("none")) {
+      return false;
+    }
+    return void 0;
+  }
+  function doesMatch$4(value) {
+    return matchMedia("(forced-colors: ".concat(value, ")")).matches;
+  }
+  var maxValueToCheck = 100;
+  function getMonochromeDepth() {
+    if (!matchMedia("(min-monochrome: 0)").matches) {
+      return void 0;
+    }
+    for (var i = 0; i <= maxValueToCheck; ++i) {
+      if (matchMedia("(max-monochrome: ".concat(i, ")")).matches) {
+        return i;
+      }
+    }
+    throw new Error("Too high value");
+  }
+  function getContrastPreference() {
+    if (doesMatch$3("no-preference")) {
+      return 0;
+    }
+    if (doesMatch$3("high") || doesMatch$3("more")) {
+      return 1;
+    }
+    if (doesMatch$3("low") || doesMatch$3("less")) {
+      return -1;
+    }
+    if (doesMatch$3("forced")) {
+      return 10;
+    }
+    return void 0;
+  }
+  function doesMatch$3(value) {
+    return matchMedia("(prefers-contrast: ".concat(value, ")")).matches;
+  }
+  function isMotionReduced() {
+    if (doesMatch$2("reduce")) {
+      return true;
+    }
+    if (doesMatch$2("no-preference")) {
+      return false;
+    }
+    return void 0;
+  }
+  function doesMatch$2(value) {
+    return matchMedia("(prefers-reduced-motion: ".concat(value, ")")).matches;
+  }
+  function isTransparencyReduced() {
+    if (doesMatch$1("reduce")) {
+      return true;
+    }
+    if (doesMatch$1("no-preference")) {
+      return false;
+    }
+    return void 0;
+  }
+  function doesMatch$1(value) {
+    return matchMedia("(prefers-reduced-transparency: ".concat(value, ")")).matches;
+  }
+  function isHDR() {
+    if (doesMatch("high")) {
+      return true;
+    }
+    if (doesMatch("standard")) {
+      return false;
+    }
+    return void 0;
+  }
+  function doesMatch(value) {
+    return matchMedia("(dynamic-range: ".concat(value, ")")).matches;
+  }
+  var M = Math;
+  var fallbackFn = function() {
+    return 0;
+  };
+  function getMathFingerprint() {
+    var acos = M.acos || fallbackFn;
+    var acosh = M.acosh || fallbackFn;
+    var asin = M.asin || fallbackFn;
+    var asinh = M.asinh || fallbackFn;
+    var atanh = M.atanh || fallbackFn;
+    var atan = M.atan || fallbackFn;
+    var sin = M.sin || fallbackFn;
+    var sinh = M.sinh || fallbackFn;
+    var cos = M.cos || fallbackFn;
+    var cosh = M.cosh || fallbackFn;
+    var tan = M.tan || fallbackFn;
+    var tanh = M.tanh || fallbackFn;
+    var exp = M.exp || fallbackFn;
+    var expm1 = M.expm1 || fallbackFn;
+    var log1p = M.log1p || fallbackFn;
+    var powPI = function(value) {
+      return M.pow(M.PI, value);
+    };
+    var acoshPf = function(value) {
+      return M.log(value + M.sqrt(value * value - 1));
+    };
+    var asinhPf = function(value) {
+      return M.log(value + M.sqrt(value * value + 1));
+    };
+    var atanhPf = function(value) {
+      return M.log((1 + value) / (1 - value)) / 2;
+    };
+    var sinhPf = function(value) {
+      return M.exp(value) - 1 / M.exp(value) / 2;
+    };
+    var coshPf = function(value) {
+      return (M.exp(value) + 1 / M.exp(value)) / 2;
+    };
+    var expm1Pf = function(value) {
+      return M.exp(value) - 1;
+    };
+    var tanhPf = function(value) {
+      return (M.exp(2 * value) - 1) / (M.exp(2 * value) + 1);
+    };
+    var log1pPf = function(value) {
+      return M.log(1 + value);
+    };
+    return {
+      acos: acos(0.12312423423423424),
+      acosh: acosh(1e308),
+      acoshPf: acoshPf(1e154),
+      asin: asin(0.12312423423423424),
+      asinh: asinh(1),
+      asinhPf: asinhPf(1),
+      atanh: atanh(0.5),
+      atanhPf: atanhPf(0.5),
+      atan: atan(0.5),
+      sin: sin(-1e300),
+      sinh: sinh(1),
+      sinhPf: sinhPf(1),
+      cos: cos(10.000000000123),
+      cosh: cosh(1),
+      coshPf: coshPf(1),
+      tan: tan(-1e300),
+      tanh: tanh(1),
+      tanhPf: tanhPf(1),
+      exp: exp(1),
+      expm1: expm1(1),
+      expm1Pf: expm1Pf(1),
+      log1p: log1p(10),
+      log1pPf: log1pPf(10),
+      powPI: powPI(-100)
+    };
+  }
+  var defaultText = "mmMwWLliI0fiflO&1";
+  var presets = {
+    /**
+     * The default font. User can change it in desktop Chrome, desktop Firefox, IE 11,
+     * Android Chrome (but only when the size is ≥ than the default) and Android Firefox.
+     */
+    default: [],
+    /** OS font on macOS. User can change its size and weight. Applies after Safari restart. */
+    apple: [{ font: "-apple-system-body" }],
+    /** User can change it in desktop Chrome and desktop Firefox. */
+    serif: [{ fontFamily: "serif" }],
+    /** User can change it in desktop Chrome and desktop Firefox. */
+    sans: [{ fontFamily: "sans-serif" }],
+    /** User can change it in desktop Chrome and desktop Firefox. */
+    mono: [{ fontFamily: "monospace" }],
+    /**
+     * Check the smallest allowed font size. User can change it in desktop Chrome, desktop Firefox and desktop Safari.
+     * The height can be 0 in Chrome on a retina display.
+     */
+    min: [{ fontSize: "1px" }],
+    /** Tells one OS from another in desktop Chrome. */
+    system: [{ fontFamily: "system-ui" }]
+  };
+  function getFontPreferences() {
+    return withNaturalFonts(function(document2, container) {
+      var elements = {};
+      var sizes = {};
+      for (var _i = 0, _a = Object.keys(presets); _i < _a.length; _i++) {
+        var key = _a[_i];
+        var _b = presets[key], _c = _b[0], style = _c === void 0 ? {} : _c, _d = _b[1], text = _d === void 0 ? defaultText : _d;
+        var element = document2.createElement("span");
+        element.textContent = text;
+        element.style.whiteSpace = "nowrap";
+        for (var _e = 0, _f = Object.keys(style); _e < _f.length; _e++) {
+          var name_1 = _f[_e];
+          var value = style[name_1];
+          if (value !== void 0) {
+            element.style[name_1] = value;
+          }
+        }
+        elements[key] = element;
+        container.append(document2.createElement("br"), element);
+      }
+      for (var _g = 0, _h = Object.keys(presets); _g < _h.length; _g++) {
+        var key = _h[_g];
+        sizes[key] = elements[key].getBoundingClientRect().width;
+      }
+      return sizes;
+    });
+  }
+  function withNaturalFonts(action, containerWidthPx) {
+    if (containerWidthPx === void 0) {
+      containerWidthPx = 4e3;
+    }
+    return withIframe(function(_, iframeWindow) {
+      var iframeDocument = iframeWindow.document;
+      var iframeBody = iframeDocument.body;
+      var bodyStyle = iframeBody.style;
+      bodyStyle.width = "".concat(containerWidthPx, "px");
+      bodyStyle.webkitTextSizeAdjust = bodyStyle.textSizeAdjust = "none";
+      if (isChromium()) {
+        iframeBody.style.zoom = "".concat(1 / iframeWindow.devicePixelRatio);
+      } else if (isWebKit()) {
+        iframeBody.style.zoom = "reset";
+      }
+      var linesOfText = iframeDocument.createElement("div");
+      linesOfText.textContent = __spreadArray([], Array(containerWidthPx / 20 << 0), true).map(function() {
+        return "word";
+      }).join(" ");
+      iframeBody.appendChild(linesOfText);
+      return action(iframeDocument, iframeBody);
+    }, '<!doctype html><html><head><meta name="viewport" content="width=device-width, initial-scale=1">');
+  }
+  function isPdfViewerEnabled() {
+    return navigator.pdfViewerEnabled;
+  }
+  function getArchitecture() {
+    var f = new Float32Array(1);
+    var u8 = new Uint8Array(f.buffer);
+    f[0] = Infinity;
+    f[0] = f[0] - f[0];
+    return u8[3];
+  }
+  function getApplePayState() {
+    var ApplePaySession = window.ApplePaySession;
+    if (typeof (ApplePaySession === null || ApplePaySession === void 0 ? void 0 : ApplePaySession.canMakePayments) !== "function") {
+      return -1;
+    }
+    if (willPrintConsoleError()) {
+      return -3;
+    }
+    try {
+      return ApplePaySession.canMakePayments() ? 1 : 0;
+    } catch (error) {
+      return getStateFromError(error);
+    }
+  }
+  var willPrintConsoleError = isAnyParentCrossOrigin;
+  function getStateFromError(error) {
+    if (error instanceof Error && error.name === "InvalidAccessError" && /\bfrom\b.*\binsecure\b/i.test(error.message)) {
+      return -2;
+    }
+    throw error;
+  }
+  function getPrivateClickMeasurement() {
+    var _a;
+    var link = document.createElement("a");
+    var sourceId = (_a = link.attributionSourceId) !== null && _a !== void 0 ? _a : link.attributionsourceid;
+    return sourceId === void 0 ? void 0 : String(sourceId);
+  }
+  var STATUS_NO_GL_CONTEXT = -1;
+  var STATUS_GET_PARAMETER_NOT_A_FUNCTION = -2;
+  var validContextParameters = /* @__PURE__ */ new Set([
+    10752,
+    2849,
+    2884,
+    2885,
+    2886,
+    2928,
+    2929,
+    2930,
+    2931,
+    2932,
+    2960,
+    2961,
+    2962,
+    2963,
+    2964,
+    2965,
+    2966,
+    2967,
+    2968,
+    2978,
+    3024,
+    3042,
+    3088,
+    3089,
+    3106,
+    3107,
+    32773,
+    32777,
+    32777,
+    32823,
+    32824,
+    32936,
+    32937,
+    32938,
+    32939,
+    32968,
+    32969,
+    32970,
+    32971,
+    3317,
+    33170,
+    3333,
+    3379,
+    3386,
+    33901,
+    33902,
+    34016,
+    34024,
+    34076,
+    3408,
+    3410,
+    3411,
+    3412,
+    3413,
+    3414,
+    3415,
+    34467,
+    34816,
+    34817,
+    34818,
+    34819,
+    34877,
+    34921,
+    34930,
+    35660,
+    35661,
+    35724,
+    35738,
+    35739,
+    36003,
+    36004,
+    36005,
+    36347,
+    36348,
+    36349,
+    37440,
+    37441,
+    37443,
+    7936,
+    7937,
+    7938
+    // SAMPLE_ALPHA_TO_COVERAGE (32926) and SAMPLE_COVERAGE (32928) are excluded because they trigger a console warning
+    // in IE, Chrome ≤ 59 and Safari ≤ 13 and give no entropy.
+  ]);
+  var validExtensionParams = /* @__PURE__ */ new Set([
+    34047,
+    35723,
+    36063,
+    34852,
+    34853,
+    34854,
+    34229,
+    36392,
+    36795,
+    38449
+    // MAX_VIEWS_OVR
+  ]);
+  var shaderTypes = ["FRAGMENT_SHADER", "VERTEX_SHADER"];
+  var precisionTypes = ["LOW_FLOAT", "MEDIUM_FLOAT", "HIGH_FLOAT", "LOW_INT", "MEDIUM_INT", "HIGH_INT"];
+  var rendererInfoExtensionName = "WEBGL_debug_renderer_info";
+  var polygonModeExtensionName = "WEBGL_polygon_mode";
+  function getWebGlBasics(_a) {
+    var _b, _c, _d, _e, _f, _g;
+    var cache = _a.cache;
+    var gl = getWebGLContext(cache);
+    if (!gl) {
+      return STATUS_NO_GL_CONTEXT;
+    }
+    if (!isValidParameterGetter(gl)) {
+      return STATUS_GET_PARAMETER_NOT_A_FUNCTION;
+    }
+    var debugExtension = shouldAvoidDebugRendererInfo() ? null : gl.getExtension(rendererInfoExtensionName);
+    return {
+      version: ((_b = gl.getParameter(gl.VERSION)) === null || _b === void 0 ? void 0 : _b.toString()) || "",
+      vendor: ((_c = gl.getParameter(gl.VENDOR)) === null || _c === void 0 ? void 0 : _c.toString()) || "",
+      vendorUnmasked: debugExtension ? (_d = gl.getParameter(debugExtension.UNMASKED_VENDOR_WEBGL)) === null || _d === void 0 ? void 0 : _d.toString() : "",
+      renderer: ((_e = gl.getParameter(gl.RENDERER)) === null || _e === void 0 ? void 0 : _e.toString()) || "",
+      rendererUnmasked: debugExtension ? (_f = gl.getParameter(debugExtension.UNMASKED_RENDERER_WEBGL)) === null || _f === void 0 ? void 0 : _f.toString() : "",
+      shadingLanguageVersion: ((_g = gl.getParameter(gl.SHADING_LANGUAGE_VERSION)) === null || _g === void 0 ? void 0 : _g.toString()) || ""
+    };
+  }
+  function getWebGlExtensions(_a) {
+    var cache = _a.cache;
+    var gl = getWebGLContext(cache);
+    if (!gl) {
+      return STATUS_NO_GL_CONTEXT;
+    }
+    if (!isValidParameterGetter(gl)) {
+      return STATUS_GET_PARAMETER_NOT_A_FUNCTION;
+    }
+    var extensions = gl.getSupportedExtensions();
+    var contextAttributes = gl.getContextAttributes();
+    var unsupportedExtensions = [];
+    var attributes = [];
+    var parameters = [];
+    var extensionParameters = [];
+    var shaderPrecisions = [];
+    if (contextAttributes) {
+      for (var _i = 0, _b = Object.keys(contextAttributes); _i < _b.length; _i++) {
+        var attributeName = _b[_i];
+        attributes.push("".concat(attributeName, "=").concat(contextAttributes[attributeName]));
+      }
+    }
+    var constants = getConstantsFromPrototype(gl);
+    for (var _c = 0, constants_1 = constants; _c < constants_1.length; _c++) {
+      var constant = constants_1[_c];
+      var code = gl[constant];
+      parameters.push("".concat(constant, "=").concat(code).concat(validContextParameters.has(code) ? "=".concat(gl.getParameter(code)) : ""));
+    }
+    if (extensions) {
+      for (var _d = 0, extensions_1 = extensions; _d < extensions_1.length; _d++) {
+        var name_1 = extensions_1[_d];
+        if (name_1 === rendererInfoExtensionName && shouldAvoidDebugRendererInfo() || name_1 === polygonModeExtensionName && shouldAvoidPolygonModeExtensions()) {
+          continue;
+        }
+        var extension = gl.getExtension(name_1);
+        if (!extension) {
+          unsupportedExtensions.push(name_1);
+          continue;
+        }
+        for (var _e = 0, _f = getConstantsFromPrototype(extension); _e < _f.length; _e++) {
+          var constant = _f[_e];
+          var code = extension[constant];
+          extensionParameters.push("".concat(constant, "=").concat(code).concat(validExtensionParams.has(code) ? "=".concat(gl.getParameter(code)) : ""));
+        }
+      }
+    }
+    for (var _g = 0, shaderTypes_1 = shaderTypes; _g < shaderTypes_1.length; _g++) {
+      var shaderType = shaderTypes_1[_g];
+      for (var _h = 0, precisionTypes_1 = precisionTypes; _h < precisionTypes_1.length; _h++) {
+        var precisionType = precisionTypes_1[_h];
+        var shaderPrecision = getShaderPrecision(gl, shaderType, precisionType);
+        shaderPrecisions.push("".concat(shaderType, ".").concat(precisionType, "=").concat(shaderPrecision.join(",")));
+      }
+    }
+    extensionParameters.sort();
+    parameters.sort();
+    return {
+      contextAttributes: attributes,
+      parameters,
+      shaderPrecisions,
+      extensions,
+      extensionParameters,
+      unsupportedExtensions
+    };
+  }
+  function getWebGLContext(cache) {
+    if (cache.webgl) {
+      return cache.webgl.context;
+    }
+    var canvas = document.createElement("canvas");
+    var context;
+    canvas.addEventListener("webglCreateContextError", function() {
+      return context = void 0;
+    });
+    for (var _i = 0, _a = ["webgl", "experimental-webgl"]; _i < _a.length; _i++) {
+      var type = _a[_i];
+      try {
+        context = canvas.getContext(type);
+      } catch (_b) {
+      }
+      if (context) {
+        break;
+      }
+    }
+    cache.webgl = { context };
+    return context;
+  }
+  function getShaderPrecision(gl, shaderType, precisionType) {
+    var shaderPrecision = gl.getShaderPrecisionFormat(gl[shaderType], gl[precisionType]);
+    return shaderPrecision ? [shaderPrecision.rangeMin, shaderPrecision.rangeMax, shaderPrecision.precision] : [];
+  }
+  function getConstantsFromPrototype(obj) {
+    var keys = Object.keys(obj.__proto__);
+    return keys.filter(isConstantLike);
+  }
+  function isConstantLike(key) {
+    return typeof key === "string" && !key.match(/[^A-Z0-9_x]/);
+  }
+  function shouldAvoidDebugRendererInfo() {
+    return isGecko();
+  }
+  function shouldAvoidPolygonModeExtensions() {
+    return isChromium() || isWebKit();
+  }
+  function isValidParameterGetter(gl) {
+    return typeof gl.getParameter === "function";
+  }
+  function getAudioContextBaseLatency() {
+    var isAllowedPlatform = isAndroid() || isWebKit();
+    if (!isAllowedPlatform) {
+      return -2;
+    }
+    if (!window.AudioContext) {
+      return -1;
+    }
+    var latency = new AudioContext().baseLatency;
+    if (latency === null || latency === void 0) {
+      return -1;
+    }
+    if (!isFinite(latency)) {
+      return -3;
+    }
+    return latency;
+  }
+  function getDateTimeLocale() {
+    if (!window.Intl) {
+      return -1;
+    }
+    var DateTimeFormat = window.Intl.DateTimeFormat;
+    if (!DateTimeFormat) {
+      return -2;
+    }
+    var locale = DateTimeFormat().resolvedOptions().locale;
+    if (!locale && locale !== "") {
+      return -3;
+    }
+    return locale;
+  }
+  var sources = {
+    // READ FIRST:
+    // See https://github.com/fingerprintjs/fingerprintjs/blob/master/contributing.md#how-to-add-an-entropy-source
+    // to learn how entropy source works and how to make your own.
+    // The sources run in this exact order.
+    // The asynchronous sources are at the start to run in parallel with other sources.
+    fonts: getFonts,
+    domBlockers: getDomBlockers,
+    fontPreferences: getFontPreferences,
+    audio: getAudioFingerprint,
+    screenFrame: getScreenFrame,
+    canvas: getCanvasFingerprint,
+    osCpu: getOsCpu,
+    languages: getLanguages,
+    colorDepth: getColorDepth,
+    deviceMemory: getDeviceMemory,
+    screenResolution: getScreenResolution,
+    hardwareConcurrency: getHardwareConcurrency,
+    timezone: getTimezone,
+    sessionStorage: getSessionStorage,
+    localStorage: getLocalStorage,
+    indexedDB: getIndexedDB,
+    openDatabase: getOpenDatabase,
+    cpuClass: getCpuClass,
+    platform: getPlatform,
+    plugins: getPlugins,
+    touchSupport: getTouchSupport,
+    vendor: getVendor,
+    vendorFlavors: getVendorFlavors,
+    cookiesEnabled: areCookiesEnabled,
+    colorGamut: getColorGamut,
+    invertedColors: areColorsInverted,
+    forcedColors: areColorsForced,
+    monochrome: getMonochromeDepth,
+    contrast: getContrastPreference,
+    reducedMotion: isMotionReduced,
+    reducedTransparency: isTransparencyReduced,
+    hdr: isHDR,
+    math: getMathFingerprint,
+    pdfViewerEnabled: isPdfViewerEnabled,
+    architecture: getArchitecture,
+    applePay: getApplePayState,
+    privateClickMeasurement: getPrivateClickMeasurement,
+    audioBaseLatency: getAudioContextBaseLatency,
+    dateTimeLocale: getDateTimeLocale,
+    // Some sources can affect other sources (e.g. WebGL can affect canvas), so it's important to run these sources
+    // after other sources.
+    webGlBasics: getWebGlBasics,
+    webGlExtensions: getWebGlExtensions
+  };
+  function loadBuiltinSources(options) {
+    return loadSources(sources, options, []);
+  }
+  var commentTemplate = "$ if upgrade to Pro: https://fpjs.dev/pro";
+  function getConfidence(components) {
+    var openConfidenceScore = getOpenConfidenceScore(components);
+    var proConfidenceScore = deriveProConfidenceScore(openConfidenceScore);
+    return { score: openConfidenceScore, comment: commentTemplate.replace(/\$/g, "".concat(proConfidenceScore)) };
+  }
+  function getOpenConfidenceScore(components) {
+    if (isAndroid()) {
+      return 0.4;
+    }
+    if (isWebKit()) {
+      return isDesktopWebKit() && !(isWebKit616OrNewer() && isSafariWebKit()) ? 0.5 : 0.3;
+    }
+    var platform = "value" in components.platform ? components.platform.value : "";
+    if (/^Win/.test(platform)) {
+      return 0.6;
+    }
+    if (/^Mac/.test(platform)) {
+      return 0.5;
+    }
+    return 0.7;
+  }
+  function deriveProConfidenceScore(openConfidenceScore) {
+    return round(0.99 + 0.01 * openConfidenceScore, 1e-4);
+  }
+  function componentsToCanonicalString(components) {
+    var result = "";
+    for (var _i = 0, _a = Object.keys(components).sort(); _i < _a.length; _i++) {
+      var componentKey = _a[_i];
+      var component = components[componentKey];
+      var value = "error" in component ? "error" : JSON.stringify(component.value);
+      result += "".concat(result ? "|" : "").concat(componentKey.replace(/([:|\\])/g, "\\$1"), ":").concat(value);
+    }
+    return result;
+  }
+  function componentsToDebugString(components) {
+    return JSON.stringify(components, function(_key, value) {
+      if (value instanceof Error) {
+        return errorToObject(value);
+      }
+      return value;
+    }, 2);
+  }
+  function hashComponents(components) {
+    return x64hash128(componentsToCanonicalString(components));
+  }
+  function makeLazyGetResult(components) {
+    var visitorIdCache;
+    var confidence = getConfidence(components);
+    return {
+      get visitorId() {
+        if (visitorIdCache === void 0) {
+          visitorIdCache = hashComponents(this.components);
+        }
+        return visitorIdCache;
+      },
+      set visitorId(visitorId) {
+        visitorIdCache = visitorId;
+      },
+      confidence,
+      components,
+      version
+    };
+  }
+  function prepareForSources(delayFallback) {
+    if (delayFallback === void 0) {
+      delayFallback = 50;
+    }
+    return requestIdleCallbackIfAvailable(delayFallback, delayFallback * 2);
+  }
+  function makeAgent(getComponents, debug) {
+    var creationTime = Date.now();
+    return {
+      get: function(options) {
+        return __awaiter(this, void 0, void 0, function() {
+          var startTime, components, result;
+          return __generator(this, function(_a) {
+            switch (_a.label) {
+              case 0:
+                startTime = Date.now();
+                return [4, getComponents()];
+              case 1:
+                components = _a.sent();
+                result = makeLazyGetResult(components);
+                if (debug || (options === null || options === void 0 ? void 0 : options.debug)) {
+                  console.log("Copy the text below to get the debug data:\n\n```\nversion: ".concat(result.version, "\nuserAgent: ").concat(navigator.userAgent, "\ntimeBetweenLoadAndGet: ").concat(startTime - creationTime, "\nvisitorId: ").concat(result.visitorId, "\ncomponents: ").concat(componentsToDebugString(components), "\n```"));
+                }
+                return [2, result];
+            }
+          });
+        });
+      }
+    };
+  }
+  function monitor() {
+    if (window.__fpjs_d_m || Math.random() >= 1e-3) {
+      return;
+    }
+    try {
+      var request = new XMLHttpRequest();
+      request.open("get", "https://m1.openfpcdn.io/fingerprintjs/v".concat(version, "/npm-monitoring"), true);
+      request.send();
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  function load(options) {
+    var _a;
+    if (options === void 0) {
+      options = {};
+    }
+    return __awaiter(this, void 0, void 0, function() {
+      var delayFallback, debug, getComponents;
+      return __generator(this, function(_b) {
+        switch (_b.label) {
+          case 0:
+            if ((_a = options.monitoring) !== null && _a !== void 0 ? _a : true) {
+              monitor();
+            }
+            delayFallback = options.delayFallback, debug = options.debug;
+            return [4, prepareForSources(delayFallback)];
+          case 1:
+            _b.sent();
+            getComponents = loadBuiltinSources({ cache: {}, debug });
+            return [2, makeAgent(getComponents, debug)];
+        }
+      });
+    });
+  }
+  var index = { load, hashComponents, componentsToDebugString };
+
+  // lib/fingerprint.js
+  var cachedId = null;
+  var getFingerprint = async () => {
+    if (cachedId) return cachedId;
+    const fpPromise = index.load();
+    const fp = await fpPromise;
+    const result = await fp.get();
+    cachedId = result.visitorId;
+    return cachedId;
+  };
+
+  // src/views/LoginForm.js
+  console.log("login fire");
+  var i18n3 = {
+    en: {
+      heading: "Log In",
+      subheading: "Welcome back! Please sign in.",
+      email: "Email",
+      password: "Password",
+      login: "Log In",
+      error: "Login failed. Please check your credentials.",
+      forgotPassword: "Forgot your password?",
+      reset: {
+        heading: "Reset Your Password",
+        subheading: "Enter your email and we'll send you reset instructions.",
+        email: "Registered Email",
+        button: "Send Reset Link",
+        success: "Reset link sent! Please check your email.",
+        error: "Could not send reset email. Try again.",
+        serverError: "Server error. Please try again later."
+      },
+      passwordResetSuccess: "Password reset successfully! Please log in with your new password."
+    },
+    id: {
+      heading: "Masuk",
+      subheading: "Selamat datang! Silakan masuk.",
+      email: "Surel",
+      password: "Kata Sandi",
+      login: "Masuk",
+      error: "Login gagal. Silakan periksa kembali kredensial Anda.",
+      forgotPassword: "Lupa kata sandi?",
+      reset: {
+        heading: "Atur Ulang Kata Sandi",
+        subheading: "Masukkan email Anda dan kami akan mengirimkan instruksi.",
+        email: "Email Terdaftar",
+        button: "Kirim Tautan Atur Ulang",
+        success: "Tautan atur ulang dikirim! Silakan periksa email Anda.",
+        error: "Gagal mengirim email atur ulang. Coba lagi.",
+        serverError: "Kesalahan server. Silakan coba lagi nanti."
+      },
+      passwordResetSuccess: "Kata sandi berhasil diatur ulang! Silakan masuk dengan kata sandi baru Anda."
+    }
+  };
+  var LoginForm = {
+    email: "",
+    password: "",
+    error: "",
+    success: "",
+    loading: false,
+    // ⏳ Track whether request is in progress
+    forgotEmail: "",
+    resetSuccess: false,
+    resetError: "",
+    showResetModal: false,
+    resetLoading: false,
+    resetStep: 1,
+    // 1: email, 2: code
+    resetCode: "",
+    oninit: () => {
+      LoginForm.email = "";
+      LoginForm.password = "";
+      LoginForm.error = "";
+      LoginForm.loading = false;
+      LoginForm.forgotEmail = "";
+      LoginForm.resetSuccess = false;
+      LoginForm.resetError = "";
+      LoginForm.showResetModal = false;
+      LoginForm.resetLoading = false;
+      LoginForm.resetStep = 1;
+      LoginForm.resetCode = "";
+      const params = import_mithril3.default.route.param();
+      if (params.success === "password_reset") {
+        const lang2 = localStorage.getItem("lang") || "en";
+        LoginForm.success = i18n3[lang2].passwordResetSuccess;
+      } else {
+        LoginForm.success = "";
+      }
+    },
+    view: () => {
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto");
+      const lang2 = localStorage.getItem("lang") || "en";
+      const t = i18n3[lang2];
+      return (0, import_mithril3.default)(
+        "main.container",
+        [
+          (0, import_mithril3.default)("article", [
+            (0, import_mithril3.default)("hgroup", [
+              (0, import_mithril3.default)("h1", t.heading),
+              (0, import_mithril3.default)("h2", t.subheading)
+            ]),
+            LoginForm.error && (0, import_mithril3.default)("p", { style: "color: red;" }, `\u274C ${LoginForm.error}`),
+            LoginForm.success && (0, import_mithril3.default)("p", { style: "color: green;" }, `\u2705 ${LoginForm.success}`),
+            (0, import_mithril3.default)("form", {
+              onsubmit: async (e) => {
+                e.preventDefault();
+                LoginForm.error = LoginForm.success = "";
+                LoginForm.loading = true;
+                try {
+                  const res = await import_mithril3.default.request({
+                    method: "POST",
+                    url: "/api/login",
+                    body: {
+                      email: LoginForm.email,
+                      password: LoginForm.password,
+                      fingerprint: await getFingerprint()
+                    }
+                  });
+                  LoginForm.success = res.msg || "Logged in";
+                  localStorage.setItem("token", res.token);
+                  import_mithril3.default.route.set("/");
+                } catch (err) {
+                  LoginForm.error = err.message || "Login failed";
+                  if (err.status === 401) LoginForm.error = t.error;
+                }
+                LoginForm.loading = false;
+              }
+            }, [
+              (0, import_mithril3.default)("label", { for: "email" }, t.email),
+              (0, import_mithril3.default)("input", {
+                id: "email",
+                type: "email",
+                placeholder: "you@example.com",
+                value: LoginForm.email,
+                oninput: (e) => LoginForm.email = e.target.value
+              }),
+              (0, import_mithril3.default)("label", { for: "password" }, t.password),
+              (0, import_mithril3.default)("input", {
+                id: "password",
+                type: "password",
+                placeholder: "\u2022\u2022\u2022\u2022\u2022\u2022\u2022\u2022",
+                value: LoginForm.password,
+                oninput: (e) => LoginForm.password = e.target.value
+              }),
+              (0, import_mithril3.default)("button", {
+                type: "submit",
+                //  value:  t.login,
+                //  value: LoginForm.loading ? "⏳ " + t.login : t.login,
+                "aria-busy": LoginForm.loading ? "true" : false,
+                disabled: !(LoginForm.email && LoginForm.password)
+              }, t.login)
+            ]),
+            (0, import_mithril3.default)("a", {
+              style: "margin-top: 0.5rem; text-decoration: underline; cursor: pointer; display: inline-block;",
+              onclick: () => {
+                LoginForm.resetSuccess = LoginForm.resetError = "";
+                LoginForm.forgotEmail = LoginForm.email;
+                LoginForm.showResetModal = true;
+              }
+            }, lang2 === "id" ? "\u{1F511} Lupa kata sandi?" : "\u{1F511} Forgot your password?")
+          ])
+        ],
+        LoginForm.showResetModal && (0, import_mithril3.default)("dialog[open]", {
+          style: "max-width: 400px; margin: auto; border-radius: 6px;"
+        }, [
+          (0, import_mithril3.default)("article", [
+            (0, import_mithril3.default)("header", [
+              (0, import_mithril3.default)("h3", lang2 === "id" ? "Lupa Kata Sandi" : "Forgot Password")
+            ]),
+            (0, import_mithril3.default)(
+              "p",
+              lang2 === "id" ? "Masukkan email yang terdaftar untuk menerima kode reset." : "Enter your registered email to receive a reset code."
+            ),
+            // Step 1: Email input
+            LoginForm.resetStep === 1 && [
+              LoginForm.resetSuccess && (0, import_mithril3.default)(
+                "p",
+                { style: "color: green" },
+                lang2 === "id" ? "\u2705 Kode berhasil dikirim. Silakan cek email Anda." : "\u2705 Code sent successfully. Please check your email."
+              ),
+              LoginForm.resetError && (0, import_mithril3.default)(
+                "p",
+                { style: "color: red" },
+                `\u274C ${LoginForm.resetError}`
+              ),
+              (0, import_mithril3.default)("form", {
+                onsubmit: async (e) => {
+                  e.preventDefault();
+                  LoginForm.resetSuccess = LoginForm.resetError = "";
+                  LoginForm.resetLoading = true;
+                  try {
+                    const res = await import_mithril3.default.request({
+                      method: "POST",
+                      url: "/api/request-password-reset",
+                      body: { email: LoginForm.forgotEmail },
+                      headers: { "x-lang": lang2 }
+                    });
+                    LoginForm.resetSuccess = true;
+                    LoginForm.resetStep = 2;
+                  } catch (err) {
+                    LoginForm.resetError = err.message || t.reset.serverError;
+                  }
+                  LoginForm.resetLoading = false;
+                }
+              }, [
+                (0, import_mithril3.default)("label", { for: "forgotEmail" }, lang2 === "id" ? "Email Terdaftar" : "Registered Email"),
+                (0, import_mithril3.default)("input", {
+                  id: "forgotEmail",
+                  type: "email",
+                  value: LoginForm.forgotEmail,
+                  oninput: (e) => LoginForm.forgotEmail = e.target.value
+                }),
+                (0, import_mithril3.default)("div", { style: "display: flex; gap: 0.5rem; margin-top: 1rem;" }, [
+                  (0, import_mithril3.default)("button", {
+                    style: { "border-color": "#D93526", "background-color": "#D93526" },
+                    type: "button",
+                    onclick: () => {
+                      LoginForm.showResetModal = false;
+                      LoginForm.resetStep = 1;
+                      LoginForm.resetSuccess = LoginForm.resetError = "";
+                      LoginForm.forgotEmail = "";
+                      LoginForm.resetCode = "";
+                    }
+                  }, lang2 === "id" ? "Batal" : "Cancel"),
+                  (0, import_mithril3.default)("button", {
+                    type: "submit",
+                    disabled: !LoginForm.forgotEmail || LoginForm.resetLoading
+                  }, LoginForm.resetLoading ? lang2 === "id" ? "Mengirim..." : "Sending..." : lang2 === "id" ? "Kirim Kode" : "Send Code")
+                ])
+              ])
+            ],
+            // Step 2: Code input
+            LoginForm.resetStep === 2 && [
+              (0, import_mithril3.default)("form", {
+                onsubmit: async (e) => {
+                  e.preventDefault();
+                  LoginForm.resetError = false;
+                  LoginForm.resetLoading = true;
+                  try {
+                    await import_mithril3.default.request({
+                      method: "POST",
+                      url: "/api/verify-reset-code",
+                      body: {
+                        email: LoginForm.forgotEmail,
+                        code: LoginForm.resetCode
+                      }
+                    });
+                    import_mithril3.default.route.set("/reset", {
+                      code: LoginForm.resetCode,
+                      email: LoginForm.forgotEmail
+                    });
+                  } catch (err) {
+                    LoginForm.resetError = true;
+                  }
+                  LoginForm.resetLoading = false;
+                }
+              }, [
+                (0, import_mithril3.default)("label", { for: "resetCode" }, lang2 === "id" ? "Kode 6 Digit" : "6 Digit Code"),
+                (0, import_mithril3.default)("input", {
+                  id: "resetCode",
+                  type: "text",
+                  maxlength: 6,
+                  pattern: "\\d{6}",
+                  value: LoginForm.resetCode,
+                  oninput: (e) => {
+                    LoginForm.resetCode = e.target.value.replace(/\D/g, "").slice(0, 6);
+                    LoginForm.resetError = false;
+                  }
+                }),
+                LoginForm.resetError && (0, import_mithril3.default)(
+                  "p",
+                  { style: "color: red" },
+                  lang2 === "id" ? "\u274C Kode salah" : "\u274C Incorrect code"
+                ),
+                (0, import_mithril3.default)("div", { style: "display: flex; gap: 0.5rem; margin-top: 1rem;" }, [
+                  (0, import_mithril3.default)("button.secondary", {
+                    type: "button",
+                    onclick: () => {
+                      LoginForm.resetStep = 1;
+                      LoginForm.resetCode = "";
+                      LoginForm.resetError = false;
+                    }
+                  }, lang2 === "id" ? "Kembali" : "Back"),
+                  (0, import_mithril3.default)("button", {
+                    type: "submit",
+                    disabled: LoginForm.resetCode.length !== 6 || LoginForm.resetLoading,
+                    "aria-busy": LoginForm.resetLoading ? "true" : false
+                  }, LoginForm.resetLoading ? lang2 === "id" ? "Mengonfirmasi..." : "Confirming..." : lang2 === "id" ? "Konfirmasi" : "Confirm")
+                ])
+              ])
+            ]
+          ])
+        ])
+      );
+    }
+  };
+  var LoginForm_default = LoginForm;
+
+  // src/views/ProfilePage.js
+  var import_mithril4 = __toESM(require_mithril(), 1);
+  var ProfilePage = {
+    user: null,
+    error: "",
+    loading: true,
+    oninit: async () => {
+      const visitorId = await getFingerprint();
+      try {
+        const res = await import_mithril4.default.request({
+          method: "GET",
+          url: "/api/profile",
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "X-Device-Fingerprint": visitorId
+            // 👈 send it here!
+          }
+        });
+        ProfilePage.user = res.user;
+      } catch (err) {
+        ProfilePage.error = err.message || "Unauthorized";
+      }
+      ProfilePage.loading = false;
+    },
+    view: () => {
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto");
+      return (0, import_mithril4.default)("main.container", [
+        (0, import_mithril4.default)("h1", "\u{1F464} Profile"),
+        ProfilePage.error ? (0, import_mithril4.default)("p", { style: "color:red" }, `\u274C ${String(ProfilePage.error.message || ProfilePage.error)}`) : ProfilePage.user ? (0, import_mithril4.default)("pre", JSON.stringify(ProfilePage.user, null, 2)) : (0, import_mithril4.default)("p", "\u23F3 Loading...")
+      ]);
+    }
+  };
+  var ProfilePage_default = ProfilePage;
+
+  // src/views/ChangePasswordForm.js
+  var import_mithril5 = __toESM(require_mithril(), 1);
+  var lang = localStorage.getItem("lang") || "en";
+  var ChangePasswordForm = {
+    language: lang,
+    oldPassword: "",
+    newPassword: "",
+    confirmPassword: "",
+    newPasswordInput: "",
+    fingerprint: "",
+    message: "",
+    error: "",
+    isSubmitting: false,
+    t(key) {
+      return ChangePasswordForm.translations[ChangePasswordForm.language][key] || key;
+    },
+    translations: {
+      en: {
+        title: "Change Password",
+        old: "Current Password",
+        new: "New Password",
+        confirm: "Confirm New Password",
+        mismatch: "New passwords do not match",
+        changed: "Password changed successfully",
+        invalid: "Invalid old password or fingerprint",
+        button: "Update Password",
+        strength: ["Too Weak", "Weak", "Fair", "Strong", "Very Strong"]
+      },
+      id: {
+        title: "Ubah Kata Sandi",
+        old: "Kata Sandi Saat Ini",
+        new: "Kata Sandi Baru",
+        confirm: "Konfirmasi Kata Sandi Baru",
+        mismatch: "Kata sandi baru tidak cocok",
+        changed: "Kata sandi berhasil diubah",
+        invalid: "Kata sandi atau sidik perangkat tidak valid",
+        button: "Perbarui Kata Sandi",
+        strength: ["Terlalu Lemah", "Lemah", "Cukup", "Kuat", "Sangat Kuat"]
+      }
+    },
+    getPasswordStrength(pwd) {
+      if (!pwd) return 0;
+      let score = 0;
+      if (pwd.length >= 8) score++;
+      if (/[A-Z]/.test(pwd)) score++;
+      if (/[a-z]/.test(pwd)) score++;
+      if (/[0-9]/.test(pwd)) score++;
+      if (/[^A-Za-z0-9]/.test(pwd)) score++;
+      return score;
+    },
+    async submit(e) {
+      e.preventDefault();
+      ChangePasswordForm.error = ChangePasswordForm.message = "";
+      ChangePasswordForm.isSubmitting = true;
+      if (ChangePasswordForm.newPasswordInput !== ChangePasswordForm.confirmPassword) {
+        ChangePasswordForm.error = "mismatch";
+        ChangePasswordForm.isSubmitting = false;
+        return;
+      }
+      try {
+        const fingerprint = await getFingerprint();
+        const token = localStorage.getItem("token");
+        await import_mithril5.default.request({
+          method: "POST",
+          url: "/api/change-password",
+          body: {
+            oldPassword: ChangePasswordForm.oldPassword,
+            newPassword: ChangePasswordForm.newPasswordInput
+          },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "x-device-fingerprint": fingerprint
+          }
+        });
+        ChangePasswordForm.message = "changed";
+        ChangePasswordForm.oldPassword = "";
+        ChangePasswordForm.newPasswordInput = "";
+        ChangePasswordForm.confirmPassword = "";
+        setTimeout(() => {
+          import_mithril5.default.route.set("/");
+        }, 1e3);
+      } catch (err) {
+        ChangePasswordForm.error = "invalid";
+      } finally {
+        ChangePasswordForm.isSubmitting = false;
+      }
+    },
+    view() {
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto");
+      const strength = ChangePasswordForm.getPasswordStrength(ChangePasswordForm.newPasswordInput);
+      const t = ChangePasswordForm.t;
+      return (0, import_mithril5.default)("main.container", [
+        (0, import_mithril5.default)("form", { onsubmit: ChangePasswordForm.submit, style: "max-width: 400px; margin: auto" }, [
+          (0, import_mithril5.default)("h2", t("title")),
+          (0, import_mithril5.default)("label", { for: "old" }, t("old")),
+          (0, import_mithril5.default)("input", {
+            id: "old",
+            type: "password",
+            value: ChangePasswordForm.oldPassword,
+            oninput: (e) => ChangePasswordForm.oldPassword = e.target.value
+          }),
+          (0, import_mithril5.default)("label", { for: "new" }, t("new")),
+          (0, import_mithril5.default)("input", {
+            id: "new",
+            type: "password",
+            value: ChangePasswordForm.newPasswordInput,
+            oninput: (e) => ChangePasswordForm.newPasswordInput = e.target.value
+          }),
+          ChangePasswordForm.newPasswordInput && (0, import_mithril5.default)("small", t("strength")[strength - 1] || t("strength")[0]),
+          ChangePasswordForm.newPasswordInput && (0, import_mithril5.default)("progress", {
+            value: strength,
+            max: 5,
+            style: "width: 100%; height: 6px;"
+          }),
+          (0, import_mithril5.default)("label", { for: "confirm" }, t("confirm")),
+          (0, import_mithril5.default)("input", {
+            id: "confirm",
+            type: "password",
+            value: ChangePasswordForm.confirmPassword,
+            oninput: (e) => ChangePasswordForm.confirmPassword = e.target.value
+          }),
+          (0, import_mithril5.default)(
+            "button",
+            {
+              type: "submit",
+              disabled: ChangePasswordForm.isSubmitting || !ChangePasswordForm.oldPassword || !ChangePasswordForm.newPasswordInput || !ChangePasswordForm.confirmPassword || ChangePasswordForm.newPasswordInput !== ChangePasswordForm.confirmPassword,
+              "aria-busy": ChangePasswordForm.isSubmitting ? "true" : false
+            },
+            ChangePasswordForm.t("button")
+          ),
+          ChangePasswordForm.error && (0, import_mithril5.default)("p", { style: "color:red; margin-top: 8px" }, t(ChangePasswordForm.error)),
+          ChangePasswordForm.message && (0, import_mithril5.default)("p", { style: "color:green; margin-top: 8px" }, t(ChangePasswordForm.message))
+        ])
+      ]);
+    }
+  };
+  var ChangePasswordForm_default = ChangePasswordForm;
+
+  // src/views/ForgotPasswordForm.js
+  var import_mithril6 = __toESM(require_mithril(), 1);
+  var i18n4 = {
+    en: {
+      heading: "Reset Your Password",
+      subheading: "Enter your email and we'll send you reset instructions.",
+      email: "Registered Email",
+      button: "Send Reset Link",
+      success: "Reset link sent! Please check your email.",
+      error: "Could not send reset email. Try again."
+    },
+    id: {
+      heading: "Atur Ulang Kata Sandi",
+      subheading: "Masukkan email Anda dan kami akan mengirimkan instruksi.",
+      email: "Email Terdaftar",
+      button: "Kirim Tautan Atur Ulang",
+      success: "Tautan atur ulang dikirim! Silakan periksa email Anda.",
+      error: "Gagal mengirim email atur ulang. Coba lagi."
+    }
+  };
+  var ForgotPasswordForm = {
+    email: "",
+    success: "",
+    error: "",
+    loading: false,
+    view() {
+      const lang2 = localStorage.getItem("lang") || "en";
+      const t = i18n4[lang2];
+      document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto");
+      return (0, import_mithril6.default)("main.container", [
+        (0, import_mithril6.default)("article", [
+          (0, import_mithril6.default)("hgroup", [
+            (0, import_mithril6.default)("h1", t.heading),
+            (0, import_mithril6.default)("h2", t.subheading)
+          ]),
+          ForgotPasswordForm.success && (0, import_mithril6.default)("p", { style: "color: green" }, t.success),
+          ForgotPasswordForm.error && (0, import_mithril6.default)("p", { style: "color: red" }, t.error),
+          (0, import_mithril6.default)("form", {
+            onsubmit: async (e) => {
+              e.preventDefault();
+              ForgotPasswordForm.success = ForgotPasswordForm.error = "";
+              ForgotPasswordForm.loading = true;
+              try {
+                await import_mithril6.default.request({
+                  method: "POST",
+                  url: "/api/request-password-reset",
+                  body: { email: ForgotPasswordForm.email }
+                });
+                ForgotPasswordForm.success = true;
+              } catch (err) {
+                ForgotPasswordForm.error = true;
+              }
+              ForgotPasswordForm.loading = false;
+            }
+          }, [
+            (0, import_mithril6.default)("label", { for: "email" }, t.email),
+            (0, import_mithril6.default)("input", {
+              id: "email",
+              type: "email",
+              value: ForgotPasswordForm.email,
+              oninput: (e) => ForgotPasswordForm.email = e.target.value
+            }),
+            (0, import_mithril6.default)("button", {
+              type: "submit",
+              disabled: !ForgotPasswordForm.email || ForgotPasswordForm.loading,
+              "aria-busy": ForgotPasswordForm.loading ? "true" : null
+            }, t.button)
+          ])
+        ])
+      ]);
+    }
+  };
+  var ForgotPasswordForm_default = ForgotPasswordForm;
+
+  // src/views/ResetPassword.js
+  var import_mithril7 = __toESM(require_mithril(), 1);
+  var ResetPassword = {
+    email: "",
+    code: "",
+    newPassword: "",
+    confirmPassword: "",
+    error: "",
+    success: "",
+    loading: false,
+    oninit: () => {
+      ResetPassword.email = import_mithril7.default.route.param("email") || "";
+      ResetPassword.code = import_mithril7.default.route.param("code") || "";
+      ResetPassword.newPassword = "";
+      ResetPassword.confirmPassword = "";
+      ResetPassword.error = "";
+      ResetPassword.success = "";
+      ResetPassword.loading = false;
+    },
+    view: () => {
+      const lang2 = localStorage.getItem("lang") || "en";
+      const t = {
+        en: {
+          heading: "Reset Password",
+          subheading: "Enter your new password below.",
+          newPassword: "New Password",
+          confirmPassword: "Confirm Password",
+          submit: "Update Password",
+          success: "\u2705 Password updated successfully!",
+          error: "\u274C Error updating password. Try again.",
+          mismatch: "\u274C Passwords do not match.",
+          short: "\u274C Password too short (min 6 characters)."
+        },
+        id: {
+          heading: "Atur Ulang Kata Sandi",
+          subheading: "Masukkan kata sandi baru Anda.",
+          newPassword: "Kata Sandi Baru",
+          confirmPassword: "Konfirmasi Kata Sandi",
+          submit: "Perbarui Kata Sandi",
+          success: "\u2705 Kata sandi berhasil diperbarui!",
+          error: "\u274C Gagal memperbarui kata sandi. Coba lagi.",
+          mismatch: "\u274C Kata sandi tidak cocok.",
+          short: "\u274C Kata sandi terlalu pendek (min 6 karakter)."
+        }
+      }[lang2];
+      return (0, import_mithril7.default)("main.container", [
+        (0, import_mithril7.default)("article", [
+          (0, import_mithril7.default)("hgroup", [
+            (0, import_mithril7.default)("h1", t.heading),
+            (0, import_mithril7.default)("h2", t.subheading)
+          ]),
+          ResetPassword.success && (0, import_mithril7.default)("p", { style: "color: green" }, t.success),
+          ResetPassword.error && (0, import_mithril7.default)("p", { style: "color: red" }, ResetPassword.error),
+          (0, import_mithril7.default)("form", {
+            onsubmit: async (e) => {
+              e.preventDefault();
+              ResetPassword.error = ResetPassword.success = "";
+              if (ResetPassword.newPassword !== ResetPassword.confirmPassword) {
+                ResetPassword.error = t.mismatch;
+                return;
+              }
+              if (ResetPassword.newPassword.length < 6) {
+                ResetPassword.error = t.short;
+                return;
+              }
+              ResetPassword.loading = true;
+              try {
+                const res = await import_mithril7.default.request({
+                  method: "POST",
+                  url: "/api/change-password",
+                  body: {
+                    email: ResetPassword.email,
+                    resetCode: ResetPassword.code,
+                    newPassword: ResetPassword.newPassword
+                  }
+                });
+                import_mithril7.default.route.set("/login", { success: "password_reset" });
+              } catch (err) {
+                ResetPassword.error = err.message || t.error;
+              }
+              ResetPassword.loading = false;
+            }
+          }, [
+            (0, import_mithril7.default)("label", { for: "newPassword" }, t.newPassword),
+            (0, import_mithril7.default)("input", {
+              id: "newPassword",
+              type: "password",
+              value: ResetPassword.newPassword,
+              oninput: (e) => ResetPassword.newPassword = e.target.value
+            }),
+            (0, import_mithril7.default)("label", { for: "confirmPassword" }, t.confirmPassword),
+            (0, import_mithril7.default)("input", {
+              id: "confirmPassword",
+              type: "password",
+              value: ResetPassword.confirmPassword,
+              oninput: (e) => ResetPassword.confirmPassword = e.target.value
+            }),
+            (0, import_mithril7.default)("button", {
+              type: "submit",
+              disabled: ResetPassword.loading,
+              "aria-busy": ResetPassword.loading ? "true" : false
+            }, t.submit)
+          ])
+        ])
+      ]);
+    }
+  };
+  var ResetPassword_default = ResetPassword;
+
+  // src/index.js
+  import_mithril8.default.route.prefix = "";
+  import_mithril8.default.route(document.getElementById("app"), "/", {
+    "/": LandingPage_default,
+    "/signup": SignupForm_default,
+    "/login": LoginForm_default,
+    "/profile": ProfilePage_default,
+    "/change-password": ChangePasswordForm_default,
+    "/forgot-password": ForgotPasswordForm_default,
+    "/reset": ResetPassword_default
+  });
+})();

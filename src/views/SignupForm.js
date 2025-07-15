@@ -58,17 +58,6 @@ const i18n = {
   }
 }
 
-const lang = localStorage.getItem("lang") || "en"
-const t = i18n[lang]
-
-const strengthLabels = [
-  t.tooWeak,
-  t.weak,
-  t.fair,
-  t.strong,
-  t.veryStrong
-]
-
 const SignupForm = {
   fullName: "",
   userName: "",
@@ -121,6 +110,22 @@ const SignupForm = {
   }, 750),
 
   view: () => {
+    let lang = localStorage.getItem("lang")
+    // Validate that the language from localStorage is a valid key in our i18n object.
+    // Default to "en" if it's missing or invalid.
+    if (!i18n.hasOwnProperty(lang)) {
+      lang = "en"
+    }
+    const t = i18n[lang]
+
+    const strengthLabels = [
+      t.tooWeak,
+      t.weak,
+      t.fair,
+      t.strong,
+      t.veryStrong,
+    ]
+
     document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto")
     const strength = SignupForm.getPasswordStrength(SignupForm.password)
 
