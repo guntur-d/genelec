@@ -100,8 +100,15 @@ const ChangePasswordForm = {
 
   view() {
     document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto")
+    // Validate the language from localStorage before using it
+    let lang = localStorage.getItem("lang")
+    if (!ChangePasswordForm.translations.hasOwnProperty(lang)) {
+      lang = "en"
+    }
+    ChangePasswordForm.language = lang // Update component state
+
     const strength = ChangePasswordForm.getPasswordStrength(ChangePasswordForm.newPasswordInput)
-    const t = ChangePasswordForm.t
+    const t = ChangePasswordForm.t // Translation helper already uses this.language
 
     return m("main.container", [
       m("form", { onsubmit: ChangePasswordForm.submit, style: "max-width: 400px; margin: auto" }, [

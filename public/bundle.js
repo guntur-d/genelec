@@ -5009,6 +5009,11 @@
     },
     view() {
       document.documentElement.setAttribute("data-theme", localStorage.getItem("theme") || "auto");
+      let lang2 = localStorage.getItem("lang");
+      if (!ChangePasswordForm.translations.hasOwnProperty(lang2)) {
+        lang2 = "en";
+      }
+      ChangePasswordForm.language = lang2;
       const strength = ChangePasswordForm.getPasswordStrength(ChangePasswordForm.newPasswordInput);
       const t = ChangePasswordForm.t;
       return (0, import_mithril5.default)("main.container", [
