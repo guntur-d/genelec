@@ -1619,7 +1619,11 @@
       document.documentElement.setAttribute("lang", LandingPage.lang);
     },
     view: () => {
-      const t = i18n[LandingPage.lang];
+      let lang2 = LandingPage.lang;
+      if (!i18n.hasOwnProperty(lang2)) {
+        lang2 = "en";
+      }
+      const t = i18n[lang2];
       const isLoggedIn = localStorage.getItem("token") !== null;
       document.documentElement.setAttribute("data-theme", LandingPage.selectedTheme);
       return (0, import_mithril.default)("main.container", [
@@ -1638,10 +1642,10 @@
             }, `\u{1F511} ${t.changePassword}`),
             (0, import_mithril.default)("button", {
               onclick: () => {
-                const lang2 = localStorage.getItem("lang");
+                const lang3 = localStorage.getItem("lang");
                 const theme = localStorage.getItem("theme");
                 localStorage.clear();
-                localStorage.setItem("lang", lang2);
+                localStorage.setItem("lang", lang3);
                 localStorage.setItem("theme", theme);
                 location.reload();
               }
@@ -1680,10 +1684,10 @@
               localStorage.setItem("lang", value);
             }
           }, ["en", "id"].map(
-            (lang2) => (0, import_mithril.default)("option", {
-              value: lang2,
-              selected: LandingPage.lang === lang2
-            }, lang2 === "en" ? "\u{1F1FA}\u{1F1F8} English" : "\u{1F1EE}\u{1F1E9} Bahasa Indonesia")
+            (lang3) => (0, import_mithril.default)("option", {
+              value: lang3,
+              selected: LandingPage.lang === lang3
+            }, lang3 === "en" ? "\u{1F1FA}\u{1F1F8} English" : "\u{1F1EE}\u{1F1E9} Bahasa Indonesia")
           ))
         ])
       ]);

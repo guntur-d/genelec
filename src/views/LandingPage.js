@@ -37,7 +37,13 @@ const LandingPage = {
     },
 
     view: () => {
-        const t = i18n[LandingPage.lang]
+        // Validate LandingPage.lang before accessing i18n
+        let lang = LandingPage.lang;
+        if (!i18n.hasOwnProperty(lang)) {
+          lang = "en"; // Fallback to default if invalid
+        }
+        const t = i18n[lang];
+
         const isLoggedIn = localStorage.getItem("token") !== null
         document.documentElement.setAttribute("data-theme", LandingPage.selectedTheme)
 
